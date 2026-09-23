@@ -1,9 +1,9 @@
-# cfregions
+# CF Regions
 
-`cfregions` is the dependency-light, presentation-independent core of the
-[CF Regions project][project]. It resolves WGS84 coordinates to names from the
-[CF Standardized Region List][cf-list] and exposes hierarchy, metadata,
-provenance, and interpreted GeoJSON geometry. It has no web or GUI dependency.
+`cfregions` is the dependency-light, presentation-independent library of the for the 
+mapping and lookup of [CF Standardized Region List][cf-list] names to geometries and hierarchy. 
+It resolves WGS84 coordinates to region names from the CF Standardized Region List and 
+exposes hierarchy, metadata, provenance, and interpreted GeoJSON geometry. 
 
 > [!IMPORTANT]
 > CF standardizes region names, not boundaries. The bundled shapes are a
