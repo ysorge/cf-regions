@@ -1,0 +1,5 @@
+# Keep checksummed text resources byte-identical on every operating system.
+* text=auto eol=lf
+
+# Never apply line-ending conversion to binary geospatial exports.
+*.wkb binary
