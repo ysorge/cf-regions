@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ysorge/cfregions/schemas/catalog.schema.json",
+  "title": "cfregions profile-independent CF release catalog",
+  "description": "Discovery document for CF Standardized Region List releases. It contains no spatial-profile references.",
+  "type": "object",
+  "required": ["schema_version", "default_version", "aliases", "versions"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "default_version": {"type": "string", "minLength": 1, "description": "Numbered CF release selected by default."},
+    "aliases": {
+      "type": "object",
+      "additionalProperties": {"type": "string", "minLength": 1}
+    },
+    "versions": {
+      "description": "Map from numbered CF release to a data-root-relative version manifest path.",
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"type": "string", "minLength": 1}
+    }
+  },
+  "additionalProperties": false
+}

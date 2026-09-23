@@ -1,0 +1,15 @@
+{
+  "$schema": "schemas/catalog.schema.json",
+  "schema_version": 1,
+  "default_version": "5",
+  "aliases": {
+    "current": "5"
+  },
+  "versions": {
+    "1": "versions/1.json",
+    "2": "versions/2.json",
+    "3": "versions/3.json",
+    "4": "versions/4.json",
+    "5": "versions/5.json"
+  }
+}

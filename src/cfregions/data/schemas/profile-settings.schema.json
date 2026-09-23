@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ysorge/cfregions/schemas/profile-settings.schema.json",
+  "title": "cfregions spatial profile defaults",
+  "description": "The global built-in profile selection. Available profiles are discovered from their own manifests and are not indexed here.",
+  "type": "object",
+  "required": ["schema_version", "default_profile"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "default_profile": {
+      "type": "object",
+      "description": "Exact built-in profile identity selected by the default/current aliases.",
+      "required": ["id", "version"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

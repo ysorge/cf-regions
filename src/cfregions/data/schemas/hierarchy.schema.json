@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ysorge/cfregions/schemas/hierarchy.schema.json",
+  "title": "cfregions spatial-profile hierarchy",
+  "description": "Explicit profile-owned semantic broader relations with per-edge provenance; relations are not inferred from geometry.",
+  "type": "object",
+  "required": ["schema_version", "edges"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "edges": {
+      "description": "Directed child-to-parent edges forming an acyclic graph after selection of a compatible CF release.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["child", "parent", "relation", "origin", "source", "source_path", "context_path"],
+        "properties": {
+          "child": {"type": "string", "minLength": 1},
+          "parent": {"type": "string", "minLength": 1},
+          "relation": {"const": "broader"},
+          "origin": {"type": "string", "minLength": 1, "description": "Provider-defined stable category describing how the edge was derived."},
+          "source": {
+            "type": "object",
+            "required": ["name", "version", "uri", "license", "method"],
+            "properties": {
+              "name": {"type": "string", "minLength": 1},
+              "version": {"type": "string", "minLength": 1},
+              "uri": {"type": "string", "format": "uri"},
+              "license": {"type": "string", "minLength": 1},
+              "method": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": false
+          },
+          "source_path": {"type": "array", "description": "Source hierarchy path that directly evidences this edge, or an empty array.", "items": {"type": "string"}},
+          "context_path": {"type": "array", "description": "Optional retained source path for context/display; it need not prove the edge.", "items": {"type": "string"}}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

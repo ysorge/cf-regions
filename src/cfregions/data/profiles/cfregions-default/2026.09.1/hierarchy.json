@@ -1,0 +1,1648 @@
+{
+  "$schema": "../../../schemas/hierarchy.schema.json",
+  "schema_version": 1,
+  "edges": [
+    {
+      "child": "africa",
+      "parent": "global_land",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "CONTINENT",
+        "AFRICA"
+      ]
+    },
+    {
+      "child": "antarctica",
+      "parent": "global_land",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "CONTINENT",
+        "ANTARCTICA"
+      ]
+    },
+    {
+      "child": "arabian_sea",
+      "parent": "indian_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "INDIAN OCEAN",
+        "ARABIAN SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "INDIAN OCEAN",
+        "ARABIAN SEA"
+      ]
+    },
+    {
+      "child": "aral_sea",
+      "parent": "asia",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "CONTINENT",
+        "ASIA",
+        "SOUTHCENTRAL ASIA",
+        "ARAL SEA"
+      ],
+      "context_path": [
+        "CONTINENT",
+        "ASIA",
+        "SOUTHCENTRAL ASIA",
+        "ARAL SEA"
+      ]
+    },
+    {
+      "child": "arctic_ocean",
+      "parent": "global_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "OCEAN",
+        "ARCTIC OCEAN"
+      ]
+    },
+    {
+      "child": "asia",
+      "parent": "eurasia",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "CONTINENT",
+        "ASIA"
+      ]
+    },
+    {
+      "child": "atlantic_arctic_ocean",
+      "parent": "global_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "atlantic_ocean",
+      "parent": "global_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN"
+      ]
+    },
+    {
+      "child": "australia",
+      "parent": "global_land",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "CONTINENT",
+        "AUSTRALIA/NEW ZEALAND",
+        "AUSTRALIA"
+      ]
+    },
+    {
+      "child": "baltic_sea",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN",
+        "NORTH ATLANTIC OCEAN",
+        "BALTIC SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN",
+        "NORTH ATLANTIC OCEAN",
+        "BALTIC SEA"
+      ]
+    },
+    {
+      "child": "barents_opening",
+      "parent": "barents_sea",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "barents_opening",
+      "parent": "norwegian_sea",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "barents_sea",
+      "parent": "arctic_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "ARCTIC OCEAN",
+        "BARENTS SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "ARCTIC OCEAN",
+        "BARENTS SEA"
+      ]
+    },
+    {
+      "child": "beaufort_sea",
+      "parent": "arctic_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "ARCTIC OCEAN",
+        "BEAUFORT SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "ARCTIC OCEAN",
+        "BEAUFORT SEA"
+      ]
+    },
+    {
+      "child": "bellingshausen_sea",
+      "parent": "southern_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "SOUTHERN OCEAN",
+        "BELLINGSHAUSEN SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "SOUTHERN OCEAN",
+        "BELLINGSHAUSEN SEA"
+      ]
+    },
+    {
+      "child": "bering_sea",
+      "parent": "pacific_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "PACIFIC OCEAN",
+        "NORTH PACIFIC OCEAN",
+        "BERING SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "PACIFIC OCEAN",
+        "NORTH PACIFIC OCEAN",
+        "BERING SEA"
+      ]
+    },
+    {
+      "child": "bering_strait",
+      "parent": "bering_sea",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "bering_strait",
+      "parent": "chukchi_sea",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "black_sea",
+      "parent": "asia",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "CONTINENT",
+        "ASIA",
+        "WESTERN ASIA",
+        "BLACK SEA"
+      ],
+      "context_path": [
+        "CONTINENT",
+        "ASIA",
+        "WESTERN ASIA",
+        "BLACK SEA"
+      ]
+    },
+    {
+      "child": "black_sea",
+      "parent": "europe",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "CONTINENT",
+        "ASIA",
+        "WESTERN ASIA",
+        "BLACK SEA"
+      ]
+    },
+    {
+      "child": "canadian_archipelago",
+      "parent": "arctic_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "canadian_archipelago",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "caribbean_sea",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN",
+        "NORTH ATLANTIC OCEAN",
+        "CARIBBEAN SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN",
+        "NORTH ATLANTIC OCEAN",
+        "CARIBBEAN SEA"
+      ]
+    },
+    {
+      "child": "caspian_sea",
+      "parent": "asia",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "CONTINENT",
+        "ASIA",
+        "WESTERN ASIA",
+        "CASPIAN SEA"
+      ],
+      "context_path": [
+        "CONTINENT",
+        "ASIA",
+        "WESTERN ASIA",
+        "CASPIAN SEA"
+      ]
+    },
+    {
+      "child": "central_america",
+      "parent": "north_america",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "CONTINENT",
+        "NORTH AMERICA",
+        "CENTRAL AMERICA"
+      ],
+      "context_path": [
+        "CONTINENT",
+        "NORTH AMERICA",
+        "CENTRAL AMERICA"
+      ]
+    },
+    {
+      "child": "chukchi_sea",
+      "parent": "arctic_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "ARCTIC OCEAN",
+        "CHUKCHI SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "ARCTIC OCEAN",
+        "CHUKCHI SEA"
+      ]
+    },
+    {
+      "child": "contiguous_united_states",
+      "parent": "north_america",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "davis_strait",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN",
+        "NORTH ATLANTIC OCEAN",
+        "DAVIS STRAIT"
+      ],
+      "context_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN",
+        "NORTH ATLANTIC OCEAN",
+        "DAVIS STRAIT"
+      ]
+    },
+    {
+      "child": "denmark_strait",
+      "parent": "arctic_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "denmark_strait",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "drake_passage",
+      "parent": "southern_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "SOUTHERN OCEAN",
+        "DRAKE PASSAGE"
+      ],
+      "context_path": [
+        "OCEAN",
+        "SOUTHERN OCEAN",
+        "DRAKE PASSAGE"
+      ]
+    },
+    {
+      "child": "east_china_sea",
+      "parent": "pacific_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "PACIFIC OCEAN",
+        "WESTERN PACIFIC OCEAN",
+        "EAST CHINA SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "PACIFIC OCEAN",
+        "WESTERN PACIFIC OCEAN",
+        "EAST CHINA SEA"
+      ]
+    },
+    {
+      "child": "english_channel",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "eurasia",
+      "parent": "global_land",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "GEOGRAPHIC REGION",
+        "EURASIA"
+      ]
+    },
+    {
+      "child": "europe",
+      "parent": "eurasia",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "CONTINENT",
+        "EUROPE"
+      ]
+    },
+    {
+      "child": "faroe_scotland_channel",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "florida_bahamas_strait",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "fram_strait",
+      "parent": "arctic_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "fram_strait",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "gibraltar_strait",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "gibraltar_strait",
+      "parent": "mediterranean_sea",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "global_land",
+      "parent": "global",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "GEOGRAPHIC REGION",
+        "GLOBAL LAND"
+      ]
+    },
+    {
+      "child": "global_ocean",
+      "parent": "global",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "GEOGRAPHIC REGION",
+        "GLOBAL OCEAN"
+      ]
+    },
+    {
+      "child": "great_lakes",
+      "parent": "north_america",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "CONTINENT",
+        "NORTH AMERICA",
+        "UNITED STATES OF AMERICA",
+        "GREAT LAKES"
+      ],
+      "context_path": [
+        "CONTINENT",
+        "NORTH AMERICA",
+        "UNITED STATES OF AMERICA",
+        "GREAT LAKES"
+      ]
+    },
+    {
+      "child": "greenland",
+      "parent": "north_america",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "CONTINENT",
+        "NORTH AMERICA",
+        "GREENLAND"
+      ],
+      "context_path": [
+        "CONTINENT",
+        "NORTH AMERICA",
+        "GREENLAND"
+      ]
+    },
+    {
+      "child": "gulf_of_alaska",
+      "parent": "pacific_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "PACIFIC OCEAN",
+        "NORTH PACIFIC OCEAN",
+        "GULF OF ALASKA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "PACIFIC OCEAN",
+        "NORTH PACIFIC OCEAN",
+        "GULF OF ALASKA"
+      ]
+    },
+    {
+      "child": "gulf_of_mexico",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "hudson_bay",
+      "parent": "north_america",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "CONTINENT",
+        "NORTH AMERICA",
+        "CANADA",
+        "HUDSON BAY"
+      ],
+      "context_path": [
+        "CONTINENT",
+        "NORTH AMERICA",
+        "CANADA",
+        "HUDSON BAY"
+      ]
+    },
+    {
+      "child": "iceland_faroe_channel",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "indian_ocean",
+      "parent": "global_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "OCEAN",
+        "INDIAN OCEAN"
+      ]
+    },
+    {
+      "child": "indian_pacific_ocean",
+      "parent": "global_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "indo_pacific_ocean",
+      "parent": "global_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "indonesian_throughflow",
+      "parent": "indian_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "indonesian_throughflow",
+      "parent": "pacific_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "irish_sea",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN",
+        "NORTH ATLANTIC OCEAN",
+        "IRISH SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN",
+        "NORTH ATLANTIC OCEAN",
+        "IRISH SEA"
+      ]
+    },
+    {
+      "child": "lake_baykal",
+      "parent": "europe",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "CONTINENT",
+        "EUROPE",
+        "EASTERN EUROPE",
+        "RUSSIAN FEDERATION",
+        "LAKE BAYKAL"
+      ],
+      "context_path": [
+        "CONTINENT",
+        "EUROPE",
+        "EASTERN EUROPE",
+        "RUSSIAN FEDERATION",
+        "LAKE BAYKAL"
+      ]
+    },
+    {
+      "child": "lake_chad",
+      "parent": "africa",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "CONTINENT",
+        "AFRICA",
+        "CENTRAL AFRICA",
+        "LAKE CHAD"
+      ],
+      "context_path": [
+        "CONTINENT",
+        "AFRICA",
+        "CENTRAL AFRICA",
+        "LAKE CHAD"
+      ]
+    },
+    {
+      "child": "lake_malawi",
+      "parent": "africa",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "CONTINENT",
+        "AFRICA",
+        "EASTERN AFRICA",
+        "LAKE MALAWI"
+      ],
+      "context_path": [
+        "CONTINENT",
+        "AFRICA",
+        "EASTERN AFRICA",
+        "LAKE MALAWI"
+      ]
+    },
+    {
+      "child": "lake_tanganyika",
+      "parent": "africa",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "CONTINENT",
+        "AFRICA",
+        "EASTERN AFRICA",
+        "LAKE TANGANYIKA"
+      ],
+      "context_path": [
+        "CONTINENT",
+        "AFRICA",
+        "EASTERN AFRICA",
+        "LAKE TANGANYIKA"
+      ]
+    },
+    {
+      "child": "lake_victoria",
+      "parent": "africa",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "CONTINENT",
+        "AFRICA",
+        "EASTERN AFRICA",
+        "LAKE VICTORIA"
+      ],
+      "context_path": [
+        "CONTINENT",
+        "AFRICA",
+        "EASTERN AFRICA",
+        "LAKE VICTORIA"
+      ]
+    },
+    {
+      "child": "mediterranean_sea",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN",
+        "NORTH ATLANTIC OCEAN",
+        "MEDITERRANEAN SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN",
+        "NORTH ATLANTIC OCEAN",
+        "MEDITERRANEAN SEA"
+      ]
+    },
+    {
+      "child": "mozambique_channel",
+      "parent": "indian_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "north_america",
+      "parent": "global_land",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "CONTINENT",
+        "NORTH AMERICA"
+      ]
+    },
+    {
+      "child": "north_sea",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN",
+        "NORTH ATLANTIC OCEAN",
+        "NORTH SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN",
+        "NORTH ATLANTIC OCEAN",
+        "NORTH SEA"
+      ]
+    },
+    {
+      "child": "northern_hemisphere",
+      "parent": "global",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "GEOGRAPHIC REGION",
+        "NORTHERN HEMISPHERE"
+      ]
+    },
+    {
+      "child": "norwegian_sea",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN",
+        "NORTH ATLANTIC OCEAN",
+        "NORWEGIAN SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "ATLANTIC OCEAN",
+        "NORTH ATLANTIC OCEAN",
+        "NORWEGIAN SEA"
+      ]
+    },
+    {
+      "child": "pacific_equatorial_undercurrent",
+      "parent": "pacific_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "pacific_ocean",
+      "parent": "global_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "OCEAN",
+        "PACIFIC OCEAN"
+      ]
+    },
+    {
+      "child": "persian_gulf",
+      "parent": "arabian_sea",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "INDIAN OCEAN",
+        "ARABIAN SEA",
+        "PERSIAN GULF"
+      ],
+      "context_path": [
+        "OCEAN",
+        "INDIAN OCEAN",
+        "ARABIAN SEA",
+        "PERSIAN GULF"
+      ]
+    },
+    {
+      "child": "red_sea",
+      "parent": "indian_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "INDIAN OCEAN",
+        "RED SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "INDIAN OCEAN",
+        "RED SEA"
+      ]
+    },
+    {
+      "child": "ross_sea",
+      "parent": "southern_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "SOUTHERN OCEAN",
+        "ROSS SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "SOUTHERN OCEAN",
+        "ROSS SEA"
+      ]
+    },
+    {
+      "child": "sea_of_japan",
+      "parent": "pacific_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "PACIFIC OCEAN",
+        "NORTH PACIFIC OCEAN",
+        "SEA OF JAPAN"
+      ],
+      "context_path": [
+        "OCEAN",
+        "PACIFIC OCEAN",
+        "NORTH PACIFIC OCEAN",
+        "SEA OF JAPAN"
+      ]
+    },
+    {
+      "child": "sea_of_okhotsk",
+      "parent": "pacific_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "PACIFIC OCEAN",
+        "NORTH PACIFIC OCEAN",
+        "SEA OF OKHOTSK"
+      ],
+      "context_path": [
+        "OCEAN",
+        "PACIFIC OCEAN",
+        "NORTH PACIFIC OCEAN",
+        "SEA OF OKHOTSK"
+      ]
+    },
+    {
+      "child": "south_america",
+      "parent": "global_land",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "CONTINENT",
+        "SOUTH AMERICA"
+      ]
+    },
+    {
+      "child": "south_china_sea",
+      "parent": "pacific_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "PACIFIC OCEAN",
+        "WESTERN PACIFIC OCEAN",
+        "SOUTH CHINA SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "PACIFIC OCEAN",
+        "WESTERN PACIFIC OCEAN",
+        "SOUTH CHINA SEA"
+      ]
+    },
+    {
+      "child": "southern_hemisphere",
+      "parent": "global",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "GEOGRAPHIC REGION",
+        "SOUTHERN HEMISPHERE"
+      ]
+    },
+    {
+      "child": "southern_ocean",
+      "parent": "global_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": [
+        "OCEAN",
+        "SOUTHERN OCEAN"
+      ]
+    },
+    {
+      "child": "taiwan_luzon_straits",
+      "parent": "pacific_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "taiwan_luzon_straits",
+      "parent": "south_china_sea",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "weddell_sea",
+      "parent": "southern_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "SOUTHERN OCEAN",
+        "WEDDELL SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "SOUTHERN OCEAN",
+        "WEDDELL SEA"
+      ]
+    },
+    {
+      "child": "windward_passage",
+      "parent": "atlantic_ocean",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "windward_passage",
+      "parent": "caribbean_sea",
+      "relation": "broader",
+      "origin": "mapping_curation",
+      "source": {
+        "name": "cfregions mapping curation",
+        "version": "2026.09.1",
+        "uri": "https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md",
+        "license": "Apache-2.0",
+        "method": "documented composite, global, or section connectivity link; not evidenced by the retained GCMD path"
+      },
+      "source_path": [],
+      "context_path": []
+    },
+    {
+      "child": "yellow_sea",
+      "parent": "pacific_ocean",
+      "relation": "broader",
+      "origin": "gcmd_path_projection",
+      "source": {
+        "name": "NASA GCMD Location Keywords",
+        "version": "24.8",
+        "uri": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+        "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+        "method": "parent name occurs in the retained GCMD location path"
+      },
+      "source_path": [
+        "OCEAN",
+        "PACIFIC OCEAN",
+        "WESTERN PACIFIC OCEAN",
+        "YELLOW SEA"
+      ],
+      "context_path": [
+        "OCEAN",
+        "PACIFIC OCEAN",
+        "WESTERN PACIFIC OCEAN",
+        "YELLOW SEA"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ysorge/cfregions/schemas/version-manifest.schema.json",
+  "title": "cfregions profile-independent CF release manifest",
+  "description": "Metadata and checksum for one exact CF vocabulary release; geometry and hierarchy are intentionally absent.",
+  "type": "object",
+  "required": ["schema_version", "dataset_id", "region_count", "cf"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "dataset_id": {"type": "string", "minLength": 1, "description": "Stable identity of this CF-only release dataset."},
+    "region_count": {"type": "integer", "minimum": 1},
+    "cf": {
+      "description": "Official CF source metadata and retained XML resource.",
+      "type": "object",
+      "required": ["version", "date", "url", "vocabulary_file", "sha256"],
+      "properties": {
+        "version": {"type": "string", "minLength": 1},
+        "date": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "format": "uri"},
+        "vocabulary_file": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

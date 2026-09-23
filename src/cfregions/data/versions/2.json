@@ -1,0 +1,13 @@
+{
+  "$schema": "../schemas/version-manifest.schema.json",
+  "schema_version": 1,
+  "dataset_id": "cf-standardized-region-list-v2",
+  "region_count": 68,
+  "cf": {
+    "version": "2",
+    "date": "12 July 2013",
+    "url": "https://cfconventions.org/Data/standardized-region-list/standardized-region-list.2.xml",
+    "vocabulary_file": "vocabularies/standardized-region-list.2.xml",
+    "sha256": "41380848ef057b31f0894b152e5692899f4a669ebd3112047648c92b895c5080"
+  }
+}

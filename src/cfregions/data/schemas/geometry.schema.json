@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ysorge/cfregions/schemas/geometry.schema.json",
+  "title": "cfregions spatial-profile GeoJSON representation",
+  "description": "A complete profile-owned GeoJSON FeatureCollection. CF descriptions and semantic hierarchy are supplied by separate resources.",
+  "type": "object",
+  "required": ["type", "features"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "type": {"const": "FeatureCollection"},
+    "name": {"type": "string"},
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "id", "properties", "geometry"],
+        "properties": {
+          "type": {"const": "Feature"},
+          "id": {"type": "string", "minLength": 1},
+          "properties": {
+            "type": "object",
+            "required": [
+              "name",
+              "kind",
+              "nvs_concept_url",
+              "geometry_source",
+              "geometry_source_url",
+              "geometry_source_version",
+              "geometry_license",
+              "geometry_method",
+              "geometry_contexts",
+              "specificity"
+            ],
+            "properties": {
+              "name": {"type": "string", "minLength": 1, "description": "Exact CF standardized region name."},
+              "kind": {"enum": ["area", "section"], "description": "Role assigned by this profile, not by CF."},
+              "nvs_concept_url": {"type": "string", "format": "uri"},
+              "geometry_source": {"type": "string", "minLength": 1},
+              "geometry_source_url": {"type": "string", "minLength": 1},
+              "geometry_source_version": {"type": "string", "minLength": 1},
+              "geometry_license": {"type": "string", "minLength": 1},
+              "geometry_method": {"type": "string", "minLength": 1},
+              "geometry_contexts": {"type": "array", "items": {"type": "string"}},
+              "specificity": {"type": "integer", "description": "Profile-defined deterministic ordering weight; larger values are more specific."}
+            },
+            "additionalProperties": false
+          },
+          "geometry": {
+            "type": "object",
+            "required": ["type", "coordinates"],
+            "properties": {
+              "type": {"enum": ["Polygon", "MultiPolygon", "LineString", "MultiLineString"]},
+              "coordinates": {"type": "array"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

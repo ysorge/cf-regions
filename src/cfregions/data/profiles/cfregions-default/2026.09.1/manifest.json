@@ -1,0 +1,171 @@
+{
+  "$schema": "../../../schemas/profile-manifest.schema.json",
+  "schema_version": 1,
+  "profile": {
+    "id": "cfregions-default",
+    "version": "2026.09.1",
+    "title": "cfregions default",
+    "description": "The bundled, documented interpretation of CF standardized region names used by cfregions.",
+    "basis": "CF supplies the standardized names and descriptions; NASA GCMD informs the hierarchy; SeaVoX and Natural Earth supply most area geometry; OMIP and CMIP6 inform diagnostic sections.",
+    "scope": "General-purpose coordinate lookup, hierarchy traversal, and visualization; not for navigation or legal boundaries.",
+    "license": "Mixed open-data terms; see DATA_LICENSES.md and this manifest.",
+    "homepage": "https://github.com/ysorge/cfregions"
+  },
+  "supported_cf_versions": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+  ],
+  "generated_on": "2026-09-22",
+  "crs": "OGC:CRS84",
+  "lookup": {
+    "behavior_version": "1",
+    "geometry_resolution": "low",
+    "default_geometry_resolution": "low",
+    "area_predicate": "covers",
+    "boundary_inclusive": true,
+    "section_method": "minor_great_circle_distance"
+  },
+  "representations": {
+    "low": {
+      "label": "Low detail",
+      "description": "Compact geometry for fast lookup and overview maps.",
+      "geometry_file": "geometry/low.geojson",
+      "sha256": "4841b9d9199a2e0c7e3afcd8ac19d2036a25338db6982154f4f0f8e475ec3896",
+      "feature_count": 74,
+      "processing": {
+        "method": "simplify_and_round",
+        "parameters": {
+          "seavox_pre_simplification_degrees": 0.02,
+          "seavox_pre_simplification_preserves_topology": false,
+          "output_simplification_degrees": 0.01,
+          "output_simplification_preserves_topology": true,
+          "coordinate_precision_degrees": 1e-05
+        }
+      }
+    },
+    "high": {
+      "label": "High detail",
+      "description": "More detailed geometry for closer visual inspection; slower and larger.",
+      "geometry_file": "geometry/high.geojson",
+      "sha256": "4321acb3ee37c96df40cb580e60201fb570004347e10d78aabb393b19fb1a9f7",
+      "feature_count": 74,
+      "processing": {
+        "method": "simplify_and_round",
+        "parameters": {
+          "seavox_pre_simplification_degrees": 0.002,
+          "seavox_pre_simplification_preserves_topology": false,
+          "output_simplification_degrees": 0.001,
+          "output_simplification_preserves_topology": true,
+          "coordinate_precision_degrees": 1e-06
+        }
+      }
+    }
+  },
+  "hierarchy": {
+    "name": "NASA GCMD Location Keywords",
+    "version": "24.8",
+    "date": "2026-09-16",
+    "url": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+    "hierarchy_file": "hierarchy.json",
+    "sha256": "65871ade85ff52f308ad69e03f70c1f4c4f9496788716d0d672ce8fd5ef2fa41",
+    "edge_count": 83
+  },
+  "limitations": [
+    "CF standardizes region names but does not publish canonical boundaries; every geometry is a documented interpretation.",
+    "Natural Earth and SeaVoX geometries are generalized and must not be used for navigation or legal boundaries.",
+    "The Indo-Pacific polygon is an explicit approximation of the CF biogeographic description.",
+    "Diagnostic passage and transect names are lines and only participate in lookup when a positive section tolerance is supplied.",
+    "GCMD-derived parent links are supplemented by documented composite and section connectivity links.",
+    "Adjacent named regions need not share a boundary: SeaVoX definitions are retained without project-specific gap filling, including the North Sea and Baltic Sea.",
+    "Resolution changes geometric detail, not the upstream definition; coordinate lookup always uses the declared low representation."
+  ],
+  "sources": [
+    {
+      "name": "CF Standardized Region List",
+      "version": "5",
+      "url": "https://cfconventions.org/Data/standardized-region-list/standardized-region-list.5.xml",
+      "license": "CC0"
+    },
+    {
+      "name": "NASA GCMD Location Keywords",
+      "version": "24.8",
+      "url": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
+      "license": "NASA ESDIS open-data guidance; acknowledgment requested",
+      "license_url": "https://www.earthdata.nasa.gov/engage/open-data-services-software/data-use-policy"
+    },
+    {
+      "name": "SeaVoX polygons",
+      "version": "19",
+      "url": "https://www.marineregions.org/download_file.php?name=SeaVoX_sea_areas_polygons_v19.zip",
+      "doi": "10.14284/590",
+      "license": "CC BY 4.0"
+    },
+    {
+      "name": "Natural Earth",
+      "scale": "1:50m",
+      "url": "https://www.naturalearthdata.com/",
+      "license": "Public domain"
+    },
+    {
+      "name": "OMIP protocol Table J1",
+      "url": "https://doi.org/10.5194/gmd-9-3231-2016",
+      "license": "CC BY 3.0"
+    },
+    {
+      "name": "CMIP6 CMOR tables",
+      "url": "https://github.com/PCMDI/cmip6-cmor-tables",
+      "license": "BSD-3-Clause"
+    }
+  ],
+  "input_sha256": {
+    "cf-standardized-region-list-v5.xml": "80b444d86ed140b0fd866bd6e5d4f3c8aed73e1391c56bf66df6ebbc0a7952da",
+    "gcmd-locations-24.8.csv": "79a91579a5cbf209188cb3e001a20506e673f275ad1b169e51eb48cdb4c4280b",
+    "cfregions-seavox-arctic-v19.geojson": "b1db4291ec6f1ffa4ca9ff2c1c25a4c39456538ba1075355ab06852b90aa5848",
+    "cfregions-seavox-atlantic-v19.geojson": "d40485a710f4693b012a7780bfb308cff63bc93c6f3460ed2cdfb442d9a3b9e3",
+    "cfregions-seavox-baltic-v19.geojson": "3f2322b4d529f3c4db791ce0bc511c985f682b583f2b0c2a2e61ebf4e32407c8",
+    "cfregions-seavox-direct-v19.geojson": "d3681b4c08d940e1b11498da1738b8ba9653c36599c089e6f806045cd312526e",
+    "cfregions-seavox-indian-v19.geojson": "8afa8927c7685403bfc8e0835d4a272828f152a55e0d1264eb54f2a4a9b70e50",
+    "cfregions-seavox-mediterranean-v19.geojson": "0c22b452ddfd2fe95ccb89427cb8bf70a1434454f6296cae5a73d625e59218e1",
+    "cfregions-seavox-pacific-v19.geojson": "32c1dea605f258947a4f3067c77efbab758c5044645b5cfc7d7d881c2427278b",
+    "cfregions-seavox-southern-v19.geojson": "3e15dc935061e934b7458661a82a71fb1d03d11b04bde4fea81ef02dade9ed7b",
+    "ne_50m_geography_regions_polys.shp": "98a0867ab08e07f0d7d473a2f1ad81b0aedf7dd492fb031aef223f8bf20ec9ee",
+    "ne_50m_geography_regions_polys.shx": "23f5c99648f1ec2917f035447730d9ce1c66da1e134202c33eef601c77c70da1",
+    "ne_50m_geography_regions_polys.dbf": "1af18d56237fc4a9f0292be3d1aeb7472873d8a0a0017450ed8543ef418dd821",
+    "ne_50m_geography_regions_polys.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+    "ne_50m_geography_regions_polys.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+    "ne_50m_geography_regions_polys.VERSION.txt": "30d0ad7c0f48ffeaaf390112b5b95823c7efa1da3ee5abc116eb481989340b58",
+    "ne_50m_geography_marine_polys.shp": "d04b57cf2186e40b510beedbcd049eaaa7f070f863fa834a09c83bd9111bc1a6",
+    "ne_50m_geography_marine_polys.shx": "8a32e5a95d2237eaa6cc6509e4bec37fe41dbd3e345d2f8ddef31c7320224104",
+    "ne_50m_geography_marine_polys.dbf": "462a179eaf5b8fd2a355c99024a41790d39d6635ff366da8fbcbda32cd39e549",
+    "ne_50m_geography_marine_polys.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+    "ne_50m_geography_marine_polys.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+    "ne_50m_geography_marine_polys.VERSION.txt": "cc9ba20cb7d5b479e0ef2386e24b08806c307df296208e283aee8f277281412b",
+    "ne_50m_lakes.shp": "0b94256e53f0a252dde49b9c57a7a1461454ac6e248c1fd02874d826dc469254",
+    "ne_50m_lakes.shx": "8f90881410c4c26d36a976d9663f24e37965a05d34e26f1bf1cb8d609855e7b0",
+    "ne_50m_lakes.dbf": "9c70f3ef0f7175f97ab4a8bc4d249449e95936b1eb75efb5db893c66c80dcdb7",
+    "ne_50m_lakes.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+    "ne_50m_lakes.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+    "ne_50m_lakes.VERSION.txt": "30d0ad7c0f48ffeaaf390112b5b95823c7efa1da3ee5abc116eb481989340b58",
+    "ne_50m_land.shp": "140d1419f7ace66bf0ea8ceb068cab544d413170f4e8c48e0a11bde6c978b319",
+    "ne_50m_land.shx": "c1b93ee40fe83d6322197251517c141c2c91970915ac61d7bf7a4821fc2a68d7",
+    "ne_50m_land.dbf": "d082add78c82e01b9bf422df3143ad6fbe43ca1bcb798d12a334f9e001b67bc0",
+    "ne_50m_land.prj": "98aaf3d1c0ecadf1a424a4536de261c3daf4e373697cb86c40c43b989daf52eb",
+    "ne_50m_land.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+    "ne_50m_land.VERSION.txt": "0874a8fe36effb87780f431845b5a7d85be657f2bd998ce8eeace717860d3b78",
+    "ne_50m_ocean.shp": "6ff1190e8430e493cf8eed99393f021b7562b600b9a7a11aa23ce45b6035d8b8",
+    "ne_50m_ocean.shx": "449353f638399c48c4cfe59e8f945e5c3025a4e412e9bcd0eeba64ba137ae7c1",
+    "ne_50m_ocean.dbf": "162d515911b17e35d36e22c5757e75fd37bdd38db2bc0011b9c79888a28bb4f5",
+    "ne_50m_ocean.prj": "98aaf3d1c0ecadf1a424a4536de261c3daf4e373697cb86c40c43b989daf52eb",
+    "ne_50m_ocean.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+    "ne_50m_ocean.VERSION.txt": "0874a8fe36effb87780f431845b5a7d85be657f2bd998ce8eeace717860d3b78",
+    "ne_50m_admin_1_states_provinces.shp": "dc1d56a45f74720056cb8eb9014518a29e5504b02f1a4c353e074fae125e8036",
+    "ne_50m_admin_1_states_provinces.shx": "3866ffde6304eabd8b24811b96ae7b7f5ae252d66ec5ceb9cb80c28ccba8ebd1",
+    "ne_50m_admin_1_states_provinces.dbf": "1e0fc3231509e2506f26d622dbbadc0f36d0ccbf97862941ac9e98cb9c604223",
+    "ne_50m_admin_1_states_provinces.prj": "98aaf3d1c0ecadf1a424a4536de261c3daf4e373697cb86c40c43b989daf52eb",
+    "ne_50m_admin_1_states_provinces.cpg": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824",
+    "ne_50m_admin_1_states_provinces.VERSION.txt": "548358969090d629b41888f5fe664ac31b7203dfd849f7c1ef820ac055b62191"
+  }
+}
