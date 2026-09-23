@@ -15,7 +15,7 @@ from cfregions import (
 
 
 def names_at(longitude: float, latitude: float) -> set[str]:
-    return set(cfregions.get_region_names(longitude=longitude, latitude=latitude))
+    return set(cfregions.match_region_names(longitude=longitude, latitude=latitude))
 
 
 def test_catalog_contains_every_cf_v5_name() -> None:
@@ -89,7 +89,7 @@ def test_combined_coordinate_forms(
     arguments: dict[str, object], expected: tuple[float, float]
 ) -> None:
     assert cfregions.resolve_coordinates(**arguments) == expected  # type: ignore[arg-type]
-    assert cfregions.get_region_names(**arguments)  # type: ignore[arg-type]
+    assert cfregions.match_region_names(**arguments)  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize(
@@ -106,13 +106,13 @@ def test_coordinate_forms_must_be_complete_and_unambiguous(
     arguments: dict[str, object],
 ) -> None:
     with pytest.raises(CoordinateError):
-        cfregions.get_region_names(**arguments)  # type: ignore[arg-type]
+        cfregions.match_region_names(**arguments)  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize("value", ["7", "7,24,9", "seven,24", "nan,24"])
 def test_combined_coordinate_form_rejects_invalid_values(value: str) -> None:
     with pytest.raises(CoordinateError, match="lonlat"):
-        cfregions.get_region_names(lonlat=value)
+        cfregions.match_region_names(lonlat=value)
 
 
 def test_sea_lookup_returns_specific_and_parent_regions() -> None:
@@ -147,7 +147,7 @@ def test_section_lines_are_opt_in() -> None:
 
 
 def test_section_distance_is_spherical_and_respects_tolerance() -> None:
-    far = cfregions.get_region_names(
+    far = cfregions.match_region_names(
         longitude=-154.0,
         latitude=1.0,
         section_tolerance_km=100.0,
@@ -176,7 +176,7 @@ def test_invalid_coordinates_raise_clear_errors(
     longitude: object, latitude: object, message: str
 ) -> None:
     with pytest.raises(CoordinateError, match=message):
-        cfregions.get_region_names(  # type: ignore[arg-type]
+        cfregions.match_region_names(  # type: ignore[arg-type]
             longitude=longitude,
             latitude=latitude,
         )
@@ -184,7 +184,7 @@ def test_invalid_coordinates_raise_clear_errors(
 
 def test_invalid_section_tolerance_is_rejected() -> None:
     with pytest.raises(CoordinateError, match="section_tolerance_km"):
-        cfregions.get_region_names(
+        cfregions.match_region_names(
             longitude=0.0,
             latitude=0.0,
             section_tolerance_km=-1.0,
@@ -252,7 +252,7 @@ def test_bundled_spatial_profile_is_discoverable_and_selectable() -> None:
     assert selected.title == "cfregions default"
     assert "NASA GCMD" in selected.basis
     assert selected.scope
-    assert cfregions.get_region_names(
+    assert cfregions.match_region_names(
         lonlat="7.990654,24.602804",
         profile=selected.id,
         profile_version=selected.version,

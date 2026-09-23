@@ -151,7 +151,7 @@ def test_external_self_describing_dataset_is_supported(tmp_path: Path) -> None:
     _external_dataset(tmp_path)
 
     info = cfregions.get_dataset_info(data_directory=tmp_path)
-    names = cfregions.get_region_names(
+    names = cfregions.match_region_names(
         longitude=0,
         latitude=0,
         data_directory=tmp_path,

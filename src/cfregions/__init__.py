@@ -4,7 +4,6 @@ from .api import (
     get_catalog,
     get_dataset_info,
     get_region,
-    get_region_names,
     get_region_shape,
     get_spatial_profile,
     list_cf_versions,
@@ -14,6 +13,7 @@ from .api import (
     list_spatial_profile_ids,
     list_spatial_profile_versions,
     list_spatial_profiles,
+    match_region_names,
     match_regions,
 )
 from .catalog import CoordinatePair, RegionCatalog, resolve_coordinates
@@ -78,7 +78,6 @@ __all__ = [
     "get_catalog",
     "get_dataset_info",
     "get_region",
-    "get_region_names",
     "get_region_shape",
     "get_spatial_profile",
     "list_cf_versions",
@@ -88,6 +87,7 @@ __all__ = [
     "list_spatial_profile_ids",
     "list_spatial_profile_versions",
     "list_spatial_profiles",
+    "match_region_names",
     "match_regions",
     "resolve_coordinates",
 ]

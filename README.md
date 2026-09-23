@@ -63,14 +63,20 @@ Arguments are keyword-only and use longitude/latitude order:
 ```python
 import cfregions
 
-names = cfregions.get_region_names(
+# Get all region names covering a point:
+# -------------------------------------------
+
+names = cfregions.match_region_names(
     longitude=-90.0,
     latitude=25.0,
 )
-print(names)
-# ('gulf_of_mexico', 'atlantic_ocean', ..., 'global')
+print(names) # ('gulf_of_mexico', 'atlantic_ocean', ..., 'global')
 
-same_names = cfregions.get_region_names(lonlat="-90.0, 25.0")
+same_names = cfregions.match_region_names(lonlat="-90.0, 25.0")
+print(same_names) # ('gulf_of_mexico', 'atlantic_ocean', ..., 'global')
+
+# Get detailed matches with provenance and geometry:
+# -------------------------------------------
 
 matches = cfregions.match_regions(longitude=5.0, latitude=56.0)
 for match in matches:
@@ -81,11 +87,16 @@ for match in matches:
         match.mapping.version,
     )
 
+# Get only direct matches without semantic expansion:
+
 direct_matches = cfregions.match_regions(
     longitude=5.0,
     latitude=56.0,
     include_ancestors=False,
 )
+
+# Get the full hierarchy graph or one region's ancestor subgraph:
+# -------------------------------------------
 
 ancestor_edges = cfregions.list_hierarchy_edges(region_name="north_sea")
 
@@ -94,6 +105,9 @@ region = cfregions.get_region(
     cf_version="current",
 )
 
+# Get the GeoJSON shape of a region with high detail:
+# -------------------------------------------
+
 shape = cfregions.get_region_shape(
     region_name="north_sea",
     cf_version="current",
@@ -101,7 +115,7 @@ shape = cfregions.get_region_shape(
 )
 ```
 
-`get_region_names()` is a deliberately lossy convenience. Use
+`match_region_names()` is a deliberately lossy convenience. Use
 `match_regions()` whenever the mapping method and provenance matter.
 
 ## Lookup behavior
@@ -144,7 +158,7 @@ Distances to sections use spherical minor-great-circle segments.
 
 | Function | Result |
 | --- | --- |
-| `get_region_names(...)` | Matching names as `tuple[str, ...]` |
+| `match_region_names(...)` | Matching names as `tuple[str, ...]` |
 | `match_regions(...)` | Detailed immutable `RegionMatch` objects |
 | `list_spatial_profiles()` | Available profile versions |
 | `list_spatial_profile_ids()` | Stable IDs of available profiles |

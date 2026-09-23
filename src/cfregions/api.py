@@ -199,7 +199,7 @@ def list_cf_versions(
     return _cf_registry(_directory_key(data_directory)).list_versions()
 
 
-def get_region_names(
+def match_region_names(
     *,
     longitude: float | None = None,
     latitude: float | None = None,
