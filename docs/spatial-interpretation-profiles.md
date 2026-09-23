@@ -35,7 +35,7 @@ data/
 
 The CF registry is shared by every profile. A profile provider must **not**
 copy or republish CF XML, `catalog.json`, or `versions/` manifests. Its profile
-manifest declares `supported_cf_versions`; at runtime `cfregions` selects a CF
+manifest declares `supported_cf_versions`; at runtime `cf-regions` selects a CF
 release and a profile independently, verifies compatibility, and then verifies
 that the profile supplies geometry for every name in that release.
 

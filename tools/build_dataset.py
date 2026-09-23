@@ -650,8 +650,8 @@ def main() -> None:
         "southern_hemisphere": "WGS84 world extent south of and including the equator",
     }.items():
         metadata[name] = (
-            "cfregions analytical geometry",
-            "https://github.com/ysorge/cfregions",
+            "cf-regions analytical geometry",
+            "https://github.com/ysorge/cf-regions",
             GEOMETRY_EDITION,
             "Apache-2.0",
             method,
@@ -681,7 +681,7 @@ def main() -> None:
         ),
     }.items():
         metadata[name] = (
-            "cfregions derived geometry",
+            "cf-regions derived geometry",
             CF_URL,
             GEOMETRY_EDITION,
             "Derived from CC BY 4.0 and/or public-domain geometries",
@@ -748,7 +748,7 @@ def main() -> None:
     collection = {
         "$schema": "../../../../schemas/geometry.schema.json",
         "type": "FeatureCollection",
-        "name": f"cfregions geometry interpretation {GEOMETRY_EDITION}",
+        "name": f"cf-regions geometry interpretation {GEOMETRY_EDITION}",
         "features": features,
     }
     geometry_path = geometry_dir / str(profile["filename"])
@@ -838,10 +838,10 @@ def main() -> None:
                         }
                         if from_gcmd
                         else {
-                            "name": "cfregions mapping curation",
+                            "name": "cf-regions mapping curation",
                             "version": GEOMETRY_EDITION,
                             "uri": (
-                                "https://github.com/ysorge/cfregions/blob/main/"
+                                "https://github.com/ysorge/cf-regions/blob/main/"
                                 "docs/mapping-guidelines.md"
                             ),
                             "license": "Apache-2.0",
@@ -871,10 +871,10 @@ def main() -> None:
         "profile": {
             "id": MAPPING_ID,
             "version": GEOMETRY_EDITION,
-            "title": "cfregions default spatial interpretation",
+            "title": "cf-regions default spatial interpretation",
             "description": (
                 "The bundled, documented interpretation of CF standardized region "
-                "names used by cfregions."
+                "names used by cf-regions."
             ),
             "basis": (
                 "CF supplies the standardized names and descriptions; NASA GCMD "
@@ -888,7 +888,7 @@ def main() -> None:
             "license": (
                 "Mixed open-data terms; see DATA_LICENSES.md and this manifest."
             ),
-            "homepage": "https://github.com/ysorge/cfregions",
+            "homepage": "https://github.com/ysorge/cf-regions",
         },
         "supported_cf_versions": ["1", "2", "3", "4", "5"],
         "generated_on": date.today().isoformat(),

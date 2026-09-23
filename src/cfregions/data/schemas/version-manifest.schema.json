@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ysorge/cfregions/schemas/version-manifest.schema.json",
-  "title": "cfregions profile-independent CF release manifest",
+  "$id": "https://github.com/ysorge/cf-regions/schemas/version-manifest.schema.json",
+  "title": "cf-regions profile-independent CF release manifest",
   "description": "Metadata and checksum for one exact CF vocabulary release; geometry and hierarchy are intentionally absent.",
   "type": "object",
   "required": ["schema_version", "dataset_id", "region_count", "cf"],

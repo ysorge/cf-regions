@@ -341,7 +341,7 @@ class SpatialProfileDataset(_ResourceLoader):
             self._required_bool(lookup, "boundary_inclusive")
         ):
             raise RegionDataError(
-                "profile lookup behavior is unsupported; cfregions requires "
+                "profile lookup behavior is unsupported; cf-regions requires "
                 "boundary-inclusive covers semantics"
             )
         if self._required_string(lookup, "section_method") != "minor_great_circle_distance":

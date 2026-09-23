@@ -3,7 +3,7 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cfregions"
+name = "cf-regions"
 version = "0.1.0"
 description = "Version-aware lookup and geometry for CF standardized regions"
 readme = "README.md"
@@ -43,10 +43,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/ysorge/cfregions"
-Documentation = "https://github.com/ysorge/cfregions#readme"
-Issues = "https://github.com/ysorge/cfregions/issues"
-Repository = "https://github.com/ysorge/cfregions"
+Homepage = "https://github.com/ysorge/cf-regions"
+Documentation = "https://github.com/ysorge/cf-regions#readme"
+Issues = "https://github.com/ysorge/cf-regions/issues"
+Repository = "https://github.com/ysorge/cf-regions"
 [project.scripts]
 cfregions = "cfregions.cli:main"
 

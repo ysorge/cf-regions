@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ysorge/cfregions/schemas/profile-manifest.schema.json",
-  "title": "cfregions spatial interpretation profile manifest",
+  "$id": "https://github.com/ysorge/cf-regions/schemas/profile-manifest.schema.json",
+  "title": "cf-regions spatial interpretation profile manifest",
   "description": "Self-describing identity, compatibility, lookup behavior, geometry resources, hierarchy resource, provenance, and limitations for one immutable profile version.",
   "type": "object",
   "required": ["schema_version", "profile", "supported_cf_versions", "generated_on", "crs", "lookup", "representations", "hierarchy", "sources", "limitations"],

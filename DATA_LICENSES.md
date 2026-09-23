@@ -1,6 +1,6 @@
 # Data licenses and attribution
 
-The `cfregions` source code is Apache-2.0. The bundled geometry catalog is a
+The `cf-regions` source code is Apache-2.0. The bundled geometry catalog is a
 collective/derived dataset assembled from the sources below. Upstream data is
 not relicensed under Apache-2.0; its original terms continue to apply.
 
@@ -143,11 +143,11 @@ upstream authoritative boundary.
 
 ## Web-map dependencies
 
-`cfregions-map` loads [MapLibre GL JS 6.10.0](https://github.com/maplibre/maplibre-gl-js/tree/v6.10.0)
+`cf-regions-map` loads [MapLibre GL JS 6.10.0](https://github.com/maplibre/maplibre-gl-js/tree/v6.10.0)
 (BSD-3-Clause and bundled third-party notices) from unpkg and OpenStreetMap
 tiles at runtime. OpenStreetMap attribution is displayed on the map; map data is
 available under the [Open Database License](https://www.openstreetmap.org/copyright),
 and use of the community tile service is subject to its
 [tile usage policy](https://operations.osmfoundation.org/policies/tiles/).
-Neither dependency is embedded in the region dataset. `cfregions-gui` instead
+Neither dependency is embedded in the region dataset. `cf-regions-gui` instead
 draws the bundled vector representations with Qt and makes no network requests.

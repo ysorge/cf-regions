@@ -1,6 +1,6 @@
 # Code of conduct
 
-The `cfregions` project is committed to an open, welcoming, inclusive, and
+The `cf-regions` project is committed to an open, welcoming, inclusive, and
 harassment-free community. Participants are expected to follow the standards of
 the [Contributor Covenant, version 2.1][covenant] in discussions, issues, pull
 requests, reviews, and project events.
@@ -24,4 +24,4 @@ the reporter's privacy, and may edit or remove contributions, issue warnings, or
 temporarily or permanently restrict participation.
 
 [covenant]: https://www.contributor-covenant.org/version/2/1/code_of_conduct/
-[private-report]: https://github.com/ysorge/cfregions/security/advisories/new
+[private-report]: https://github.com/ysorge/cf-regions/security/advisories/new

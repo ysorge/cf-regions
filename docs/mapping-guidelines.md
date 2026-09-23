@@ -1,12 +1,12 @@
-# Mapping Guidelines for `cfregions`
+# Mapping Guidelines for `cf-regions`
 
 ## Purpose
 
-`cfregions` connects names from the CF Standardized Region List with explicit spatial interpretations that can be used for coordinate lookup and visualization.
+`cf-regions` connects names from the CF Standardized Region List with explicit spatial interpretations that can be used for coordinate lookup and visualization.
 
 The central design rule is:
 
-> CF defines the semantic region name; `cfregions` provides an explicit, versioned spatial interpretation of that region.
+> CF defines the semantic region name; `cf-regions` provides an explicit, versioned spatial interpretation of that region.
 
 The CF region concept and a geometry used to represent it are therefore related,
 but they are not the same object.
@@ -42,7 +42,7 @@ Spatial representation
     method: ...
 ```
 
-A CF region may in principle have no available geometry, one geometry, or multiple representations from different sources, resolutions, or methods. A published mapping profile must declare its coverage policy. The currently bundled `cfregions` profile deliberately requires one representation for every name in its supported CF release; partial profiles remain a future extension.
+A CF region may in principle have no available geometry, one geometry, or multiple representations from different sources, resolutions, or methods. A published mapping profile must declare its coverage policy. The currently bundled `cf-regions` profile deliberately requires one representation for every name in its supported CF release; partial profiles remain a future extension.
 
 Geometry type is also part of the spatial interpretation, not an intrinsic
 property of a CF name. A strait or channel may be represented as an area in one
@@ -265,7 +265,7 @@ If hierarchy is provided, record whether it comes from:
 - an algorithmic derivation;
 - a project-specific curation decision.
 
-Hierarchy expansion must remain visibly distinct from a spatial match. In `cfregions`, `relation="ancestor"`, `method="hierarchy_expansion"`, and `predicate="broader"` mean that the returned name is semantically connected to a direct result. They do **not** assert that the queried point was tested against, or lies within, the ancestor's geometry.
+Hierarchy expansion must remain visibly distinct from a spatial match. In `cf-regions`, `relation="ancestor"`, `method="hierarchy_expansion"`, and `predicate="broader"` mean that the returned name is semantically connected to a direct result. They do **not** assert that the queried point was tested against, or lies within, the ancestor's geometry.
 
 ## 13. Avoid hidden fallbacks
 
@@ -296,7 +296,7 @@ Each mapping release should be validated for at least:
 
 Overlaps and gaps are not necessarily errors, but they must be identified and understood rather than accidentally introduced.
 
-For example, the bundled mapping retains the pinned SeaVoX definitions of the North Sea and Baltic Sea. Those source geometries do not meet. `cfregions` must document that gap and its provenance rather than drawing a project-specific connector that could be mistaken for an upstream or CF boundary.
+For example, the bundled mapping retains the pinned SeaVoX definitions of the North Sea and Baltic Sea. Those source geometries do not meet. `cf-regions` must document that gap and its provenance rather than drawing a project-specific connector that could be mistaken for an upstream or CF boundary.
 
 ## 15. Test behavior, not only data loading
 
@@ -350,4 +350,4 @@ Before merging mapping-related work, confirm:
 
 ## Summary
 
-The mapping layer in `cfregions` should be explicit, versioned, provenance-aware, deterministic, and capable of representing ambiguity. It should never imply that its polygons are authoritative CF boundaries. Its responsibility is to provide reproducible spatial interpretations of CF region concepts and to make every assumption behind those interpretations visible to users and developers.
+The mapping layer in `cf-regions` should be explicit, versioned, provenance-aware, deterministic, and capable of representing ambiguity. It should never imply that its polygons are authoritative CF boundaries. Its responsibility is to provide reproducible spatial interpretations of CF region concepts and to make every assumption behind those interpretations visible to users and developers.

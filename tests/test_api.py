@@ -249,7 +249,7 @@ def test_bundled_spatial_profile_is_discoverable_and_selectable() -> None:
     assert cfregions.list_spatial_profile_versions(profile=selected.id) == (
         selected.version,
     )
-    assert selected.title == "cfregions default"
+    assert selected.title == "cf-regions default spatial interpretation"
     assert "NASA GCMD" in selected.basis
     assert selected.scope
     assert cfregions.match_region_names(

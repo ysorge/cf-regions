@@ -1,9 +1,10 @@
-# CF Regions
+# cf-regions
 
-`cfregions` is the dependency-light, presentation-independent library for the 
+`cf-regions` is the dependency-light, presentation-independent library for the
 mapping and lookup of [CF Standardized Region List][cf-list] names to geometries and hierarchy. 
 It resolves WGS84 coordinates to region names from the CF Standardized Region List and 
-exposes hierarchy, metadata, provenance, and interpreted GeoJSON geometry. 
+exposes hierarchy, metadata, provenance, and interpreted GeoJSON geometry. Its
+Python package is imported as `cfregions`.
 
 > [!IMPORTANT]
 > CF standardizes region names, not boundaries. The bundled shapes are a
@@ -39,20 +40,20 @@ no data during lookup.
 
 ## Requirements and installation
 
-`cfregions` requires Python 3.10 or newer. Its only runtime dependency is
+`cf-regions` requires Python 3.10 or newer. Its only runtime dependency is
 [Shapely][shapely]. Binary Shapely wheels include GEOS on common platforms.
 
 Install from PyPI:
 
 ```console
-python -m pip install cfregions
+python -m pip install cf-regions
 ```
 
 To work on the current source checkout instead:
 
 ```console
-git clone https://github.com/ysorge/cfregions.git
-cd cfregions
+git clone https://github.com/ysorge/cf-regions.git
+cd cf-regions
 python -m pip install -e ".[dev]"
 ```
 
@@ -371,7 +372,7 @@ contributing.
 
 ## Authors and maintainership
 
-`cfregions` was initiated and originally developed by [Yves Sorge](https://github.com/ysorge) 
+`cf-regions` was initiated and originally developed by [Yves Sorge](https://github.com/ysorge)
 during the [CF Conventions Community Workshop 2026][workshop] at ECMWF in Bonn, Germany. The project is currently maintained by its original author.
 
 Additional contributors are recorded in [AUTHORS.md](AUTHORS.md) and the 
@@ -380,24 +381,24 @@ organization without replacing the authorship of existing contributions.
 
 ## License
 
-The `cfregions` source code is licensed under the [Apache License
+The `cf-regions` source code is licensed under the [Apache License
 2.0][license] (`Apache-2.0`). Bundled data is not relicensed under Apache-2.0
 and retains the terms documented in [Data licenses][data-licenses]. Downstream
 users must preserve the applicable source notices and attributions.
 
 [cf-list]: https://cfconventions.org/Data/standardized-region-list/standardized-region-list.current.html
-[code-of-conduct]: https://github.com/ysorge/cfregions/blob/main/CODE_OF_CONDUCT.md
-[contributing]: https://github.com/ysorge/cfregions/blob/main/CONTRIBUTING.md
-[data-directory]: https://github.com/ysorge/cfregions/tree/main/src/cfregions/data
-[data-licenses]: https://github.com/ysorge/cfregions/blob/main/DATA_LICENSES.md
-[data-sources]: https://github.com/ysorge/cfregions/blob/main/docs/data-sources-and-mapping.md
-[dataset-maintenance]: https://github.com/ysorge/cfregions/blob/main/docs/dataset-maintenance.md
-[issues]: https://github.com/ysorge/cfregions/issues
-[license]: https://github.com/ysorge/cfregions/blob/main/LICENSE
-[mapping-guidelines]: https://github.com/ysorge/cfregions/blob/main/docs/mapping-guidelines.md
-[profile-format]: https://github.com/ysorge/cfregions/blob/main/docs/profile-format.md
-[project]: https://github.com/ysorge/cfregions
-[security]: https://github.com/ysorge/cfregions/blob/main/SECURITY.md
+[code-of-conduct]: https://github.com/ysorge/cf-regions/blob/main/CODE_OF_CONDUCT.md
+[contributing]: https://github.com/ysorge/cf-regions/blob/main/CONTRIBUTING.md
+[data-directory]: https://github.com/ysorge/cf-regions/tree/main/src/cfregions/data
+[data-licenses]: https://github.com/ysorge/cf-regions/blob/main/DATA_LICENSES.md
+[data-sources]: https://github.com/ysorge/cf-regions/blob/main/docs/data-sources-and-mapping.md
+[dataset-maintenance]: https://github.com/ysorge/cf-regions/blob/main/docs/dataset-maintenance.md
+[issues]: https://github.com/ysorge/cf-regions/issues
+[license]: https://github.com/ysorge/cf-regions/blob/main/LICENSE
+[mapping-guidelines]: https://github.com/ysorge/cf-regions/blob/main/docs/mapping-guidelines.md
+[profile-format]: https://github.com/ysorge/cf-regions/blob/main/docs/profile-format.md
+[project]: https://github.com/ysorge/cf-regions
+[security]: https://github.com/ysorge/cf-regions/blob/main/SECURITY.md
 [shapely]: https://shapely.readthedocs.io/
-[spatial-profiles]: https://github.com/ysorge/cfregions/blob/main/docs/spatial-interpretation-profiles.md
+[spatial-profiles]: https://github.com/ysorge/cf-regions/blob/main/docs/spatial-interpretation-profiles.md
 [workshop]: https://cfconventions.org/Meetings/2026-Workshop.html

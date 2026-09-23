@@ -3,7 +3,7 @@
 ## Purpose
 
 This document is the operational workflow for maintaining the data distributed
-with `cfregions`. It covers new CF Standardized Region List releases, upstream
+with `cf-regions`. It covers new CF Standardized Region List releases, upstream
 geometry or hierarchy updates, and corrections to the project mapping.
 
 Read [Data sources and mapping method](data-sources-and-mapping.md) before
@@ -217,7 +217,7 @@ python -m build
 twine check dist/*
 ```
 
-Also test a built `cfregions` wheel in a clean environment so validation does
+Also test a built `cf-regions` wheel in a clean environment so validation does
 not accidentally depend on the repository's `tools/` package or raw inputs.
 
 Before publishing, confirm:

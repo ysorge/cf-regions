@@ -4,12 +4,12 @@
   "profile": {
     "id": "cfregions-default",
     "version": "2026.09.1",
-    "title": "cfregions default",
-    "description": "The bundled, documented interpretation of CF standardized region names used by cfregions.",
+    "title": "cf-regions default spatial interpretation",
+    "description": "The bundled, documented interpretation of CF standardized region names used by cf-regions.",
     "basis": "CF supplies the standardized names and descriptions; NASA GCMD informs the hierarchy; SeaVoX and Natural Earth supply most area geometry; OMIP and CMIP6 inform diagnostic sections.",
     "scope": "General-purpose coordinate lookup, hierarchy traversal, and visualization; not for navigation or legal boundaries.",
     "license": "Mixed open-data terms; see DATA_LICENSES.md and this manifest.",
-    "homepage": "https://github.com/ysorge/cfregions"
+    "homepage": "https://github.com/ysorge/cf-regions"
   },
   "supported_cf_versions": [
     "1",
@@ -33,7 +33,7 @@
       "label": "Low detail",
       "description": "Compact geometry for fast lookup and overview maps.",
       "geometry_file": "geometry/low.geojson",
-      "sha256": "4841b9d9199a2e0c7e3afcd8ac19d2036a25338db6982154f4f0f8e475ec3896",
+      "sha256": "e3fce66ad130692b1e4a37619a352d62102e7c76eccbd90acd9f991bb86ea00a",
       "feature_count": 74,
       "processing": {
         "method": "simplify_and_round",
@@ -50,7 +50,7 @@
       "label": "High detail",
       "description": "More detailed geometry for closer visual inspection; slower and larger.",
       "geometry_file": "geometry/high.geojson",
-      "sha256": "4321acb3ee37c96df40cb580e60201fb570004347e10d78aabb393b19fb1a9f7",
+      "sha256": "58395aa75307c3ae6d652922abe19c5dccfb9a65144de5672c055f0fecb73c6d",
       "feature_count": 74,
       "processing": {
         "method": "simplify_and_round",
@@ -70,7 +70,7 @@
     "date": "2026-09-16",
     "url": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/locations?format=csv&page_size=2000",
     "hierarchy_file": "hierarchy.json",
-    "sha256": "65871ade85ff52f308ad69e03f70c1f4c4f9496788716d0d672ce8fd5ef2fa41",
+    "sha256": "f06e32a3692d07228deb06ead9bc94121c562f6f115c8e66eb2fed7410c68074",
     "edge_count": 83
   },
   "limitations": [

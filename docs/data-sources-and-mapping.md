@@ -2,7 +2,7 @@
 
 ## Scope
 
-`cfregions` connects controlled names from the CF Standardized Region List to a
+`cf-regions` connects controlled names from the CF Standardized Region List to a
 versioned spatial interpretation. CF defines the names and a small number of
 descriptions, but it does not define canonical boundaries. The polygons and
 lines distributed by this project are therefore not official CF geometries.
@@ -30,7 +30,7 @@ The following versions answer different questions and must not be conflated:
 | CF vocabulary version | Which standardized names and descriptions exist? | CF Standardized Region List v5 |
 | Spatial profile version | Which spatial interpretation and lookup behavior are used? | `cfregions-default@2026.09.1` |
 | Geometry resolution | Which rendering detail is requested within the profile? | `low` or `high` |
-| Package version | Which implementation and bundled data were installed? | the installed `cfregions` release |
+| Package version | Which implementation and bundled data were installed? | the installed `cf-regions` release |
 
 An upstream source version is a fourth identity. A mapping may combine several
 upstream releases and may be reused by more than one CF vocabulary version when
@@ -86,7 +86,7 @@ geometry type to every label. CF can encode explicit point, line, and polygon
 geometries, but that geometry belongs to the individual dataset, not to the
 Standardized Region List itself.
 
-Correspondingly, the `kind` and `geometry_type` fields returned by `cfregions`
+Correspondingly, the `kind` and `geometry_type` fields returned by `cf-regions`
 describe the selected **mapping representation**. They are not properties
 asserted by CF. A result should be read as "the bundled mapping represents
 `denmark_strait` as a diagnostic section", not "CF defines Denmark Strait as a

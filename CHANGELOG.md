@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `cfregions` are documented here. The project follows
+All notable changes to `cf-regions` are documented here. The project follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and uses
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 

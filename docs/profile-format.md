@@ -1,6 +1,6 @@
 # Spatial profile file format
 
-This document is the authoring reference for `cfregions` spatial
+This document is the authoring reference for `cf-regions` spatial
 interpretation data. It complements the machine-readable schemas and the
 conceptual [profile architecture](spatial-interpretation-profiles.md).
 

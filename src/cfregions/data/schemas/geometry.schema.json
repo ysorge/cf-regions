@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ysorge/cfregions/schemas/geometry.schema.json",
-  "title": "cfregions spatial-profile GeoJSON representation",
+  "$id": "https://github.com/ysorge/cf-regions/schemas/geometry.schema.json",
+  "title": "cf-regions spatial-profile GeoJSON representation",
   "description": "A complete profile-owned GeoJSON FeatureCollection. CF descriptions and semantic hierarchy are supplied by separate resources.",
   "type": "object",
   "required": ["type", "features"],

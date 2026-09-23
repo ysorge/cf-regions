@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ysorge/cfregions/schemas/hierarchy.schema.json",
-  "title": "cfregions spatial-profile hierarchy",
+  "$id": "https://github.com/ysorge/cf-regions/schemas/hierarchy.schema.json",
+  "title": "cf-regions spatial-profile hierarchy",
   "description": "Explicit profile-owned semantic broader relations with per-edge provenance; relations are not inferred from geometry.",
   "type": "object",
   "required": ["schema_version", "edges"],

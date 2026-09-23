@@ -1,7 +1,7 @@
-cfregions
-Copyright (C) 2026 Yves Sorge and cfregions contributors
+cf-regions
+Copyright (C) 2026 Yves Sorge and cf-regions contributors
 
-The cfregions source code is licensed under Apache-2.0. The bundled CF
+The cf-regions source code is licensed under Apache-2.0. The bundled CF
 vocabularies and interpreted geometry catalog contain material under separate
 open-data and permissive terms. Those materials are not relicensed under
 Apache-2.0.
