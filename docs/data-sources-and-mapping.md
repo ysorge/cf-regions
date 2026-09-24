@@ -155,7 +155,7 @@ project profile rules ---------> selection, unions, hierarchy and analytical sha
                          |                         |
                          +------------+------------+
                                       |
-                  checksummed profile manifest and hierarchy
+                profile manifest and hierarchy with checksums
 ```
 
 The low and high representations express the same interpretation. They differ
@@ -165,9 +165,9 @@ requesting a high-detail display shape cannot change lookup results.
 
 The builder validates exact coverage of its target CF release, pinned Natural
 Earth layer versions, source selections, non-empty geometry, and input hashes.
-The runtime loader independently validates manifests, hashes, vocabulary
-version/date/count, geometry coverage, geometry types, hierarchy references, and
-hierarchy acyclicity.
+The runtime loader independently validates manifests, mandatory vocabulary and
+declared profile hashes, vocabulary version/date/count, geometry coverage,
+geometry types, hierarchy references, and hierarchy acyclicity.
 
 ## How coordinate lookup works
 

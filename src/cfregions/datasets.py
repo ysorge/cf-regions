@@ -73,7 +73,7 @@ class GeometryResource:
     label: str
     description: str
     geometry_file: str
-    sha256: str
+    sha256: str | None
     feature_count: int
     processing: GeometryProcessing
 
@@ -138,6 +138,21 @@ class _ResourceLoader:
         result = value.get(key)
         if not isinstance(result, str) or not result:
             raise RegionDataError(f"data manifest field {key!r} must be a string")
+        return result
+
+    @staticmethod
+    def _optional_sha256(value: dict[str, Any], key: str = "sha256") -> str | None:
+        if key not in value:
+            return None
+        result = value[key]
+        if (
+            not isinstance(result, str)
+            or len(result) != 64
+            or any(character not in "0123456789abcdef" for character in result)
+        ):
+            raise RegionDataError(
+                f"data manifest field {key!r} must be a lowercase SHA-256 digest"
+            )
         return result
 
     @staticmethod
@@ -420,10 +435,15 @@ class SpatialProfileDataset(_ResourceLoader):
         )
 
     def load_geometry(self, resource: GeometryResource) -> dict[str, Any]:
-        """Load and checksum one declared profile geometry representation."""
+        """Load one geometry representation and verify its optional checksum."""
 
         content = self._read_bytes(resource.geometry_file)
-        self._verify_sha256(content, expected=resource.sha256, label=resource.geometry_file)
+        if resource.sha256 is not None:
+            self._verify_sha256(
+                content,
+                expected=resource.sha256,
+                label=resource.geometry_file,
+            )
         try:
             collection = json.loads(content)
         except (UnicodeDecodeError, json.JSONDecodeError) as error:
@@ -449,11 +469,13 @@ class SpatialProfileDataset(_ResourceLoader):
     ) -> tuple[ProfileHierarchyEdge, ...]:
         hierarchy_file = self._required_string(metadata, "hierarchy_file")
         content = self._read_bytes(hierarchy_file)
-        self._verify_sha256(
-            content,
-            expected=self._required_string(metadata, "sha256"),
-            label=hierarchy_file,
-        )
+        hierarchy_sha256 = self._optional_sha256(metadata)
+        if hierarchy_sha256 is not None:
+            self._verify_sha256(
+                content,
+                expected=hierarchy_sha256,
+                label=hierarchy_file,
+            )
         try:
             value = json.loads(content)
         except (UnicodeDecodeError, json.JSONDecodeError) as error:
@@ -527,7 +549,7 @@ class SpatialProfileDataset(_ResourceLoader):
                     label=cls._required_string(raw_resource, "label"),
                     description=cls._required_string(raw_resource, "description"),
                     geometry_file=cls._required_string(raw_resource, "geometry_file"),
-                    sha256=cls._required_string(raw_resource, "sha256"),
+                    sha256=cls._optional_sha256(raw_resource),
                     feature_count=cls._required_int(raw_resource, "feature_count"),
                     processing=GeometryProcessing(
                         method=cls._required_string(processing, "method"),

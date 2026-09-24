@@ -47,7 +47,7 @@ class GeometryRepresentation:
     resolution: GeometryResolution
     label: str
     description: str
-    sha256: str
+    sha256: str | None
     processing: GeometryProcessing
 
 
@@ -61,7 +61,7 @@ class MappingReference:
     behavior_version: str
     crs: str
     created_at: str
-    geometry_sha256: str
+    geometry_sha256: str | None
 
 
 @dataclass(frozen=True, slots=True)
@@ -164,7 +164,7 @@ class DatasetInfo:
     profile: SpatialInterpretationProfile
     mapping_id: str
     mapping_version: str
-    lookup_geometry_sha256: str
+    lookup_geometry_sha256: str | None
     generated_on: str
     crs: str
     lookup_behavior_version: str

@@ -18,8 +18,9 @@ immutable resources. This keeps one profile-version directory portable.
 
 `profile.id` and `profile.version` in `manifest.json` are the sole authoritative
 profile identity. Directory names are an organizational convention rather than
-a second registry. `hierarchy.json` is bound to its manifest by path and SHA-256
-and therefore does not repeat the profile identity.
+a second registry. `hierarchy.json` is bound to its manifest by path and may
+optionally be protected by SHA-256; it therefore does not repeat the profile
+identity.
 
 For the built-in default only, `profile-settings.json` necessarily refers to
 that exact ID and version. Renaming the built-in profile therefore means
@@ -51,16 +52,19 @@ The authoritative schema is
 | `crs` | Currently required to be `OGC:CRS84` |
 | `lookup` | Deterministic coordinate-lookup behavior |
 | `representations` | Named geometry resources such as `low` and `high` |
-| `hierarchy` | Hierarchy resource, digest, count, and summary provenance |
+| `hierarchy` | Hierarchy resource, count, summary provenance, and optional digest |
 | `sources` | Profile-level source and licensing bibliography |
 | `limitations` | Important interpretation and fitness-for-use limitations |
 | `input_sha256` | Optional hashes of pinned generation inputs |
 
-The vocabulary, geometry, and hierarchy hashes bind metadata and result
-provenance to exact file bytes and detect accidental or silent changes. They
-are integrity/reproducibility checks, not cryptographic signatures. The loader
-verifies shipped runtime resources; `input_sha256` records non-shipped builder
-inputs for maintainers and is not read during lookup.
+The shared CF vocabulary hash remains mandatory in the profile-independent CF
+registry. Profile authors may omit `sha256` from geometry representations and
+the hierarchy metadata. When present, these hashes bind metadata and result
+provenance to exact file bytes and the loader verifies them. They are
+integrity/reproducibility checks, not cryptographic signatures. An omitted hash
+is exposed as `None` by the Python API and `null` in structured CLI/API output.
+`input_sha256` is also optional; it records non-shipped builder inputs for
+maintainers and is not read during lookup.
 
 The currently supported lookup contract is deliberately narrow:
 
@@ -86,7 +90,7 @@ Each representation declares:
 | --- | --- |
 | `label`, `description` | Human-facing detail information |
 | `geometry_file` | Manifest-relative GeoJSON resource |
-| `sha256` | SHA-256 of the exact file bytes |
+| `sha256` | Optional SHA-256 of the exact file bytes; if declared, it is verified |
 | `feature_count` | Number of features in the complete profile resource |
 | `processing.method` | Provider-defined stable processing method name |
 | `processing.parameters` | Provider-defined JSON object needed to reproduce or understand that processing |
@@ -150,9 +154,9 @@ opening the declared geometry or hierarchy resources. The bundled
 `profile-settings.json` selects only the exact global default profile; it is not
 an index of available profiles.
 
-Loading a selected profile verifies schema versions, compatibility, hashes, feature
-counts, complete name coverage, geometry validity/types, hierarchy references,
-duplicate edges, and cycles.
+Loading a selected profile verifies schema versions, compatibility, every
+declared hash, feature counts, complete name coverage, geometry validity/types,
+hierarchy references, duplicate edges, and cycles.
 
 Use the bundled default profile as a complete real-world example. For a small
 synthetic example, see the external data-root fixture in

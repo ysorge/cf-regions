@@ -8,8 +8,7 @@ interpretation profile** is therefore a versioned, citable, and reproducible
 mapping from CF concepts to geometries, hierarchy relations, and lookup
 behavior for a stated purpose.
 
-The bundled profile is
-`cfregions-default@2026.09.1`. It is a project-supplied
+The bundled profile is `cfregions-default`. It is a project-supplied
 interpretation, not an official CF geometry.
 
 ## Independent CF and profile data
@@ -55,8 +54,8 @@ Changing rendering resolution must not change coordinate-lookup results.
 A profile version consists of the following profile-owned resources:
 
 - `manifest.json`, including its stable ID/version, intended scope, supported
-  CF releases, lookup semantics, representations, checksums, sources, and
-  limitations;
+  CF releases, lookup semantics, representations, sources, limitations, and
+  optional checksums;
 - at least one GeoJSON representation containing the profile's geometry and
   feature-level geometry provenance;
 - `hierarchy.json`, containing explicit child-to-parent edges and provenance
@@ -96,8 +95,9 @@ manifest path. Only the deliberate global default is configured separately:
 ```
 
 Geometry and hierarchy paths are relative to the manifest. Discovery reads
-only small JSON manifests; checksummed geometry and hierarchy data stay lazy
-until a profile is selected.
+only small JSON manifests; geometry and hierarchy data stay lazy until a
+profile is selected. Providers may add SHA-256 values for integrity checking,
+but checksums are not required for discovery or use.
 
 An additional directory may contain one or many profile versions, conventionally:
 
@@ -186,7 +186,7 @@ cfregions lookup --lonlat "7.990654, 24.602804" \
 ```
 
 Aliases are convenient interactively. Reproducible workflows should retain
-the resolved CF version, profile ID/version, and checksums returned by
+the resolved CF version, profile ID/version, and any checksums returned by
 `get_dataset_info()` or structured CLI output.
 
 ## Rules for future contributed profiles
@@ -198,7 +198,8 @@ A contributed profile should:
 - use `OGC:CRS84` unless the core explicitly supports another CRS;
 - provide feature-level geometry sources, versions, licenses, and methods;
 - provide every hierarchy edge explicitly with its own provenance;
-- preserve exact input and output hashes;
+- include exact input and output hashes when reproducible publication or
+  integrity verification requires them;
 - document intended use, scale, uncertainty, gaps, overlaps, and exclusions;
 - issue a new immutable profile version for any result-changing correction.
 

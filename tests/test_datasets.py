@@ -19,7 +19,7 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def _external_dataset(root: Path) -> Path:
+def _external_dataset(root: Path, *, profile_checksums: bool = True) -> Path:
     vocabulary = root / "vocabularies/standardized-region-list.9.xml"
     vocabulary.parent.mkdir(parents=True)
     vocabulary.write_text(
@@ -62,6 +62,27 @@ def _external_dataset(root: Path) -> Path:
             "edges": [],
         },
     )
+    representation = {
+        "label": "Low detail",
+        "description": "Test geometry.",
+        "geometry_file": "geometry/low.geojson",
+        "feature_count": 1,
+        "processing": {
+            "method": "test",
+            "parameters": {"coordinate_precision_degrees": 0.000001},
+        },
+    }
+    hierarchy_metadata = {
+        "name": "Test hierarchy",
+        "version": "1",
+        "date": "2099-01-01",
+        "url": "https://example.test/hierarchy",
+        "hierarchy_file": "hierarchy.json",
+        "edge_count": 0,
+    }
+    if profile_checksums:
+        representation["sha256"] = _sha256(geometry)
+        hierarchy_metadata["sha256"] = _sha256(hierarchy)
     _write_json(
         root / "profiles/test-profile/1/manifest.json",
         {
@@ -88,27 +109,9 @@ def _external_dataset(root: Path) -> Path:
                 "section_method": "minor_great_circle_distance",
             },
             "representations": {
-                "low": {
-                    "label": "Low detail",
-                    "description": "Test geometry.",
-                    "geometry_file": "geometry/low.geojson",
-                    "sha256": _sha256(geometry),
-                    "feature_count": 1,
-                    "processing": {
-                        "method": "test",
-                        "parameters": {"coordinate_precision_degrees": 0.000001},
-                    },
-                }
+                "low": representation
             },
-            "hierarchy": {
-                "name": "Test hierarchy",
-                "version": "1",
-                "date": "2099-01-01",
-                "url": "https://example.test/hierarchy",
-                "hierarchy_file": "hierarchy.json",
-                "sha256": _sha256(hierarchy),
-                "edge_count": 0,
-            },
+            "hierarchy": hierarchy_metadata,
             "sources": [{"name": "Test"}],
             "limitations": ["Test data."],
         },
@@ -166,6 +169,41 @@ def test_external_self_describing_dataset_is_supported(tmp_path: Path) -> None:
         region_name="global",
         data_directory=tmp_path,
     ).description == "Earth."
+
+
+def test_profile_checksums_are_optional(tmp_path: Path) -> None:
+    _external_dataset(tmp_path, profile_checksums=False)
+
+    info = cfregions.get_dataset_info(data_directory=tmp_path)
+    match = cfregions.match_regions(
+        longitude=0,
+        latitude=0,
+        data_directory=tmp_path,
+    )[0]
+
+    assert info.lookup_geometry_sha256 is None
+    assert info.geometry_representations[0].sha256 is None
+    assert match.mapping.geometry_sha256 is None
+
+
+def test_declared_profile_geometry_checksum_is_verified(tmp_path: Path) -> None:
+    _external_dataset(tmp_path)
+    geometry = tmp_path / "profiles/test-profile/1/geometry/low.geojson"
+    geometry.write_text("{}", encoding="utf-8")
+
+    with pytest.raises(cfregions.RegionDataError, match="checksum mismatch"):
+        cfregions.get_dataset_info(data_directory=tmp_path)
+
+
+def test_declared_profile_checksum_must_be_a_sha256_digest(tmp_path: Path) -> None:
+    _external_dataset(tmp_path, profile_checksums=False)
+    manifest_path = tmp_path / "profiles/test-profile/1/manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["representations"]["low"]["sha256"] = None
+    _write_json(manifest_path, manifest)
+
+    with pytest.raises(cfregions.RegionDataError, match="lowercase SHA-256"):
+        cfregions.get_dataset_info(data_directory=tmp_path)
 
 
 def test_external_dataset_checksum_is_verified(tmp_path: Path) -> None:
