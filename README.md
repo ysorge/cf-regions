@@ -25,14 +25,19 @@ not download data during lookup.
 
 ## Installation
 
-`cf-regions` requires Python 3.10 or newer:
+Install from PyPI:
 
 ```console
 python -m pip install cf-regions
 ```
 
-Its only runtime dependency is [Shapely][shapely]. Binary Shapely wheels include
-GEOS on common platforms.
+To work on the current source checkout instead:
+
+```console
+git clone https://github.com/ysorge/cf-regions.git
+cd cf-regions
+python -m pip install -e ".[dev]"
+```
 
 ## Quick start
 
