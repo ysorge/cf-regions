@@ -1,0 +1,1790 @@
+{
+  "$schema": "../../../../schemas/lookup-index.schema.json",
+  "schema_version": 1,
+  "format": "wkb-pack-v1",
+  "source_sha256": "58395aa75307c3ae6d652922abe19c5dccfb9a65144de5672c055f0fecb73c6d",
+  "feature_count": 74,
+  "features": [
+    {
+      "name": "africa",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -17.497975,
+        -34.785726,
+        51.380035,
+        37.317299
+      ],
+      "offset": 0,
+      "length": 32671,
+      "properties": {
+        "name": "africa",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/africa/",
+        "geometry_source": "Natural Earth geography regions",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-physical-labels/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "selected Natural Earth geography region AFRICA",
+        "geometry_contexts": [],
+        "specificity": 30
+      }
+    },
+    {
+      "name": "antarctica",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -179.999989,
+        -89.999933,
+        180.0,
+        -61.076164
+      ],
+      "offset": 32671,
+      "length": 73421,
+      "properties": {
+        "name": "antarctica",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/antarctica/",
+        "geometry_source": "Natural Earth geography regions",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-physical-labels/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "selected Natural Earth geography region ANTARCTICA",
+        "geometry_contexts": [],
+        "specificity": 30
+      }
+    },
+    {
+      "name": "arabian_sea",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        51.021957,
+        -0.700931,
+        74.171135,
+        25.625385
+      ],
+      "offset": 106092,
+      "length": 122627,
+      "properties": {
+        "name": "arabian_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/arabian_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24074",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "aral_sea",
+      "geometry_type": "Polygon",
+      "bounds": [
+        58.178301,
+        43.390601,
+        61.9726,
+        46.8733
+      ],
+      "offset": 228719,
+      "length": 19805,
+      "properties": {
+        "name": "aral_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/aral_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24176",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "arctic_ocean",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -180.0,
+        51.132549,
+        180.0,
+        90.000053
+      ],
+      "offset": 248524,
+      "length": 6658783,
+      "properties": {
+        "name": "arctic_ocean",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/arctic_ocean/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_r=23617",
+        "geometry_contexts": [],
+        "specificity": 30
+      }
+    },
+    {
+      "name": "asia",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -180.0,
+        1.265381,
+        179.98779,
+        81.280469
+      ],
+      "offset": 6907307,
+      "length": 165397,
+      "properties": {
+        "name": "asia",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/asia/",
+        "geometry_source": "Natural Earth geography regions",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-physical-labels/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "selected Natural Earth geography region ASIA",
+        "geometry_contexts": [],
+        "specificity": 30
+      }
+    },
+    {
+      "name": "atlantic_arctic_ocean",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -180.0,
+        -60.0,
+        180.0,
+        90.000053
+      ],
+      "offset": 7072704,
+      "length": 11390897,
+      "properties": {
+        "name": "atlantic_arctic_ocean",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/CFSRLAAO/",
+        "geometry_source": "cf-regions derived geometry",
+        "geometry_source_url": "https://cfconventions.org/Data/standardized-region-list/standardized-region-list.5.xml",
+        "geometry_source_version": "2026.09.1",
+        "geometry_license": "Derived from CC BY 4.0 and/or public-domain geometries",
+        "geometry_method": "union of the SeaVoX Atlantic and Arctic interpretations",
+        "geometry_contexts": [],
+        "specificity": 20
+      }
+    },
+    {
+      "name": "atlantic_ocean",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -97.89119,
+        -60.0,
+        20.000016,
+        67.947914
+      ],
+      "offset": 18463601,
+      "length": 4736596,
+      "properties": {
+        "name": "atlantic_ocean",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/atlantic_ocean/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_r=23618",
+        "geometry_contexts": [],
+        "specificity": 30
+      }
+    },
+    {
+      "name": "australia",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        112.908203,
+        -43.619336,
+        153.616895,
+        -10.051758
+      ],
+      "offset": 23200197,
+      "length": 29134,
+      "properties": {
+        "name": "australia",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/australia/",
+        "geometry_source": "Natural Earth geography regions",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-physical-labels/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "selected Natural Earth geography region AUSTRALIA",
+        "geometry_contexts": [],
+        "specificity": 30
+      }
+    },
+    {
+      "name": "baltic_sea",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        9.4208,
+        53.6017,
+        30.3467,
+        65.9059
+      ],
+      "offset": 23229331,
+      "length": 1435862,
+      "properties": {
+        "name": "baltic_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/baltic_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_r=23619",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "barents_opening",
+      "geometry_type": "LineString",
+      "bounds": [
+        16.8,
+        70.2,
+        19.2,
+        76.5
+      ],
+      "offset": 24665193,
+      "length": 41,
+      "properties": {
+        "name": "barents_opening",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cfbarope/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "barents_sea",
+      "geometry_type": "Polygon",
+      "bounds": [
+        16.269718,
+        66.816452,
+        68.589188,
+        81.828568
+      ],
+      "offset": 24665234,
+      "length": 369625,
+      "properties": {
+        "name": "barents_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/barents_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24029",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "beaufort_sea",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -156.640976,
+        68.639938,
+        -122.60453,
+        76.345772
+      ],
+      "offset": 25034859,
+      "length": 151569,
+      "properties": {
+        "name": "beaufort_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/beaufort_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24023",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "bellingshausen_sea",
+      "geometry_type": "Polygon",
+      "bounds": [
+        -102.27214,
+        -73.43335,
+        -67.266457,
+        -66.633102
+      ],
+      "offset": 25186428,
+      "length": 30513,
+      "properties": {
+        "name": "bellingshausen_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/bellingshausen_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24148",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "bering_sea",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -179.999924,
+        51.208332,
+        180.0,
+        66.376122
+      ],
+      "offset": 25216941,
+      "length": 301802,
+      "properties": {
+        "name": "bering_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/bering_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_l3=23651",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "bering_strait",
+      "geometry_type": "LineString",
+      "bounds": [
+        -171.0,
+        65.0,
+        -166.0,
+        66.2
+      ],
+      "offset": 25518743,
+      "length": 41,
+      "properties": {
+        "name": "bering_strait",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cfberstr/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "black_sea",
+      "geometry_type": "Polygon",
+      "bounds": [
+        27.306307,
+        40.909443,
+        41.779533,
+        46.889473
+      ],
+      "offset": 25518784,
+      "length": 67441,
+      "properties": {
+        "name": "black_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/black_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24093",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "canadian_archipelago",
+      "geometry_type": "LineString",
+      "bounds": [
+        -128.2,
+        70.6,
+        -59.3,
+        82.1
+      ],
+      "offset": 25586225,
+      "length": 41,
+      "properties": {
+        "name": "canadian_archipelago",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cfcanarc/",
+        "geometry_source": "CMIP6 CMOR tables",
+        "geometry_source_url": "https://github.com/PCMDI/cmip6-cmor-tables",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "BSD-3-Clause",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "caribbean_sea",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -88.936836,
+        7.905021,
+        -59.516621,
+        22.704456
+      ],
+      "offset": 25586266,
+      "length": 414083,
+      "properties": {
+        "name": "caribbean_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/caribbean_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24042",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "caspian_sea",
+      "geometry_type": "Polygon",
+      "bounds": [
+        46.6797,
+        36.5807,
+        54.7659,
+        47.114701
+      ],
+      "offset": 26000349,
+      "length": 40669,
+      "properties": {
+        "name": "caspian_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/caspian_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24175",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "central_america",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -95.200185,
+        7.220068,
+        -77.659108,
+        21.592685
+      ],
+      "offset": 26041018,
+      "length": 10336,
+      "properties": {
+        "name": "central_america",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/central_america/",
+        "geometry_source": "Natural Earth geography regions",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-physical-labels/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "selected Natural Earth geography region CENTRAL AMERICA",
+        "geometry_contexts": [],
+        "specificity": 50
+      }
+    },
+    {
+      "name": "chukchi_sea",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -180.0,
+        65.958092,
+        180.0,
+        71.596954
+      ],
+      "offset": 26051354,
+      "length": 78722,
+      "properties": {
+        "name": "chukchi_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/chukchi_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24022",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "contiguous_united_states",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -124.709978,
+        24.542349,
+        -66.987022,
+        49.369672
+      ],
+      "offset": 26130076,
+      "length": 37690,
+      "properties": {
+        "name": "contiguous_united_states",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cfcounst/",
+        "geometry_source": "Natural Earth admin-1 states and provinces",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-1-states-provinces/",
+        "geometry_source_version": "5.1.1",
+        "geometry_license": "Public domain",
+        "geometry_method": "union of the lower 48 United States and District of Columbia (postal codes pinned in builder)",
+        "geometry_contexts": [],
+        "specificity": 60
+      }
+    },
+    {
+      "name": "davis_strait",
+      "geometry_type": "LineString",
+      "bounds": [
+        -65.0,
+        65.0,
+        -50.0,
+        65.0
+      ],
+      "offset": 26167766,
+      "length": 41,
+      "properties": {
+        "name": "davis_strait",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cfdaviss/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "denmark_strait",
+      "geometry_type": "LineString",
+      "bounds": [
+        -37.0,
+        66.0,
+        -22.5,
+        66.1
+      ],
+      "offset": 26167807,
+      "length": 41,
+      "properties": {
+        "name": "denmark_strait",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cfdenstr/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "drake_passage",
+      "geometry_type": "LineString",
+      "bounds": [
+        -68.0,
+        -64.7,
+        -60.0,
+        -54.0
+      ],
+      "offset": 26167848,
+      "length": 41,
+      "properties": {
+        "name": "drake_passage",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cfdrapas/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "east_china_sea",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        119.512283,
+        24.058853,
+        131.132813,
+        33.299538
+      ],
+      "offset": 26167889,
+      "length": 227793,
+      "properties": {
+        "name": "east_china_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/east_china_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24107",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "english_channel",
+      "geometry_type": "LineString",
+      "bounds": [
+        1.5,
+        51.0,
+        1.7,
+        51.1
+      ],
+      "offset": 26395682,
+      "length": 41,
+      "properties": {
+        "name": "english_channel",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cfengcha/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "eurasia",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -180.0,
+        1.265381,
+        179.98779,
+        81.280469
+      ],
+      "offset": 26395723,
+      "length": 241885,
+      "properties": {
+        "name": "eurasia",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/eurasia/",
+        "geometry_source": "Natural Earth geography regions",
+        "geometry_source_url": "https://www.naturalearthdata.com/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "union of the bundled Asia and Europe interpretations",
+        "geometry_contexts": [],
+        "specificity": 20
+      }
+    },
+    {
+      "name": "europe",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -9.479736,
+        34.934473,
+        66.364146,
+        71.14209
+      ],
+      "offset": 26637608,
+      "length": 103465,
+      "properties": {
+        "name": "europe",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/europe/",
+        "geometry_source": "Natural Earth geography regions",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-physical-labels/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "selected Natural Earth geography region EUROPE",
+        "geometry_contexts": [],
+        "specificity": 30
+      }
+    },
+    {
+      "name": "faroe_scotland_channel",
+      "geometry_type": "LineString",
+      "bounds": [
+        -6.9,
+        58.7,
+        -5.0,
+        62.0
+      ],
+      "offset": 26741073,
+      "length": 41,
+      "properties": {
+        "name": "faroe_scotland_channel",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cffascch/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "florida_bahamas_strait",
+      "geometry_type": "LineString",
+      "bounds": [
+        -80.5,
+        26.0,
+        -78.5,
+        27.0
+      ],
+      "offset": 26741114,
+      "length": 41,
+      "properties": {
+        "name": "florida_bahamas_strait",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cfflbast/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "fram_strait",
+      "geometry_type": "MultiLineString",
+      "bounds": [
+        -20.0,
+        79.0,
+        11.0,
+        81.3
+      ],
+      "offset": 26741155,
+      "length": 91,
+      "properties": {
+        "name": "fram_strait",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cffrastr/",
+        "geometry_source": "OMIP protocol Table J1 and CMIP6 CMOR tables",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016; https://github.com/PCMDI/cmip6-cmor-tables",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0 and BSD-3-Clause",
+        "geometry_method": "two approximate diagnostic section variants retained as a MultiLineString",
+        "geometry_contexts": [
+          "ocean_mass_transport",
+          "sea_ice_transport"
+        ],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "gibraltar_strait",
+      "geometry_type": "LineString",
+      "bounds": [
+        -5.6,
+        35.8,
+        -5.6,
+        36.0
+      ],
+      "offset": 26741246,
+      "length": 41,
+      "properties": {
+        "name": "gibraltar_strait",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cfgibral/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "global",
+      "geometry_type": "Polygon",
+      "bounds": [
+        -180.0,
+        -90.0,
+        180.0,
+        90.0
+      ],
+      "offset": 26741287,
+      "length": 93,
+      "properties": {
+        "name": "global",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/global/",
+        "geometry_source": "cf-regions analytical geometry",
+        "geometry_source_url": "https://github.com/ysorge/cf-regions",
+        "geometry_source_version": "2026.09.1",
+        "geometry_license": "Apache-2.0",
+        "geometry_method": "WGS84 world extent",
+        "geometry_contexts": [],
+        "specificity": 0
+      }
+    },
+    {
+      "name": "global_land",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -180.0,
+        -89.998926,
+        180.0,
+        83.599609
+      ],
+      "offset": 26741380,
+      "length": 980934,
+      "properties": {
+        "name": "global_land",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/global_land/",
+        "geometry_source": "Natural Earth land",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/",
+        "geometry_source_version": "4.1.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "dissolved Natural Earth 1:50m land polygons",
+        "geometry_contexts": [],
+        "specificity": 10
+      }
+    },
+    {
+      "name": "global_ocean",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -180.0,
+        -85.192188,
+        180.0,
+        90.0
+      ],
+      "offset": 27722314,
+      "length": 967927,
+      "properties": {
+        "name": "global_ocean",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/global_ocean/",
+        "geometry_source": "Natural Earth ocean",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/",
+        "geometry_source_version": "4.1.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "dissolved Natural Earth 1:50m ocean polygons",
+        "geometry_contexts": [],
+        "specificity": 10
+      }
+    },
+    {
+      "name": "great_lakes",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -92.107031,
+        41.398096,
+        -75.775684,
+        49.001416
+      ],
+      "offset": 28690241,
+      "length": 26736,
+      "properties": {
+        "name": "great_lakes",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/great_lakes/",
+        "geometry_source": "Natural Earth lakes",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-lakes/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "union of Natural Earth features: Lake Erie, Lake Huron, Lake Michigan, Lake Ontario, Lake Superior",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "greenland",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -72.818066,
+        59.815479,
+        -11.425537,
+        83.599609
+      ],
+      "offset": 28716977,
+      "length": 36070,
+      "properties": {
+        "name": "greenland",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/greenland/",
+        "geometry_source": "Natural Earth geography regions",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-physical-labels/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "selected Natural Earth geography region GREENLAND",
+        "geometry_contexts": [],
+        "specificity": 50
+      }
+    },
+    {
+      "name": "gulf_of_alaska",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -163.356735,
+        54.227856,
+        -136.677628,
+        61.339397
+      ],
+      "offset": 28753047,
+      "length": 342411,
+      "properties": {
+        "name": "gulf_of_alaska",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/gulf_of_alaska/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24118",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "gulf_of_mexico",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -97.89119,
+        18.060949,
+        -80.37294,
+        30.774929
+      ],
+      "offset": 29095458,
+      "length": 437539,
+      "properties": {
+        "name": "gulf_of_mexico",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/gulf_of_mexico/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24044",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "hudson_bay",
+      "geometry_type": "Polygon",
+      "bounds": [
+        -94.972603,
+        51.132549,
+        -76.51944,
+        66.185448
+      ],
+      "offset": 29532997,
+      "length": 479389,
+      "properties": {
+        "name": "hudson_bay",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/hudson_bay/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24018",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "iceland_faroe_channel",
+      "geometry_type": "LineString",
+      "bounds": [
+        -13.6,
+        62.2,
+        -7.4,
+        64.9
+      ],
+      "offset": 30012386,
+      "length": 41,
+      "properties": {
+        "name": "iceland_faroe_channel",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cficfach/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "indian_ocean",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        20.0,
+        -60.0,
+        146.836197,
+        30.513256
+      ],
+      "offset": 30012427,
+      "length": 2013798,
+      "properties": {
+        "name": "indian_ocean",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/indian_ocean/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_r=23620",
+        "geometry_contexts": [],
+        "specificity": 30
+      }
+    },
+    {
+      "name": "indian_pacific_ocean",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -180.0,
+        -60.0,
+        180.0,
+        66.376122
+      ],
+      "offset": 32026225,
+      "length": 8205699,
+      "properties": {
+        "name": "indian_pacific_ocean",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/CFSRLIPO/",
+        "geometry_source": "cf-regions derived geometry",
+        "geometry_source_url": "https://cfconventions.org/Data/standardized-region-list/standardized-region-list.5.xml",
+        "geometry_source_version": "2026.09.1",
+        "geometry_license": "Derived from CC BY 4.0 and/or public-domain geometries",
+        "geometry_method": "union of the SeaVoX Indian and Pacific interpretations",
+        "geometry_contexts": [],
+        "specificity": 20
+      }
+    },
+    {
+      "name": "indo_pacific_ocean",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -180.0,
+        -23.43666,
+        180.0,
+        23.43666
+      ],
+      "offset": 40231924,
+      "length": 188699,
+      "properties": {
+        "name": "indo_pacific_ocean",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/indo_pacific_ocean/",
+        "geometry_source": "cf-regions derived geometry",
+        "geometry_source_url": "https://cfconventions.org/Data/standardized-region-list/standardized-region-list.5.xml",
+        "geometry_source_version": "2026.09.1",
+        "geometry_license": "Derived from CC BY 4.0 and/or public-domain geometries",
+        "geometry_method": "interpretation of CF's biogeographic definition: Natural Earth ocean within the tropics, from 20E eastward through 140W",
+        "geometry_contexts": [],
+        "specificity": 25
+      }
+    },
+    {
+      "name": "indonesian_throughflow",
+      "geometry_type": "LineString",
+      "bounds": [
+        100.0,
+        -6.0,
+        140.0,
+        -6.0
+      ],
+      "offset": 40420623,
+      "length": 41,
+      "properties": {
+        "name": "indonesian_throughflow",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cfindthr/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "irish_sea",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -6.50748,
+        51.947781,
+        -2.680966,
+        55.007469
+      ],
+      "offset": 40420664,
+      "length": 39030,
+      "properties": {
+        "name": "irish_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/irish_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_l3=23731",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "lake_baykal",
+      "geometry_type": "Polygon",
+      "bounds": [
+        103.713379,
+        51.482324,
+        109.955371,
+        55.778564
+      ],
+      "offset": 40459694,
+      "length": 3009,
+      "properties": {
+        "name": "lake_baykal",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/lake_baykal/",
+        "geometry_source": "Natural Earth lakes",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-lakes/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "union of Natural Earth features: Lake Baikal",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "lake_chad",
+      "geometry_type": "Polygon",
+      "bounds": [
+        14.258887,
+        12.876758,
+        14.742773,
+        13.238721
+      ],
+      "offset": 40462703,
+      "length": 509,
+      "properties": {
+        "name": "lake_chad",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/lake_chad/",
+        "geometry_source": "Natural Earth lakes",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-lakes/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "union of Natural Earth features: Lake Chad",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "lake_malawi",
+      "geometry_type": "Polygon",
+      "bounds": [
+        33.905078,
+        -14.402734,
+        35.283691,
+        -9.49541
+      ],
+      "offset": 40463212,
+      "length": 2949,
+      "properties": {
+        "name": "lake_malawi",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/lake_malawi/",
+        "geometry_source": "Natural Earth lakes",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-lakes/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "union of Natural Earth features: Lake Malawi",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "lake_tanganyika",
+      "geometry_type": "Polygon",
+      "bounds": [
+        29.057617,
+        -8.791309,
+        31.198438,
+        -3.338477
+      ],
+      "offset": 40466161,
+      "length": 3197,
+      "properties": {
+        "name": "lake_tanganyika",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/lake_tanganyika/",
+        "geometry_source": "Natural Earth lakes",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-lakes/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "union of Natural Earth features: Lake Tanganyika",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "lake_victoria",
+      "geometry_type": "Polygon",
+      "bounds": [
+        31.66377,
+        -2.984863,
+        34.813281,
+        0.472021
+      ],
+      "offset": 40469358,
+      "length": 4925,
+      "properties": {
+        "name": "lake_victoria",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/lake_victoria/",
+        "geometry_source": "Natural Earth lakes",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-lakes/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "union of Natural Earth features: Lake Victoria",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "mediterranean_sea",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -6.03592,
+        30.266253,
+        36.20932,
+        45.794674
+      ],
+      "offset": 40474283,
+      "length": 699303,
+      "properties": {
+        "name": "mediterranean_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/mediterranean_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_l1=23628",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "mozambique_channel",
+      "geometry_type": "LineString",
+      "bounds": [
+        39.0,
+        -18.0,
+        45.0,
+        -16.0
+      ],
+      "offset": 41173586,
+      "length": 41,
+      "properties": {
+        "name": "mozambique_channel",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cfmozcha/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "north_america",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -178.194531,
+        15.651904,
+        179.77998,
+        83.599609
+      ],
+      "offset": 41173627,
+      "length": 301260,
+      "properties": {
+        "name": "north_america",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/north_america/",
+        "geometry_source": "Natural Earth geography regions",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-physical-labels/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "selected Natural Earth geography region NORTH AMERICA",
+        "geometry_contexts": [],
+        "specificity": 30
+      }
+    },
+    {
+      "name": "north_sea",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -4.444319,
+        51.096172,
+        9.835879,
+        60.914158
+      ],
+      "offset": 41474887,
+      "length": 285816,
+      "properties": {
+        "name": "north_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/north_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_l3=23647",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "northern_hemisphere",
+      "geometry_type": "Polygon",
+      "bounds": [
+        -180.0,
+        0.0,
+        180.0,
+        90.0
+      ],
+      "offset": 41760703,
+      "length": 93,
+      "properties": {
+        "name": "northern_hemisphere",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/NORTHHEM/",
+        "geometry_source": "cf-regions analytical geometry",
+        "geometry_source_url": "https://github.com/ysorge/cf-regions",
+        "geometry_source_version": "2026.09.1",
+        "geometry_license": "Apache-2.0",
+        "geometry_method": "WGS84 world extent north of and including the equator",
+        "geometry_contexts": [],
+        "specificity": 5
+      }
+    },
+    {
+      "name": "norwegian_sea",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -9.000113,
+        60.849033,
+        25.782976,
+        76.463409
+      ],
+      "offset": 41760796,
+      "length": 826237,
+      "properties": {
+        "name": "norwegian_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/norwegian_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24024",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "pacific_equatorial_undercurrent",
+      "geometry_type": "LineString",
+      "bounds": [
+        -155.0,
+        -2.0,
+        -155.0,
+        2.0
+      ],
+      "offset": 42587033,
+      "length": 41,
+      "properties": {
+        "name": "pacific_equatorial_undercurrent",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cfpaequn/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [
+          "ocean_mass_transport_at_0_to_350_m_depth"
+        ],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "pacific_ocean",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -180.0,
+        -60.0,
+        180.0,
+        66.376122
+      ],
+      "offset": 42587074,
+      "length": 6193604,
+      "properties": {
+        "name": "pacific_ocean",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/pacific_ocean/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_r=23622",
+        "geometry_contexts": [],
+        "specificity": 30
+      }
+    },
+    {
+      "name": "persian_gulf",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        47.702946,
+        23.906624,
+        55.821565,
+        30.513256
+      ],
+      "offset": 48780678,
+      "length": 106737,
+      "properties": {
+        "name": "persian_gulf",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/persian_gulf/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24080",
+        "geometry_contexts": [],
+        "specificity": 80
+      }
+    },
+    {
+      "name": "red_sea",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        33.641121,
+        12.457001,
+        43.505043,
+        28.137381
+      ],
+      "offset": 48887415,
+      "length": 217006,
+      "properties": {
+        "name": "red_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/red_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24077",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "ross_sea",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -180.000198,
+        -78.570282,
+        180.0,
+        -71.299993
+      ],
+      "offset": 49104421,
+      "length": 25411,
+      "properties": {
+        "name": "ross_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/ross_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_l1=23631",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "sea_of_japan",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        125.801804,
+        32.568207,
+        142.255753,
+        51.743313
+      ],
+      "offset": 49129832,
+      "length": 310603,
+      "properties": {
+        "name": "sea_of_japan",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/sea_of_japan/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_l3=23648",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "sea_of_okhotsk",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        135.17067,
+        43.222248,
+        165.308716,
+        62.693645
+      ],
+      "offset": 49440435,
+      "length": 189143,
+      "properties": {
+        "name": "sea_of_okhotsk",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/sea_of_okhotsk/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24120",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "south_america",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -81.336621,
+        -55.701226,
+        -34.887318,
+        12.176615
+      ],
+      "offset": 49629578,
+      "length": 43839,
+      "properties": {
+        "name": "south_america",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/south_america/",
+        "geometry_source": "Natural Earth geography regions",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-physical-labels/",
+        "geometry_source_version": "5.0.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "selected Natural Earth geography region SOUTH AMERICA",
+        "geometry_contexts": [],
+        "specificity": 30
+      }
+    },
+    {
+      "name": "south_china_sea",
+      "geometry_type": "Polygon",
+      "bounds": [
+        102.348926,
+        -3.21939,
+        122.266212,
+        23.759635
+      ],
+      "offset": 49673417,
+      "length": 15681,
+      "properties": {
+        "name": "south_china_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/south_china_sea/",
+        "geometry_source": "Natural Earth geography marine polygons",
+        "geometry_source_url": "https://www.naturalearthdata.com/downloads/50m-physical-vectors/50m-physical-labels/",
+        "geometry_source_version": "5.1.0",
+        "geometry_license": "Public domain",
+        "geometry_method": "selected Natural Earth marine polygon South China Sea; SeaVoX v19 has no exact geometry",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "southern_hemisphere",
+      "geometry_type": "Polygon",
+      "bounds": [
+        -180.0,
+        -90.0,
+        180.0,
+        0.0
+      ],
+      "offset": 49689098,
+      "length": 93,
+      "properties": {
+        "name": "southern_hemisphere",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/SOUTHHEM/",
+        "geometry_source": "cf-regions analytical geometry",
+        "geometry_source_url": "https://github.com/ysorge/cf-regions",
+        "geometry_source_version": "2026.09.1",
+        "geometry_license": "Apache-2.0",
+        "geometry_method": "WGS84 world extent south of and including the equator",
+        "geometry_contexts": [],
+        "specificity": 5
+      }
+    },
+    {
+      "name": "southern_ocean",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        -180.000198,
+        -78.570282,
+        180.0,
+        -53.102488
+      ],
+      "offset": 49689191,
+      "length": 308235,
+      "properties": {
+        "name": "southern_ocean",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/southern_ocean/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_r=23624",
+        "geometry_contexts": [],
+        "specificity": 30
+      }
+    },
+    {
+      "name": "taiwan_luzon_straits",
+      "geometry_type": "LineString",
+      "bounds": [
+        121.8,
+        18.3,
+        121.8,
+        22.3
+      ],
+      "offset": 49997426,
+      "length": 41,
+      "properties": {
+        "name": "taiwan_luzon_straits",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cftalust/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "weddell_sea",
+      "geometry_type": "Polygon",
+      "bounds": [
+        -61.980209,
+        -78.133766,
+        -12.094708,
+        -59.47995
+      ],
+      "offset": 49997467,
+      "length": 30085,
+      "properties": {
+        "name": "weddell_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/weddell_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_sr=24035",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    },
+    {
+      "name": "windward_passage",
+      "geometry_type": "LineString",
+      "bounds": [
+        -75.0,
+        19.7,
+        -72.6,
+        20.2
+      ],
+      "offset": 50027552,
+      "length": 41,
+      "properties": {
+        "name": "windward_passage",
+        "kind": "section",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/cfwinpas/",
+        "geometry_source": "OMIP protocol Table J1",
+        "geometry_source_url": "https://doi.org/10.5194/gmd-9-3231-2016",
+        "geometry_source_version": "2016 / CMIP6",
+        "geometry_license": "CC BY 3.0",
+        "geometry_method": "approximate diagnostic section endpoints",
+        "geometry_contexts": [],
+        "specificity": 100
+      }
+    },
+    {
+      "name": "yellow_sea",
+      "geometry_type": "MultiPolygon",
+      "bounds": [
+        117.545341,
+        31.71249,
+        126.993408,
+        41.048199
+      ],
+      "offset": 50027593,
+      "length": 251164,
+      "properties": {
+        "name": "yellow_sea",
+        "kind": "area",
+        "nvs_concept_url": "https://vocab.nerc.ac.uk/collection/P30/5/yellow_sea/",
+        "geometry_source": "SeaVoX Salt and Fresh Water Body Gazetteer polygons",
+        "geometry_source_url": "https://doi.org/10.14284/590",
+        "geometry_source_version": "19",
+        "geometry_license": "CC BY 4.0",
+        "geometry_method": "dissolved all SeaVoX v19 features where mrgid_l3=23645",
+        "geometry_contexts": [],
+        "specificity": 70
+      }
+    }
+  ]
+}

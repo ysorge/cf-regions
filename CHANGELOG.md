@@ -19,6 +19,8 @@ This is the first public release.
   integrity checksums, additive external profile directories, and discovery
   APIs.
 - Low- and high-detail shapes plus GeoJSON, WKT, WKB, and WKB-hex exports.
+- High-detail coordinate lookup with an optional generated spatial index and
+  lazy geometry decoding; plain GeoJSON profiles remain fully supported.
 - Reproducible dataset tooling, JSON Schemas, tests, type checks, and packaging
   validation.
 

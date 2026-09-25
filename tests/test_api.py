@@ -225,11 +225,13 @@ def test_dataset_info_is_versioned() -> None:
     assert info.profile.cf_versions == ("1", "2", "3", "4", "5")
     assert info.area_predicate == "covers"
     assert info.boundary_inclusive is True
+    assert info.lookup_geometry_validation == "prevalidated"
     assert {item.resolution for item in info.geometry_representations} == {"low", "high"}
     high = next(
         item for item in info.geometry_representations if item.resolution == "high"
     )
     assert high.processing.method == "simplify_and_round"
+    assert high.validation_mode == "prevalidated"
     assert high.processing.parameters["output_simplification_degrees"] == 0.001
     assert high.processing.parameters["output_simplification_preserves_topology"] is True
     assert info.limitations
@@ -296,7 +298,8 @@ def test_match_preserves_reproducible_mapping_and_source_provenance() -> None:
 
     assert direct.cf_version == "5"
     assert direct.mapping.id == "cfregions-default"
-    assert direct.mapping.geometry_resolution == "low"
+    assert direct.mapping.geometry_resolution == "high"
+    assert direct.mapping.geometry_validation == "prevalidated"
     assert direct.method == "polygon_lookup"
     assert direct.predicate == "covers"
     assert direct.source.name == "Natural Earth geography regions"
@@ -324,6 +327,8 @@ def test_shape_resolution_is_explicit_and_does_not_change_lookup() -> None:
 
     assert low["properties"]["geometry_resolution"] == "low"
     assert high["properties"]["geometry_resolution"] == "high"
+    assert low["properties"]["geometry_validation"] == "runtime"
+    assert high["properties"]["geometry_validation"] == "prevalidated"
     assert len(str(high["geometry"])) > len(str(low["geometry"]))
     first = [
         match.to_dict()

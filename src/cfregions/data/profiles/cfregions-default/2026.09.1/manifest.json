@@ -22,7 +22,7 @@
   "crs": "OGC:CRS84",
   "lookup": {
     "behavior_version": "1",
-    "geometry_resolution": "low",
+    "geometry_resolution": "high",
     "default_geometry_resolution": "low",
     "area_predicate": "covers",
     "boundary_inclusive": true,
@@ -52,6 +52,14 @@
       "geometry_file": "geometry/high.geojson",
       "sha256": "58395aa75307c3ae6d652922abe19c5dccfb9a65144de5672c055f0fecb73c6d",
       "feature_count": 74,
+      "lookup_artifact": {
+        "format": "wkb-pack-v1",
+        "geometry_file": "geometry/high.lookup.wkb",
+        "index_file": "geometry/high.lookup.json",
+        "sha256": "97010214852271f286a7129bfb62a09f85c8bcfe535a21327670998226498163",
+        "index_sha256": "5ae0344a83b7e3ced0a13d6b538239c5c5e6a24fe040f5858c2438cbfc43210e",
+        "validation_mode": "prevalidated"
+      },
       "processing": {
         "method": "simplify_and_round",
         "parameters": {
@@ -80,7 +88,7 @@
     "Diagnostic passage and transect names are lines and only participate in lookup when a positive section tolerance is supplied.",
     "GCMD-derived parent links are supplemented by documented composite and section connectivity links.",
     "Adjacent named regions need not share a boundary: SeaVoX definitions are retained without project-specific gap filling, including the North Sea and Baltic Sea.",
-    "Resolution changes geometric detail, not the upstream definition; coordinate lookup always uses the declared low representation."
+    "Resolution changes geometric detail, not the upstream definition; coordinate lookup uses the declared high representation while low remains the default shape for compact display."
   ],
   "sources": [
     {

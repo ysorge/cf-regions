@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from .catalog import CoordinatePair, RegionCatalog, resolve_coordinates
-from .datasets import CFRegistry
+from .datasets import CFRegistry, DatasetBundle, SpatialProfileDataset
 from .errors import SpatialProfileNotFoundError
 from .models import (
     DatasetInfo,
@@ -67,6 +67,22 @@ def _cf_registry(data_directory: str | None = None) -> CFRegistry:
 
 
 @cache
+def _dataset_selection(
+    cf_version: str,
+    profile: str,
+    profile_version: str,
+    data_directory: str | None,
+    profile_directories: tuple[str, ...],
+) -> tuple[SpatialProfileDataset, DatasetBundle]:
+    resolved_profile = _profile_resolver(data_directory, profile_directories).resolve(
+        profile, profile_version
+    )
+    dataset = resolved_profile.dataset
+    bundle = dataset.load(_cf_registry(data_directory).load(cf_version))
+    return dataset, bundle
+
+
+@cache
 def _catalog(
     cf_version: str,
     profile: str,
@@ -74,14 +90,14 @@ def _catalog(
     data_directory: str | None,
     profile_directories: tuple[str, ...],
 ) -> RegionCatalog:
-    resolved_profile = _profile_resolver(data_directory, profile_directories).resolve(
-        profile, profile_version
+    dataset, bundle = _dataset_selection(
+        cf_version,
+        profile,
+        profile_version,
+        data_directory,
+        profile_directories,
     )
-    return RegionCatalog.from_sources(
-        _cf_registry(data_directory),
-        resolved_profile.dataset,
-        cf_version=cf_version,
-    )
+    return RegionCatalog.from_bundle(dataset, bundle)
 
 
 def get_catalog(
@@ -381,10 +397,10 @@ def get_dataset_info(
 ) -> DatasetInfo:
     """Return CF-vocabulary and geometry-edition provenance metadata."""
 
-    return get_catalog(
-        cf_version=cf_version,
-        profile=profile,
-        profile_version=profile_version,
-        data_directory=data_directory,
-        profile_directories=profile_directories,
-    ).dataset_info
+    return _dataset_selection(
+        str(cf_version),
+        str(profile),
+        str(profile_version),
+        _directory_key(data_directory),
+        _profile_directory_keys(profile_directories),
+    )[1].info

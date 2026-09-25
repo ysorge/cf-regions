@@ -58,8 +58,10 @@ The authoritative schema is
 | `input_sha256` | Optional hashes of pinned generation inputs |
 
 The shared CF vocabulary hash remains mandatory in the profile-independent CF
-registry. Profile authors may omit `sha256` from geometry representations and
-the hierarchy metadata. When present, these hashes bind metadata and result
+registry. Profile authors may omit `sha256` from plain GeoJSON representations
+and the hierarchy metadata. A representation that declares a compiled lookup
+artifact must provide source, index, and artifact hashes so the generated data
+is bound to one exact authoritative GeoJSON file. When present, these hashes bind metadata and result
 provenance to exact file bytes and the loader verifies them. They are
 integrity/reproducibility checks, not cryptographic signatures. An omitted hash
 is exposed as `None` by the Python API and `null` in structured CLI/API output.
@@ -71,7 +73,7 @@ The currently supported lookup contract is deliberately narrow:
 ```json
 {
   "behavior_version": "1",
-  "geometry_resolution": "low",
+  "geometry_resolution": "high",
   "default_geometry_resolution": "low",
   "area_predicate": "covers",
   "boundary_inclusive": true,
@@ -90,10 +92,46 @@ Each representation declares:
 | --- | --- |
 | `label`, `description` | Human-facing detail information |
 | `geometry_file` | Manifest-relative GeoJSON resource |
-| `sha256` | Optional SHA-256 of the exact file bytes; if declared, it is verified |
+| `sha256` | SHA-256 of the exact GeoJSON bytes; optional unless `lookup_artifact` is declared |
 | `feature_count` | Number of features in the complete profile resource |
 | `processing.method` | Provider-defined stable processing method name |
 | `processing.parameters` | Provider-defined JSON object needed to reproduce or understand that processing |
+| `lookup_artifact` | Optional generated accelerator for lazy geometry access; never required to author a valid profile |
+
+Large lookup representations may optionally declare a `lookup_artifact` with
+`format: "wkb-pack-v1"`, manifest-relative `geometry_file` and `index_file`,
+mandatory `sha256`/`index_sha256` values, and an explicit `validation_mode`.
+The parent representation's
+GeoJSON `sha256` is also mandatory in this case. The artifact contains the same
+geometries as the representation's GeoJSON in packed WKB plus a small bounding
+box index. It does not change the profile's spatial meaning, identity, or
+provenance. GeoJSON remains the portable source representation and is used
+automatically when the artifact is absent. Profile authors can generate the
+two files with `tools/lookup_artifact.py`; the machine-readable index contract
+is [`lookup-index.schema.json`](../src/cfregions/data/schemas/lookup-index.schema.json).
+When opening an artifact, `cf-regions` verifies the exact GeoJSON source and
+index bytes against their declared hashes and checks that the index names that
+same GeoJSON hash. The WKB pack is verified before its first geometry is
+decoded.
+
+The profile provider chooses one validation mode:
+
+| `validation_mode` | Behavior and trade-off |
+| --- | --- |
+| `runtime` | `cf-regions` checks every decoded geometry with GEOS `is_valid` before use and caches the result for that process. This is the recommended defensive default for externally produced, hand-modified, or otherwise uncontrolled artifacts. |
+| `prevalidated` | The provider asserts that every WKB geometry was validated during generation. Runtime decoding checks structure and declared type but skips the expensive topology check. Use this only with a reproducible validating builder, immutable source/index/artifact hashes, and regression tests. |
+
+Runtime validation matters because successful WKB parsing and matching hashes
+prove byte integrity, not geometric validity. A polygon may still be
+self-intersecting or otherwise topologically invalid, which can produce wrong
+spatial predicates or GEOS errors. Conversely, validating multi-million-vertex
+ocean geometries can add seconds or tens of seconds to the first matching
+lookup. `prevalidated` makes that performance/responsibility trade-off explicit
+instead of inferring trust from where a profile was installed.
+
+The provided generator rejects empty or topologically invalid geometry before
+writing WKB. The bundled default therefore declares `prevalidated`; providers
+with a different build or assurance process may choose `runtime`.
 
 ## Geometry FeatureCollections
 
@@ -154,9 +192,12 @@ opening the declared geometry or hierarchy resources. The bundled
 `profile-settings.json` selects only the exact global default profile; it is not
 an index of available profiles.
 
-Loading a selected profile verifies schema versions, compatibility, every
-declared hash, feature counts, complete name coverage, geometry validity/types,
-hierarchy references, duplicate edges, and cycles.
+Loading a selected profile verifies schema versions, compatibility, hierarchy
+references, duplicate edges, and cycles without opening large geometry files.
+Opening a representation verifies its declared hashes, feature count, complete
+name coverage, and geometry types. GeoJSON geometries are validated when used;
+compiled lookup artifacts were validated by their generator and are checked
+against the source representation and any declared artifact hashes.
 
 Use the bundled default profile as a complete real-world example. For a small
 synthetic example, see the external data-root fixture in

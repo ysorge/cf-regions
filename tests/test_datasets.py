@@ -6,6 +6,9 @@ from importlib.resources import files
 from pathlib import Path
 
 import pytest
+from shapely import to_wkb
+from shapely.geometry import Polygon
+from tools.lookup_artifact import build_lookup_artifact
 
 import cfregions
 
@@ -191,8 +194,243 @@ def test_declared_profile_geometry_checksum_is_verified(tmp_path: Path) -> None:
     geometry = tmp_path / "profiles/test-profile/1/geometry/low.geojson"
     geometry.write_text("{}", encoding="utf-8")
 
+    # Metadata discovery intentionally does not open a potentially large geometry file.
+    assert cfregions.get_dataset_info(data_directory=tmp_path).profile.id == "test-profile"
     with pytest.raises(cfregions.RegionDataError, match="checksum mismatch"):
+        cfregions.match_regions(
+            longitude=0,
+            latitude=0,
+            data_directory=tmp_path,
+        )
+
+
+def test_optional_lookup_artifact_is_used_and_verified(tmp_path: Path) -> None:
+    _external_dataset(tmp_path)
+    profile_root = tmp_path / "profiles/test-profile/1"
+    geometry = profile_root / "geometry/low.geojson"
+    pack = profile_root / "geometry/low.lookup.wkb"
+    index = profile_root / "geometry/low.lookup.json"
+    pack_sha256, index_sha256 = build_lookup_artifact(geometry, pack, index)
+    manifest_path = profile_root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["representations"]["low"]["lookup_artifact"] = {
+        "format": "wkb-pack-v1",
+        "geometry_file": "geometry/low.lookup.wkb",
+        "index_file": "geometry/low.lookup.json",
+        "sha256": pack_sha256,
+        "index_sha256": index_sha256,
+        "validation_mode": "runtime",
+    }
+    _write_json(manifest_path, manifest)
+
+    assert cfregions.match_region_names(
+        longitude=0,
+        latitude=0,
+        data_directory=tmp_path,
+    ) == ("global",)
+
+    tampered_root = tmp_path / "tampered"
+    _external_dataset(tampered_root)
+    tampered_profile = tampered_root / "profiles/test-profile/1"
+    tampered_geometry = tampered_profile / "geometry/low.geojson"
+    tampered_pack = tampered_profile / "geometry/low.lookup.wkb"
+    tampered_index = tampered_profile / "geometry/low.lookup.json"
+    pack_sha256, index_sha256 = build_lookup_artifact(
+        tampered_geometry, tampered_pack, tampered_index
+    )
+    tampered_manifest_path = tampered_profile / "manifest.json"
+    tampered_manifest = json.loads(tampered_manifest_path.read_text(encoding="utf-8"))
+    tampered_manifest["representations"]["low"]["lookup_artifact"] = {
+        "format": "wkb-pack-v1",
+        "geometry_file": "geometry/low.lookup.wkb",
+        "index_file": "geometry/low.lookup.json",
+        "sha256": pack_sha256,
+        "index_sha256": index_sha256,
+        "validation_mode": "runtime",
+    }
+    _write_json(tampered_manifest_path, tampered_manifest)
+    tampered_pack.write_bytes(tampered_pack.read_bytes() + b"tampered")
+
+    with pytest.raises(cfregions.RegionDataError, match="checksum mismatch"):
+        cfregions.match_regions(
+            longitude=0,
+            latitude=0,
+            data_directory=tampered_root,
+        )
+
+
+@pytest.mark.parametrize(
+    ("missing_field", "message"),
+    [
+        ("source_sha256", "representation with lookup_artifact must declare sha256"),
+        ("artifact_sha256", "lookup_artifact must declare sha256 and index_sha256"),
+        ("index_sha256", "lookup_artifact must declare sha256 and index_sha256"),
+    ],
+)
+def test_lookup_artifact_requires_complete_checksum_binding(
+    tmp_path: Path,
+    missing_field: str,
+    message: str,
+) -> None:
+    _external_dataset(tmp_path, profile_checksums=False)
+    manifest_path = tmp_path / "profiles/test-profile/1/manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    representation = manifest["representations"]["low"]
+    representation["sha256"] = "0" * 64
+    artifact = {
+        "format": "wkb-pack-v1",
+        "geometry_file": "geometry/low.lookup.wkb",
+        "index_file": "geometry/low.lookup.json",
+        "sha256": "1" * 64,
+        "index_sha256": "2" * 64,
+        "validation_mode": "runtime",
+    }
+    representation["lookup_artifact"] = artifact
+    if missing_field == "source_sha256":
+        del representation["sha256"]
+    elif missing_field == "artifact_sha256":
+        del artifact["sha256"]
+    else:
+        del artifact["index_sha256"]
+    _write_json(manifest_path, manifest)
+
+    with pytest.raises(cfregions.RegionDataError, match=message):
         cfregions.get_dataset_info(data_directory=tmp_path)
+
+
+@pytest.mark.parametrize("validation_mode", [None, "sometimes"])
+def test_lookup_artifact_requires_supported_validation_mode(
+    tmp_path: Path,
+    validation_mode: str | None,
+) -> None:
+    _external_dataset(tmp_path)
+    manifest_path = tmp_path / "profiles/test-profile/1/manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    artifact = {
+        "format": "wkb-pack-v1",
+        "geometry_file": "geometry/low.lookup.wkb",
+        "index_file": "geometry/low.lookup.json",
+        "sha256": "1" * 64,
+        "index_sha256": "2" * 64,
+    }
+    if validation_mode is not None:
+        artifact["validation_mode"] = validation_mode
+    manifest["representations"]["low"]["lookup_artifact"] = artifact
+    _write_json(manifest_path, manifest)
+
+    with pytest.raises(cfregions.RegionDataError, match="validation_mode"):
+        cfregions.get_dataset_info(data_directory=tmp_path)
+
+
+def test_lookup_artifact_index_must_name_its_exact_geojson_source(
+    tmp_path: Path,
+) -> None:
+    _external_dataset(tmp_path)
+    profile_root = tmp_path / "profiles/test-profile/1"
+    geometry = profile_root / "geometry/low.geojson"
+    pack = profile_root / "geometry/low.lookup.wkb"
+    index_path = profile_root / "geometry/low.lookup.json"
+    pack_sha256, _ = build_lookup_artifact(geometry, pack, index_path)
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    index["source_sha256"] = "0" * 64
+    _write_json(index_path, index)
+    manifest_path = profile_root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["representations"]["low"]["lookup_artifact"] = {
+        "format": "wkb-pack-v1",
+        "geometry_file": "geometry/low.lookup.wkb",
+        "index_file": "geometry/low.lookup.json",
+        "sha256": pack_sha256,
+        "index_sha256": _sha256(index_path),
+        "validation_mode": "runtime",
+    }
+    _write_json(manifest_path, manifest)
+
+    with pytest.raises(cfregions.RegionDataError, match="does not match its GeoJSON"):
+        cfregions.match_regions(
+            longitude=0,
+            latitude=0,
+            data_directory=tmp_path,
+        )
+
+
+def test_lookup_artifact_must_match_the_actual_geojson_source(tmp_path: Path) -> None:
+    _external_dataset(tmp_path)
+    profile_root = tmp_path / "profiles/test-profile/1"
+    geometry = profile_root / "geometry/low.geojson"
+    pack = profile_root / "geometry/low.lookup.wkb"
+    index_path = profile_root / "geometry/low.lookup.json"
+    pack_sha256, index_sha256 = build_lookup_artifact(geometry, pack, index_path)
+    manifest_path = profile_root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["representations"]["low"]["lookup_artifact"] = {
+        "format": "wkb-pack-v1",
+        "geometry_file": "geometry/low.lookup.wkb",
+        "index_file": "geometry/low.lookup.json",
+        "sha256": pack_sha256,
+        "index_sha256": index_sha256,
+        "validation_mode": "runtime",
+    }
+    _write_json(manifest_path, manifest)
+
+    geometry.write_bytes(geometry.read_bytes() + b"\n")
+
+    with pytest.raises(cfregions.RegionDataError, match="checksum mismatch"):
+        cfregions.match_regions(
+            longitude=0,
+            latitude=0,
+            data_directory=tmp_path,
+        )
+
+
+@pytest.mark.parametrize("validation_mode", ["runtime", "prevalidated"])
+def test_profile_provider_controls_lookup_artifact_validation(
+    tmp_path: Path,
+    validation_mode: str,
+) -> None:
+    _external_dataset(tmp_path)
+    profile_root = tmp_path / "profiles/test-profile/1"
+    geometry = profile_root / "geometry/low.geojson"
+    pack = profile_root / "geometry/low.lookup.wkb"
+    index_path = profile_root / "geometry/low.lookup.json"
+    build_lookup_artifact(geometry, pack, index_path)
+
+    invalid_geometry = Polygon(
+        [(-1.0, -1.0), (1.0, 1.0), (1.0, -1.0), (-1.0, 1.0), (-1.0, -1.0)]
+    )
+    assert not invalid_geometry.is_valid
+    invalid_wkb = to_wkb(invalid_geometry, byte_order=1, output_dimension=2)
+    pack.write_bytes(invalid_wkb)
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    index["features"][0]["bounds"] = list(invalid_geometry.bounds)
+    index["features"][0]["offset"] = 0
+    index["features"][0]["length"] = len(invalid_wkb)
+    _write_json(index_path, index)
+
+    manifest_path = profile_root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["representations"]["low"]["lookup_artifact"] = {
+        "format": "wkb-pack-v1",
+        "geometry_file": "geometry/low.lookup.wkb",
+        "index_file": "geometry/low.lookup.json",
+        "sha256": _sha256(pack),
+        "index_sha256": _sha256(index_path),
+        "validation_mode": validation_mode,
+    }
+    _write_json(manifest_path, manifest)
+
+    if validation_mode == "runtime":
+        with pytest.raises(cfregions.RegionDataError, match="empty or invalid"):
+            cfregions.get_region_shape(
+                region_name="global",
+                data_directory=tmp_path,
+            )
+    else:
+        shape = cfregions.get_region_shape(
+            region_name="global",
+            data_directory=tmp_path,
+        )
+        assert shape["properties"]["geometry_resolution"] == "low"
 
 
 def test_declared_profile_checksum_must_be_a_sha256_digest(tmp_path: Path) -> None:

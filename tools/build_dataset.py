@@ -2,8 +2,8 @@
 """Build the bundled default spatial profile from pinned upstream datasets.
 
 The output directory is one profile-version directory containing manifest.json,
-hierarchy.json, and geometry/*.geojson. This is a maintainer tool; runtime
-lookups never contact upstream services.
+hierarchy.json, geometry/*.geojson, and an optional generated lookup artifact.
+This is a maintainer tool; runtime lookups never contact upstream services.
 """
 
 from __future__ import annotations
@@ -33,6 +33,11 @@ from shapely.geometry import (
 )
 from shapely.geometry.base import BaseGeometry
 from shapely.ops import unary_union
+
+try:
+    from .lookup_artifact import build_lookup_artifact
+except ImportError:  # Direct execution: python tools/build_dataset.py
+    from lookup_artifact import build_lookup_artifact
 
 CF_URL = (
     "https://cfconventions.org/Data/standardized-region-list/"
@@ -809,6 +814,24 @@ def main() -> None:
             }
     if "low" not in representations:
         raise ValueError("build the low representation before the high representation")
+    lookup_resolution = "high" if "high" in representations else "low"
+    if lookup_resolution == "high":
+        high_path = geometry_dir / str(RESOLUTION_PROFILES["high"]["filename"])
+        artifact_path = geometry_dir / "high.lookup.wkb"
+        index_path = geometry_dir / "high.lookup.json"
+        artifact_sha256, index_sha256 = build_lookup_artifact(
+            high_path,
+            artifact_path,
+            index_path,
+        )
+        representations["high"]["lookup_artifact"] = {
+            "format": "wkb-pack-v1",
+            "geometry_file": "geometry/high.lookup.wkb",
+            "index_file": "geometry/high.lookup.json",
+            "sha256": artifact_sha256,
+            "index_sha256": index_sha256,
+            "validation_mode": "prevalidated",
+        }
 
     hierarchy_edges = []
     for child, parents in sorted(PARENTS.items()):
@@ -895,7 +918,7 @@ def main() -> None:
         "crs": "OGC:CRS84",
         "lookup": {
             "behavior_version": "1",
-            "geometry_resolution": "low",
+            "geometry_resolution": lookup_resolution,
             "default_geometry_resolution": "low",
             "area_predicate": "covers",
             "boundary_inclusive": True,
@@ -939,7 +962,8 @@ def main() -> None:
             ),
             (
                 "Resolution changes geometric detail, not the upstream definition; "
-                "coordinate lookup always uses the declared low representation."
+                f"coordinate lookup uses the declared {lookup_resolution} representation"
+                " while low remains the default shape for compact display."
             ),
         ],
         "sources": [

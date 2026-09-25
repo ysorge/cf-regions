@@ -29,7 +29,9 @@ data/
             ├── hierarchy.json           profile-defined broader relations
             └── geometry/
                 ├── low.geojson
-                └── high.geojson         optional representation
+                ├── high.geojson         optional representation
+                ├── high.lookup.json     optional generated index
+                └── high.lookup.wkb      optional generated geometry pack
 ```
 
 The CF registry is shared by every profile. A profile provider must **not**
@@ -60,6 +62,10 @@ A profile version consists of the following profile-owned resources:
   feature-level geometry provenance;
 - `hierarchy.json`, containing explicit child-to-parent edges and provenance
   for each edge.
+
+A representation may additionally ship a generated lookup artifact for faster
+lazy access. It is an optimization only: profiles remain complete and usable
+without it, and contributors do not need to author binary data by hand.
 
 Hierarchy is profile-dependent. This matters for political groupings,
 scientific basin subdivisions, composite oceans, and diagnostic sections: two
@@ -97,7 +103,9 @@ manifest path. Only the deliberate global default is configured separately:
 Geometry and hierarchy paths are relative to the manifest. Discovery reads
 only small JSON manifests; geometry and hierarchy data stay lazy until a
 profile is selected. Providers may add SHA-256 values for integrity checking,
-but checksums are not required for discovery or use.
+but checksums are not required for plain GeoJSON profiles. If a representation
+declares a compiled lookup artifact, hashes for its authoritative GeoJSON,
+index, and WKB pack are required to prevent stale or mismatched generated data.
 
 An additional directory may contain one or many profile versions, conventionally:
 

@@ -56,6 +56,23 @@
           "geometry_file": {"type": "string", "minLength": 1, "description": "POSIX-style path relative to this manifest."},
           "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$", "description": "Optional SHA-256 integrity check for the exact geometry file bytes."},
           "feature_count": {"type": "integer", "minimum": 1},
+          "lookup_artifact": {
+            "description": "Optional generated accelerator. The GeoJSON remains authoritative and sufficient when this object is omitted.",
+            "type": "object",
+            "required": ["format", "geometry_file", "index_file", "sha256", "index_sha256", "validation_mode"],
+            "properties": {
+              "format": {"const": "wkb-pack-v1"},
+              "geometry_file": {"type": "string", "minLength": 1},
+              "index_file": {"type": "string", "minLength": 1},
+              "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+              "index_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+              "validation_mode": {
+                "enum": ["runtime", "prevalidated"],
+                "description": "runtime validates each decoded geometry defensively; prevalidated trusts the provider's build-time validation for lower latency."
+              }
+            },
+            "additionalProperties": false
+          },
           "processing": {
             "type": "object",
             "required": ["method", "parameters"],
@@ -65,6 +82,9 @@
             },
             "additionalProperties": false
           }
+        },
+        "dependentRequired": {
+          "lookup_artifact": ["sha256"]
         },
         "additionalProperties": false
       }

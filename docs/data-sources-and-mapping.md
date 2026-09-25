@@ -151,11 +151,13 @@ project profile rules ---------> selection, unions, hierarchy and analytical sha
                          +------------+------------+
                          |                         |
                     low GeoJSON                high GeoJSON
-                    lookup input               display detail
+                    compact display            precise lookup/detail
                          |                         |
                          +------------+------------+
                                       |
                 profile manifest and hierarchy with checksums
+                                      |
+                       optional generated WKB lookup index
 ```
 
 The low and high representations express the same interpretation. They differ
@@ -167,7 +169,10 @@ The builder validates exact coverage of its target CF release, pinned Natural
 Earth layer versions, source selections, non-empty geometry, and input hashes.
 The runtime loader independently validates manifests, mandatory vocabulary and
 declared profile hashes, vocabulary version/date/count, geometry coverage,
-geometry types, hierarchy references, and hierarchy acyclicity.
+geometry types, hierarchy references, and hierarchy acyclicity. For the large
+bundled high representation, a generated bounding-box index selects candidates
+before their packed WKB geometries are decoded. This changes startup cost, not
+results or provenance; profiles without the optional artifact use GeoJSON.
 
 ## How coordinate lookup works
 
@@ -179,7 +184,7 @@ following deterministic steps:
 2. Independently load the selected CF vocabulary and compatible profile
    manifest.
 3. Query the profile manifest's lookup geometry representation with a spatial
-   index.
+   bounding-box index and lazily decode only candidate geometries.
 4. For every candidate area, apply Shapely's boundary-inclusive `covers`
    predicate. A shared boundary may therefore produce more than one direct
    match.
@@ -214,7 +219,7 @@ needed to understand a match:
   basis for a direct match;
 - `geometry_source` and `geometry_method`: corresponding fields on an exported
   shape;
-- geometry resolution, CRS, generation date, and content hash.
+- geometry resolution and validation mode, CRS, generation date, and content hash.
 
 For example:
 

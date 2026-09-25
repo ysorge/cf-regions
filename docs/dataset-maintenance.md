@@ -161,10 +161,23 @@ python tools/build_dataset.py --help
 
 Run the builder first for `low` and then for `high`, using the same pinned input
 set and the same new output directory. The final manifest must declare both
-representations and their processing parameters and SHA-256 hashes. It also
-emits a separate, checksummed `hierarchy.json`. The builder
+representations and their processing parameters and SHA-256 hashes. When a
+high representation exists, the builder also derives its optional WKB pack and
+small lookup index; these are runtime accelerators and must always be
+re-generated from the authoritative GeoJSON rather than edited. Their source,
+index, and WKB checksums are mandatory and bind the generated artifact to that
+exact GeoJSON representation. It also emits
+a separate, checksummed `hierarchy.json`. The builder
 must complete with exact CF-name parity; do not bypass a missing-name or source
 version assertion.
+
+The default-profile builder declares `validation_mode: "prevalidated"` because
+it rejects invalid geometry before serialization. Release validation must
+therefore retain that check and run the artifact regression tests; do not create
+or patch a bundled WKB pack manually. Other providers choose their own mode in
+the manifest. `runtime` is recommended unless their build process provides the
+same assurance; see [Spatial profile file format](profile-format.md) for the
+correctness and performance trade-off.
 
 The build tool performs no upstream downloads. Store acquisition notes outside
 the runtime package when upstream redistribution rules do not permit retaining
@@ -232,6 +245,7 @@ Before publishing, confirm:
 - [ ] known ambiguity, overlaps, and gaps are documented;
 - [ ] licenses, citations, and notices are current;
 - [ ] package artifacts contain every declared manifest and geometry resource;
+- [ ] any declared lookup artifact was regenerated and matches its GeoJSON source;
 - [ ] release notes identify any result-changing behavior.
 
 ## Corrections after publication

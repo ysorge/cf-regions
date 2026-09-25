@@ -2,13 +2,20 @@
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
+import math
 import xml.etree.ElementTree as ET
+from collections.abc import Callable
 from dataclasses import dataclass
 from importlib.resources import files
 from pathlib import Path, PurePosixPath
-from typing import Any, Protocol
+from typing import IO, Any, Literal, Protocol
+
+from shapely.geometry import mapping, shape
+from shapely.geometry.base import BaseGeometry
+from shapely.wkb import loads as load_wkb
 
 from .errors import (
     CFVersionNotFoundError,
@@ -19,6 +26,7 @@ from .models import (
     DatasetInfo,
     GeometryProcessing,
     GeometryRepresentation,
+    GeometryValidationMode,
     SourceReference,
     SpatialInterpretationProfile,
 )
@@ -31,6 +39,8 @@ class Resource(Protocol):
     def name(self) -> str: ...
 
     def joinpath(self, child: str) -> Resource: ...
+
+    def open(self, mode: Literal["rb"]) -> IO[bytes]: ...
 
     def read_bytes(self) -> bytes: ...
 
@@ -66,6 +76,18 @@ class ProfileHierarchyEdge:
 
 
 @dataclass(frozen=True, slots=True)
+class LookupArtifactResource:
+    """Optional compiled geometry resource used to accelerate runtime access."""
+
+    format: str
+    geometry_file: str
+    index_file: str
+    sha256: str
+    index_sha256: str
+    validation_mode: GeometryValidationMode
+
+
+@dataclass(frozen=True, slots=True)
 class GeometryResource:
     """A declared GeoJSON representation that can be loaded on demand."""
 
@@ -76,16 +98,97 @@ class GeometryResource:
     sha256: str | None
     feature_count: int
     processing: GeometryProcessing
+    lookup_artifact: LookupArtifactResource | None
+
+
+@dataclass(frozen=True, slots=True)
+class GeometryRecord:
+    """Small index record for one feature in a geometry representation."""
+
+    name: str
+    geometry_type: str
+    bounds: tuple[float, float, float, float]
+    properties: dict[str, Any]
+
+
+class GeometryStore:
+    """Indexed geometry representation with lazy geometry decoding."""
+
+    def __init__(
+        self,
+        *,
+        resource: GeometryResource,
+        records: tuple[GeometryRecord, ...],
+        load_geometry: Callable[[GeometryRecord], BaseGeometry],
+        raw_features: dict[str, dict[str, Any]] | None = None,
+        validate_geometry: bool = True,
+    ) -> None:
+        self.resource = resource
+        self.records = records
+        self._records = {record.name: record for record in records}
+        self._load_geometry = load_geometry
+        self._raw_features = raw_features or {}
+        self._validate_geometry = validate_geometry
+        self._geometries: dict[str, BaseGeometry] = {}
+
+    def geometry(self, name: str) -> BaseGeometry:
+        """Return and cache one validated geometry."""
+
+        cached = self._geometries.get(name)
+        if cached is not None:
+            return cached
+        try:
+            record = self._records[name]
+        except KeyError as error:
+            raise RegionDataError(
+                f"geometry representation {self.resource.resolution!r} "
+                f"lacks region {name!r}"
+            ) from error
+        geometry = self._load_geometry(record)
+        if geometry.is_empty or (
+            self._validate_geometry and not geometry.is_valid
+        ):
+            raise RegionDataError(
+                f"empty or invalid {self.resource.resolution!r} geometry for {name}"
+            )
+        if geometry.geom_type != record.geometry_type:
+            raise RegionDataError(
+                f"geometry type mismatch for {name!r}: index declares "
+                f"{record.geometry_type}, resource contains {geometry.geom_type}"
+            )
+        self._geometries[name] = geometry
+        return geometry
+
+    def feature(self, name: str) -> dict[str, Any]:
+        """Return one defensive GeoJSON Feature without loading unrelated geometry."""
+
+        self.geometry(name)
+        raw = self._raw_features.get(name)
+        if raw is not None:
+            return copy.deepcopy(raw)
+        try:
+            record = self._records[name]
+        except KeyError as error:
+            raise RegionDataError(
+                f"geometry representation {self.resource.resolution!r} "
+                f"lacks region {name!r}"
+            ) from error
+        return {
+            "type": "Feature",
+            "id": name,
+            "properties": copy.deepcopy(record.properties),
+            "geometry": mapping(self.geometry(name)),
+        }
 
 
 @dataclass(frozen=True, slots=True)
 class DatasetBundle:
     """A selected CF release combined with one compatible spatial profile."""
 
-    feature_collection: dict[str, Any]
     info: DatasetInfo
     geometry_resources: tuple[GeometryResource, ...]
     hierarchy_edges: tuple[ProfileHierarchyEdge, ...]
+    descriptions: dict[str, str]
 
 
 class _ResourceLoader:
@@ -124,6 +227,31 @@ class _ResourceLoader:
         if actual != expected:
             raise RegionDataError(
                 f"checksum mismatch for {label}: expected {expected}, found {actual}"
+            )
+
+    def _verify_resource_sha256(
+        self,
+        relative_path: str,
+        *,
+        expected: str,
+        chunk_size: int = 1024 * 1024,
+    ) -> None:
+        """Verify a resource without loading the complete file into memory."""
+
+        digest = hashlib.sha256()
+        try:
+            with self._resource(relative_path).open("rb") as stream:
+                while chunk := stream.read(chunk_size):
+                    digest.update(chunk)
+        except OSError as error:
+            raise RegionDataError(
+                f"unable to read data resource: {relative_path}"
+            ) from error
+        actual = digest.hexdigest()
+        if actual != expected:
+            raise RegionDataError(
+                f"checksum mismatch for {relative_path}: "
+                f"expected {expected}, found {actual}"
             )
 
     @staticmethod
@@ -176,6 +304,55 @@ class _ResourceLoader:
             raise RegionDataError(
                 f"unsupported {label} schema version {version}; supported version: 1"
             )
+
+
+def _geometry_bounds(geometry: dict[str, Any]) -> tuple[float, float, float, float]:
+    """Return GeoJSON bounds without constructing a full Shapely geometry."""
+
+    minimum_longitude = math.inf
+    minimum_latitude = math.inf
+    maximum_longitude = -math.inf
+    maximum_latitude = -math.inf
+
+    def collect(value: object) -> None:
+        nonlocal minimum_longitude, minimum_latitude
+        nonlocal maximum_longitude, maximum_latitude
+        if not isinstance(value, list):
+            return
+        if (
+            len(value) >= 2
+            and isinstance(value[0], (int, float))
+            and not isinstance(value[0], bool)
+            and isinstance(value[1], (int, float))
+            and not isinstance(value[1], bool)
+        ):
+            longitude = float(value[0])
+            latitude = float(value[1])
+            minimum_longitude = min(minimum_longitude, longitude)
+            minimum_latitude = min(minimum_latitude, latitude)
+            maximum_longitude = max(maximum_longitude, longitude)
+            maximum_latitude = max(maximum_latitude, latitude)
+            return
+        for child in value:
+            collect(child)
+
+    def collect_geometry(value: dict[str, Any]) -> None:
+        collect(value.get("coordinates"))
+        members = value.get("geometries", [])
+        if isinstance(members, list):
+            for member in members:
+                if isinstance(member, dict):
+                    collect_geometry(member)
+
+    collect_geometry(geometry)
+    if minimum_longitude == math.inf:
+        raise RegionDataError("geometry does not contain coordinates")
+    return (
+        minimum_longitude,
+        minimum_latitude,
+        maximum_longitude,
+        maximum_latitude,
+    )
 
 
 class CFRegistry(_ResourceLoader):
@@ -335,6 +512,7 @@ class SpatialProfileDataset(_ResourceLoader):
             cf_versions=supported_versions,
         )
         self._geometry_resources_cache = self._geometry_resources(self._manifest)
+        self._geometry_stores: dict[str, GeometryStore] = {}
 
     @property
     def info(self) -> SpatialInterpretationProfile:
@@ -376,11 +554,6 @@ class SpatialProfileDataset(_ResourceLoader):
             raise RegionDataError(
                 "profile default_geometry_resolution is not a declared representation"
             )
-        collection = self._select_features(
-            self.load_geometry(lookup_resource),
-            descriptions=cf_release.descriptions,
-            cf_version=cf_release.version,
-        )
         hierarchy = self._required_mapping(self._manifest, "hierarchy")
         hierarchy_edges = self._load_hierarchy(
             hierarchy, region_names=frozenset(cf_release.descriptions)
@@ -401,6 +574,11 @@ class SpatialProfileDataset(_ResourceLoader):
             crs=self._required_string(self._manifest, "crs"),
             lookup_behavior_version=self._required_string(lookup, "behavior_version"),
             lookup_geometry_resolution=lookup_resolution,
+            lookup_geometry_validation=(
+                lookup_resource.lookup_artifact.validation_mode
+                if lookup_resource.lookup_artifact is not None
+                else "runtime"
+            ),
             default_geometry_resolution=default_resolution,
             area_predicate=self._required_string(lookup, "area_predicate"),
             boundary_inclusive=self._required_bool(lookup, "boundary_inclusive"),
@@ -411,6 +589,11 @@ class SpatialProfileDataset(_ResourceLoader):
                     label=item.label,
                     description=item.description,
                     sha256=item.sha256,
+                    validation_mode=(
+                        item.lookup_artifact.validation_mode
+                        if item.lookup_artifact is not None
+                        else "runtime"
+                    ),
                     processing=item.processing,
                 )
                 for item in self._geometry_resources_cache
@@ -428,10 +611,204 @@ class SpatialProfileDataset(_ResourceLoader):
             limitations=tuple(raw_limitations),
         )
         return DatasetBundle(
-            feature_collection=collection,
             info=info,
             geometry_resources=self._geometry_resources_cache,
             hierarchy_edges=hierarchy_edges,
+            descriptions=cf_release.descriptions,
+        )
+
+    def open_geometry(self, resource: GeometryResource) -> GeometryStore:
+        """Open an indexed geometry store, preferring an optional compiled artifact."""
+
+        cached = self._geometry_stores.get(resource.resolution)
+        if cached is not None:
+            return cached
+        store = (
+            self._open_wkb_artifact(resource)
+            if resource.lookup_artifact is not None
+            else self._open_geojson(resource)
+        )
+        self._geometry_stores[resource.resolution] = store
+        return store
+
+    def _open_geojson(self, resource: GeometryResource) -> GeometryStore:
+        collection = self.load_geometry(resource)
+        raw_features = collection.get("features")
+        assert isinstance(raw_features, list)
+        features_by_name: dict[str, dict[str, Any]] = {}
+        geometries_by_name: dict[str, dict[str, Any]] = {}
+        records: list[GeometryRecord] = []
+        for feature in raw_features:
+            if not isinstance(feature, dict):
+                raise RegionDataError(
+                    f"geometry representation {resource.resolution!r} contains "
+                    "an invalid feature"
+                )
+            properties = feature.get("properties")
+            raw_geometry = feature.get("geometry")
+            if not isinstance(properties, dict) or not isinstance(raw_geometry, dict):
+                raise RegionDataError(
+                    f"geometry representation {resource.resolution!r} contains "
+                    "a feature without properties or geometry"
+                )
+            name = properties.get("name")
+            geometry_type = raw_geometry.get("type")
+            if not isinstance(name, str) or not name or not isinstance(geometry_type, str):
+                raise RegionDataError("geometry feature name or type is invalid")
+            if name in features_by_name:
+                raise RegionDataError(
+                    f"geometry representation {resource.resolution!r} "
+                    f"duplicates region {name!r}"
+                )
+            features_by_name[name] = feature
+            geometries_by_name[name] = raw_geometry
+            records.append(
+                GeometryRecord(
+                    name=name,
+                    geometry_type=geometry_type,
+                    bounds=_geometry_bounds(raw_geometry),
+                    properties=properties,
+                )
+            )
+
+        def load_record(record: GeometryRecord) -> BaseGeometry:
+            try:
+                return shape(geometries_by_name[record.name])
+            except Exception as error:
+                raise RegionDataError(
+                    f"invalid {resource.resolution!r} geometry for {record.name}"
+                ) from error
+
+        return GeometryStore(
+            resource=resource,
+            records=tuple(records),
+            load_geometry=load_record,
+            raw_features=features_by_name,
+        )
+
+    def _open_wkb_artifact(self, resource: GeometryResource) -> GeometryStore:
+        artifact = resource.lookup_artifact
+        assert artifact is not None
+        if artifact.format != "wkb-pack-v1":
+            raise RegionDataError(
+                f"unsupported compiled lookup artifact format {artifact.format!r}"
+            )
+        index_content = self._read_bytes(artifact.index_file)
+        self._verify_sha256(
+            index_content,
+            expected=artifact.index_sha256,
+            label=artifact.index_file,
+        )
+        try:
+            index = json.loads(index_content)
+        except (UnicodeDecodeError, json.JSONDecodeError) as error:
+            raise RegionDataError(
+                f"{artifact.index_file} is not valid UTF-8 JSON"
+            ) from error
+        if not isinstance(index, dict):
+            raise RegionDataError(f"{artifact.index_file} must contain a JSON object")
+        self._validate_schema_version(index, label=artifact.index_file)
+        if index.get("format") != "wkb-pack-v1":
+            raise RegionDataError("unsupported compiled lookup artifact format")
+        if resource.sha256 is None:
+            raise RegionDataError(
+                "a geometry representation with lookup_artifact must declare sha256"
+            )
+        source_sha256 = index.get("source_sha256")
+        if source_sha256 != resource.sha256:
+            raise RegionDataError(
+                "compiled lookup artifact does not match its GeoJSON representation"
+            )
+        self._verify_resource_sha256(
+            resource.geometry_file,
+            expected=resource.sha256,
+        )
+        raw_records = index.get("features")
+        declared_count = self._required_int(index, "feature_count")
+        if (
+            not isinstance(raw_records, list)
+            or declared_count != len(raw_records)
+            or declared_count != resource.feature_count
+        ):
+            raise RegionDataError(
+                f"compiled lookup artifact for {resource.resolution!r} has an "
+                "unexpected feature count"
+            )
+        records: list[GeometryRecord] = []
+        locations: dict[str, tuple[int, int]] = {}
+        for raw_record in raw_records:
+            if not isinstance(raw_record, dict):
+                raise RegionDataError("compiled lookup index contains an invalid feature")
+            name = self._required_string(raw_record, "name")
+            geometry_type = self._required_string(raw_record, "geometry_type")
+            properties = self._required_mapping(raw_record, "properties")
+            if properties.get("name") != name:
+                raise RegionDataError(
+                    "compiled lookup index feature name does not match its properties"
+                )
+            raw_bounds = raw_record.get("bounds")
+            if (
+                not isinstance(raw_bounds, list)
+                or len(raw_bounds) != 4
+                or any(
+                    isinstance(value, bool) or not isinstance(value, (int, float))
+                    for value in raw_bounds
+                )
+            ):
+                raise RegionDataError("compiled lookup index contains invalid bounds")
+            bounds = (
+                float(raw_bounds[0]),
+                float(raw_bounds[1]),
+                float(raw_bounds[2]),
+                float(raw_bounds[3]),
+            )
+            if (
+                not all(math.isfinite(value) for value in bounds)
+                or bounds[0] > bounds[2]
+                or bounds[1] > bounds[3]
+            ):
+                raise RegionDataError("compiled lookup index contains invalid bounds")
+            offset = self._required_int(raw_record, "offset")
+            length = self._required_int(raw_record, "length")
+            if offset < 0 or length <= 0 or name in locations:
+                raise RegionDataError("compiled lookup index contains invalid offsets")
+            locations[name] = (offset, length)
+            records.append(
+                GeometryRecord(
+                    name=name,
+                    geometry_type=geometry_type,
+                    bounds=bounds,
+                    properties=properties,
+                )
+            )
+
+        pack: bytes | None = None
+
+        def load_record(record: GeometryRecord) -> BaseGeometry:
+            nonlocal pack
+            if pack is None:
+                pack = self._read_bytes(artifact.geometry_file)
+                self._verify_sha256(
+                    pack,
+                    expected=artifact.sha256,
+                    label=artifact.geometry_file,
+                )
+            offset, length = locations[record.name]
+            end = offset + length
+            if end > len(pack):
+                raise RegionDataError("compiled lookup artifact contains invalid offsets")
+            try:
+                return load_wkb(pack[offset:end])
+            except Exception as error:
+                raise RegionDataError(
+                    f"invalid compiled geometry for {record.name}"
+                ) from error
+
+        return GeometryStore(
+            resource=resource,
+            records=tuple(records),
+            load_geometry=load_record,
+            validate_geometry=artifact.validation_mode == "runtime",
         )
 
     def load_geometry(self, resource: GeometryResource) -> dict[str, Any]:
@@ -543,50 +920,61 @@ class SpatialProfileDataset(_ResourceLoader):
                 raise RegionDataError("geometry representation metadata is invalid")
             processing = cls._required_mapping(raw_resource, "processing")
             parameters = cls._required_mapping(processing, "parameters")
+            geometry_sha256 = cls._optional_sha256(raw_resource)
+            raw_artifact = raw_resource.get("lookup_artifact")
+            artifact: LookupArtifactResource | None = None
+            if raw_artifact is not None:
+                if not isinstance(raw_artifact, dict):
+                    raise RegionDataError(
+                        "geometry lookup_artifact metadata must be an object"
+                    )
+                if geometry_sha256 is None:
+                    raise RegionDataError(
+                        "a geometry representation with lookup_artifact must "
+                        "declare sha256"
+                    )
+                artifact_sha256 = cls._optional_sha256(raw_artifact)
+                index_sha256 = cls._optional_sha256(
+                    raw_artifact, "index_sha256"
+                )
+                if artifact_sha256 is None or index_sha256 is None:
+                    raise RegionDataError(
+                        "lookup_artifact must declare sha256 and index_sha256"
+                    )
+                artifact = LookupArtifactResource(
+                    format=cls._required_string(raw_artifact, "format"),
+                    geometry_file=cls._required_string(
+                        raw_artifact, "geometry_file"
+                    ),
+                    index_file=cls._required_string(raw_artifact, "index_file"),
+                    sha256=artifact_sha256,
+                    index_sha256=index_sha256,
+                    validation_mode=cls._validation_mode(raw_artifact),
+                )
             resources.append(
                 GeometryResource(
                     resolution=resolution,
                     label=cls._required_string(raw_resource, "label"),
                     description=cls._required_string(raw_resource, "description"),
                     geometry_file=cls._required_string(raw_resource, "geometry_file"),
-                    sha256=cls._optional_sha256(raw_resource),
+                    sha256=geometry_sha256,
                     feature_count=cls._required_int(raw_resource, "feature_count"),
                     processing=GeometryProcessing(
                         method=cls._required_string(processing, "method"),
                         parameters=parameters,
                     ),
+                    lookup_artifact=artifact,
                 )
             )
         return tuple(resources)
 
-    @staticmethod
-    def _select_features(
-        collection: dict[str, Any],
-        *,
-        descriptions: dict[str, str],
-        cf_version: str,
-    ) -> dict[str, Any]:
-        features = collection.get("features")
-        if collection.get("type") != "FeatureCollection" or not isinstance(features, list):
-            raise RegionDataError("geometry is not a GeoJSON FeatureCollection")
-        names = frozenset(descriptions)
-        selected: list[dict[str, Any]] = []
-        selected_names: set[str] = set()
-        for feature in features:
-            if not isinstance(feature, dict):
-                continue
-            properties = feature.get("properties")
-            if not isinstance(properties, dict) or properties.get("name") not in names:
-                continue
-            name = str(properties["name"])
-            selected.append(
-                {**feature, "properties": {**properties, "description": descriptions[name]}}
-            )
-            selected_names.add(name)
-        missing = names - selected_names
-        if missing:
+    @classmethod
+    def _validation_mode(
+        cls, artifact: dict[str, Any]
+    ) -> GeometryValidationMode:
+        value = cls._required_string(artifact, "validation_mode")
+        if value not in {"runtime", "prevalidated"}:
             raise RegionDataError(
-                f"profile geometry lacks CF v{cf_version} region(s): "
-                + ", ".join(sorted(missing))
+                "lookup_artifact validation_mode must be 'runtime' or 'prevalidated'"
             )
-        return {**collection, "features": selected}
+        return value  # type: ignore[return-value]
