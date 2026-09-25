@@ -210,7 +210,10 @@ class DirectorySpatialProfileProvider:
                 if child.is_dir():
                     visit(child, depth + 1)
                 elif child.name == "manifest.json":
-                    dataset = SpatialProfileDataset(directory, manifest_file="manifest.json")
+                    dataset = SpatialProfileDataset(
+                        directory,
+                        manifest_file="manifest.json",
+                    )
                     identity = (dataset.info.id, dataset.info.version)
                     if identity in datasets:
                         raise RegionDataError(

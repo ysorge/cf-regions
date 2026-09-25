@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
 import shapefile
 from shapely import from_wkb
 from tools.build_dataset import _load_seavox, _shapefile_parts
@@ -107,3 +108,41 @@ def test_lookup_artifact_is_reproducible_and_indexed(tmp_path: Path) -> None:
     assert index["source_sha256"]
     assert record["bounds"] == [0.0, 0.0, 2.0, 1.0]
     assert geometry.geom_type == "Polygon"
+    assert geometry.is_valid
+
+
+def test_lookup_artifact_builder_rejects_invalid_geometry(tmp_path: Path) -> None:
+    source = tmp_path / "invalid.geojson"
+    source.write_text(
+        json.dumps(
+            {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "properties": {"name": "invalid"},
+                        "geometry": {
+                            "type": "Polygon",
+                            "coordinates": [
+                                [
+                                    [-1.0, -1.0],
+                                    [1.0, 1.0],
+                                    [1.0, -1.0],
+                                    [-1.0, 1.0],
+                                    [-1.0, -1.0],
+                                ]
+                            ],
+                        },
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="invalid geometry"):
+        build_lookup_artifact(
+            source,
+            tmp_path / "invalid.lookup.wkb",
+            tmp_path / "invalid.lookup.json",
+        )

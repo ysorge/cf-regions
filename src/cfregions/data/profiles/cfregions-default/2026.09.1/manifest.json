@@ -57,7 +57,8 @@
         "geometry_file": "geometry/high.lookup.wkb",
         "index_file": "geometry/high.lookup.json",
         "sha256": "97010214852271f286a7129bfb62a09f85c8bcfe535a21327670998226498163",
-        "index_sha256": "5ae0344a83b7e3ced0a13d6b538239c5c5e6a24fe040f5858c2438cbfc43210e"
+        "index_sha256": "5ae0344a83b7e3ced0a13d6b538239c5c5e6a24fe040f5858c2438cbfc43210e",
+        "validation_mode": "prevalidated"
       },
       "processing": {
         "method": "simplify_and_round",

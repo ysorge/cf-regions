@@ -141,7 +141,10 @@ remains pinned to the profile's declared lookup representation, so changing
 display detail does not change lookup results.
 
 Every detailed match reports the CF release, mapping ID and version, lookup
-method and predicate, optional content hash, and geometry or hierarchy source.
+method and predicate, optional content hash, geometry-validation mode, and
+geometry or hierarchy source. The selected mode is also available as
+`get_dataset_info().lookup_geometry_validation`; each representation reports
+its own `validation_mode`.
 Mapping versions and CF vocabulary versions are intentionally independent.
 
 ## Profiles and external data

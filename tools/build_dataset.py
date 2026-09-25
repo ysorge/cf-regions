@@ -830,6 +830,7 @@ def main() -> None:
             "index_file": "geometry/high.lookup.json",
             "sha256": artifact_sha256,
             "index_sha256": index_sha256,
+            "validation_mode": "prevalidated",
         }
 
     hierarchy_edges = []

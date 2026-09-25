@@ -171,6 +171,14 @@ a separate, checksummed `hierarchy.json`. The builder
 must complete with exact CF-name parity; do not bypass a missing-name or source
 version assertion.
 
+The default-profile builder declares `validation_mode: "prevalidated"` because
+it rejects invalid geometry before serialization. Release validation must
+therefore retain that check and run the artifact regression tests; do not create
+or patch a bundled WKB pack manually. Other providers choose their own mode in
+the manifest. `runtime` is recommended unless their build process provides the
+same assurance; see [Spatial profile file format](profile-format.md) for the
+correctness and performance trade-off.
+
 The build tool performs no upstream downloads. Store acquisition notes outside
 the runtime package when upstream redistribution rules do not permit retaining
 raw source files in the repository.

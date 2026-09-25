@@ -9,6 +9,7 @@ RegionKind = Literal["area", "section"]
 MatchRelation = Literal["covered_by", "near_section", "ancestor"]
 HierarchyEdgeOrigin = str
 GeometryResolution = str
+GeometryValidationMode = Literal["runtime", "prevalidated"]
 
 
 @dataclass(frozen=True, slots=True)
@@ -48,6 +49,7 @@ class GeometryRepresentation:
     label: str
     description: str
     sha256: str | None
+    validation_mode: GeometryValidationMode
     processing: GeometryProcessing
 
 
@@ -62,6 +64,7 @@ class MappingReference:
     crs: str
     created_at: str
     geometry_sha256: str | None
+    geometry_validation: GeometryValidationMode
 
 
 @dataclass(frozen=True, slots=True)
@@ -169,6 +172,7 @@ class DatasetInfo:
     crs: str
     lookup_behavior_version: str
     lookup_geometry_resolution: GeometryResolution
+    lookup_geometry_validation: GeometryValidationMode
     default_geometry_resolution: GeometryResolution
     area_predicate: str
     boundary_inclusive: bool

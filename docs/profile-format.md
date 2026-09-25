@@ -100,7 +100,8 @@ Each representation declares:
 
 Large lookup representations may optionally declare a `lookup_artifact` with
 `format: "wkb-pack-v1"`, manifest-relative `geometry_file` and `index_file`,
-and mandatory `sha256`/`index_sha256` values. The parent representation's
+mandatory `sha256`/`index_sha256` values, and an explicit `validation_mode`.
+The parent representation's
 GeoJSON `sha256` is also mandatory in this case. The artifact contains the same
 geometries as the representation's GeoJSON in packed WKB plus a small bounding
 box index. It does not change the profile's spatial meaning, identity, or
@@ -108,6 +109,25 @@ provenance. GeoJSON remains the portable source representation and is used
 automatically when the artifact is absent. Profile authors can generate the
 two files with `tools/lookup_artifact.py`; the machine-readable index contract
 is [`lookup-index.schema.json`](../src/cfregions/data/schemas/lookup-index.schema.json).
+
+The profile provider chooses one validation mode:
+
+| `validation_mode` | Behavior and trade-off |
+| --- | --- |
+| `runtime` | `cf-regions` checks every decoded geometry with GEOS `is_valid` before use and caches the result for that process. This is the recommended defensive default for externally produced, hand-modified, or otherwise uncontrolled artifacts. |
+| `prevalidated` | The provider asserts that every WKB geometry was validated during generation. Runtime decoding checks structure and declared type but skips the expensive topology check. Use this only with a reproducible validating builder, immutable source/index/artifact hashes, and regression tests. |
+
+Runtime validation matters because successful WKB parsing and matching hashes
+prove byte integrity, not geometric validity. A polygon may still be
+self-intersecting or otherwise topologically invalid, which can produce wrong
+spatial predicates or GEOS errors. Conversely, validating multi-million-vertex
+ocean geometries can add seconds or tens of seconds to the first matching
+lookup. `prevalidated` makes that performance/responsibility trade-off explicit
+instead of inferring trust from where a profile was installed.
+
+The provided generator rejects empty or topologically invalid geometry before
+writing WKB. The bundled default therefore declares `prevalidated`; providers
+with a different build or assurance process may choose `runtime`.
 
 ## Geometry FeatureCollections
 

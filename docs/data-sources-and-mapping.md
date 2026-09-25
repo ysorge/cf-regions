@@ -219,7 +219,7 @@ needed to understand a match:
   basis for a direct match;
 - `geometry_source` and `geometry_method`: corresponding fields on an exported
   shape;
-- geometry resolution, CRS, generation date, and content hash.
+- geometry resolution and validation mode, CRS, generation date, and content hash.
 
 For example:
 

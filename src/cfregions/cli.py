@@ -394,6 +394,7 @@ def _run_lookup(arguments: argparse.Namespace) -> None:
                 "crs": info.crs,
                 "created_at": info.generated_on,
                 "geometry_sha256": info.lookup_geometry_sha256,
+                "geometry_validation": info.lookup_geometry_validation,
             },
             "method": {
                 "area_predicate": info.area_predicate,

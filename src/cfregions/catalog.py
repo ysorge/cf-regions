@@ -545,7 +545,9 @@ class RegionCatalog:
         except (KeyError, TypeError) as error:
             raise RegionNotFoundError(f"unknown CF standardized region: {region_name}") from error
         resolution = geometry_resolution or self._dataset_info.default_geometry_resolution
-        feature = self._store_for_resolution(resolution).feature(region_name)
+        store = self._store_for_resolution(resolution)
+        feature = store.feature(region_name)
+        artifact = store.resource.lookup_artifact
         properties = feature.get("properties")
         if not isinstance(properties, dict):
             raise RegionDataError(
@@ -559,6 +561,9 @@ class RegionCatalog:
             "mapping_id": self._dataset_info.mapping_id,
             "mapping_version": self._dataset_info.mapping_version,
             "geometry_resolution": resolution,
+            "geometry_validation": (
+                artifact.validation_mode if artifact is not None else "runtime"
+            ),
             "crs": self._dataset_info.crs,
         }
         return feature
@@ -595,6 +600,7 @@ class RegionCatalog:
             crs=info.crs,
             created_at=info.generated_on,
             geometry_sha256=info.lookup_geometry_sha256,
+            geometry_validation=info.lookup_geometry_validation,
         )
 
     @staticmethod

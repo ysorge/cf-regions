@@ -59,13 +59,17 @@
           "lookup_artifact": {
             "description": "Optional generated accelerator. The GeoJSON remains authoritative and sufficient when this object is omitted.",
             "type": "object",
-            "required": ["format", "geometry_file", "index_file", "sha256", "index_sha256"],
+            "required": ["format", "geometry_file", "index_file", "sha256", "index_sha256", "validation_mode"],
             "properties": {
               "format": {"const": "wkb-pack-v1"},
               "geometry_file": {"type": "string", "minLength": 1},
               "index_file": {"type": "string", "minLength": 1},
               "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-              "index_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+              "index_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+              "validation_mode": {
+                "enum": ["runtime", "prevalidated"],
+                "description": "runtime validates each decoded geometry defensively; prevalidated trusts the provider's build-time validation for lower latency."
+              }
             },
             "additionalProperties": false
           },

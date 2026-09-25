@@ -26,6 +26,7 @@ from .models import (
     DatasetInfo,
     GeometryProcessing,
     GeometryRepresentation,
+    GeometryValidationMode,
     SourceReference,
     SpatialInterpretationProfile,
 )
@@ -81,6 +82,7 @@ class LookupArtifactResource:
     index_file: str
     sha256: str
     index_sha256: str
+    validation_mode: GeometryValidationMode
 
 
 @dataclass(frozen=True, slots=True)
@@ -545,6 +547,11 @@ class SpatialProfileDataset(_ResourceLoader):
             crs=self._required_string(self._manifest, "crs"),
             lookup_behavior_version=self._required_string(lookup, "behavior_version"),
             lookup_geometry_resolution=lookup_resolution,
+            lookup_geometry_validation=(
+                lookup_resource.lookup_artifact.validation_mode
+                if lookup_resource.lookup_artifact is not None
+                else "runtime"
+            ),
             default_geometry_resolution=default_resolution,
             area_predicate=self._required_string(lookup, "area_predicate"),
             boundary_inclusive=self._required_bool(lookup, "boundary_inclusive"),
@@ -555,6 +562,11 @@ class SpatialProfileDataset(_ResourceLoader):
                     label=item.label,
                     description=item.description,
                     sha256=item.sha256,
+                    validation_mode=(
+                        item.lookup_artifact.validation_mode
+                        if item.lookup_artifact is not None
+                        else "runtime"
+                    ),
                     processing=item.processing,
                 )
                 for item in self._geometry_resources_cache
@@ -761,7 +773,7 @@ class SpatialProfileDataset(_ResourceLoader):
             resource=resource,
             records=tuple(records),
             load_geometry=load_record,
-            validate_geometry=False,
+            validate_geometry=artifact.validation_mode == "runtime",
         )
 
     def load_geometry(self, resource: GeometryResource) -> dict[str, Any]:
@@ -902,6 +914,7 @@ class SpatialProfileDataset(_ResourceLoader):
                     index_file=cls._required_string(raw_artifact, "index_file"),
                     sha256=artifact_sha256,
                     index_sha256=index_sha256,
+                    validation_mode=cls._validation_mode(raw_artifact),
                 )
             resources.append(
                 GeometryResource(
@@ -919,3 +932,14 @@ class SpatialProfileDataset(_ResourceLoader):
                 )
             )
         return tuple(resources)
+
+    @classmethod
+    def _validation_mode(
+        cls, artifact: dict[str, Any]
+    ) -> GeometryValidationMode:
+        value = cls._required_string(artifact, "validation_mode")
+        if value not in {"runtime", "prevalidated"}:
+            raise RegionDataError(
+                "lookup_artifact validation_mode must be 'runtime' or 'prevalidated'"
+            )
+        return value  # type: ignore[return-value]
