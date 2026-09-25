@@ -115,7 +115,8 @@ directly. See the [contribution guide][contributing] and
 [CF Conventions Community Workshop 2026][workshop] at ECMWF in Bonn, Germany.
 The project is currently maintained by its original author.
 
-Additional contributors are recorded in [AUTHORS.md](AUTHORS.md) and the
+Additional contributors are recorded in
+[AUTHORS.md](https://github.com/ysorge/cf-regions/blob/main/AUTHORS.md) and the
 repository history. Maintainer responsibility may move to another person or
 organization without replacing the authorship of existing contributions.
 
