@@ -6,6 +6,7 @@ from importlib.resources import files
 from pathlib import Path
 
 import pytest
+from tools.lookup_artifact import build_lookup_artifact
 
 import cfregions
 
@@ -191,8 +192,67 @@ def test_declared_profile_geometry_checksum_is_verified(tmp_path: Path) -> None:
     geometry = tmp_path / "profiles/test-profile/1/geometry/low.geojson"
     geometry.write_text("{}", encoding="utf-8")
 
+    # Metadata discovery intentionally does not open a potentially large geometry file.
+    assert cfregions.get_dataset_info(data_directory=tmp_path).profile.id == "test-profile"
     with pytest.raises(cfregions.RegionDataError, match="checksum mismatch"):
-        cfregions.get_dataset_info(data_directory=tmp_path)
+        cfregions.match_regions(
+            longitude=0,
+            latitude=0,
+            data_directory=tmp_path,
+        )
+
+
+def test_optional_lookup_artifact_is_used_and_verified(tmp_path: Path) -> None:
+    _external_dataset(tmp_path)
+    profile_root = tmp_path / "profiles/test-profile/1"
+    geometry = profile_root / "geometry/low.geojson"
+    pack = profile_root / "geometry/low.lookup.wkb"
+    index = profile_root / "geometry/low.lookup.json"
+    pack_sha256, index_sha256 = build_lookup_artifact(geometry, pack, index)
+    manifest_path = profile_root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["representations"]["low"]["lookup_artifact"] = {
+        "format": "wkb-pack-v1",
+        "geometry_file": "geometry/low.lookup.wkb",
+        "index_file": "geometry/low.lookup.json",
+        "sha256": pack_sha256,
+        "index_sha256": index_sha256,
+    }
+    _write_json(manifest_path, manifest)
+
+    assert cfregions.match_region_names(
+        longitude=0,
+        latitude=0,
+        data_directory=tmp_path,
+    ) == ("global",)
+
+    tampered_root = tmp_path / "tampered"
+    _external_dataset(tampered_root)
+    tampered_profile = tampered_root / "profiles/test-profile/1"
+    tampered_geometry = tampered_profile / "geometry/low.geojson"
+    tampered_pack = tampered_profile / "geometry/low.lookup.wkb"
+    tampered_index = tampered_profile / "geometry/low.lookup.json"
+    pack_sha256, index_sha256 = build_lookup_artifact(
+        tampered_geometry, tampered_pack, tampered_index
+    )
+    tampered_manifest_path = tampered_profile / "manifest.json"
+    tampered_manifest = json.loads(tampered_manifest_path.read_text(encoding="utf-8"))
+    tampered_manifest["representations"]["low"]["lookup_artifact"] = {
+        "format": "wkb-pack-v1",
+        "geometry_file": "geometry/low.lookup.wkb",
+        "index_file": "geometry/low.lookup.json",
+        "sha256": pack_sha256,
+        "index_sha256": index_sha256,
+    }
+    _write_json(tampered_manifest_path, tampered_manifest)
+    tampered_pack.write_bytes(tampered_pack.read_bytes() + b"tampered")
+
+    with pytest.raises(cfregions.RegionDataError, match="checksum mismatch"):
+        cfregions.match_regions(
+            longitude=0,
+            latitude=0,
+            data_directory=tampered_root,
+        )
 
 
 def test_declared_profile_checksum_must_be_a_sha256_digest(tmp_path: Path) -> None:

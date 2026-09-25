@@ -29,7 +29,9 @@ data/
             ├── hierarchy.json           profile-defined broader relations
             └── geometry/
                 ├── low.geojson
-                └── high.geojson         optional representation
+                ├── high.geojson         optional representation
+                ├── high.lookup.json     optional generated index
+                └── high.lookup.wkb      optional generated geometry pack
 ```
 
 The CF registry is shared by every profile. A profile provider must **not**
@@ -60,6 +62,10 @@ A profile version consists of the following profile-owned resources:
   feature-level geometry provenance;
 - `hierarchy.json`, containing explicit child-to-parent edges and provenance
   for each edge.
+
+A representation may additionally ship a generated lookup artifact for faster
+lazy access. It is an optimization only: profiles remain complete and usable
+without it, and contributors do not need to author binary data by hand.
 
 Hierarchy is profile-dependent. This matters for political groupings,
 scientific basin subdivisions, composite oceans, and diagnostic sections: two

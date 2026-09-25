@@ -66,6 +66,8 @@ cfregions = [
   "data/vocabularies/*.xml",
   "data/profiles/*/*/*.json",
   "data/profiles/*/*/geometry/*.geojson",
+  "data/profiles/*/*/geometry/*.json",
+  "data/profiles/*/*/geometry/*.wkb",
 ]
 
 [tool.pytest.ini_options]

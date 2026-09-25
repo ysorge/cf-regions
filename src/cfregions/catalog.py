@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import copy
 import math
 from collections import deque
 from collections.abc import Iterator, Sequence
@@ -10,13 +9,15 @@ from itertools import pairwise
 from pathlib import Path
 from typing import Any
 
-from shapely.geometry import LineString, MultiLineString, Point, shape
+from shapely.geometry import LineString, MultiLineString, Point, box
 from shapely.geometry.base import BaseGeometry
 from shapely.strtree import STRtree
 
 from .datasets import (
     CFRegistry,
+    DatasetBundle,
     GeometryResource,
+    GeometryStore,
     ProfileHierarchyEdge,
     SpatialProfileDataset,
 )
@@ -270,21 +271,15 @@ class RegionCatalog:
     def __init__(
         self,
         *,
-        feature_collection: dict[str, Any],
+        lookup_store: GeometryStore,
+        descriptions: dict[str, str],
         dataset_info: DatasetInfo,
         profile_dataset: SpatialProfileDataset | None = None,
         geometry_resources: tuple[GeometryResource, ...] = (),
         hierarchy_edges: tuple[ProfileHierarchyEdge, ...] = (),
     ) -> None:
-        raw_features = feature_collection.get("features")
-        if feature_collection.get("type") != "FeatureCollection" or not isinstance(
-            raw_features, list
-        ):
-            raise RegionDataError("regions.geojson is not a GeoJSON FeatureCollection")
-
         regions: list[Region] = []
-        geometries: list[BaseGeometry] = []
-        features: list[dict[str, Any]] = []
+        bounds: list[tuple[float, float, float, float]] = []
         names: set[str] = set()
         parents_by_child: dict[str, list[str]] = {}
         paths_by_child: dict[str, tuple[str, ...]] = {}
@@ -300,51 +295,51 @@ class RegionCatalog:
             if edge.context_path:
                 paths_by_child.setdefault(edge.child, edge.context_path)
 
-        for raw_feature in raw_features:
-            if not isinstance(raw_feature, dict) or raw_feature.get("type") != "Feature":
-                raise RegionDataError("regions.geojson contains an invalid feature")
-            properties = raw_feature.get("properties")
-            raw_geometry = raw_feature.get("geometry")
-            if not isinstance(properties, dict) or not isinstance(raw_geometry, dict):
-                raise RegionDataError("a region feature is missing properties or geometry")
-            name = str(properties.get("name", ""))
+        for record in lookup_store.records:
+            if record.name not in descriptions:
+                continue
+            properties = {
+                **record.properties,
+                "description": descriptions[record.name],
+            }
+            name = record.name
             region = self._region_from_properties(
                 properties,
-                raw_geometry,
+                record.geometry_type,
                 parents=tuple(parents_by_child.get(name, ())),
                 hierarchy_path=paths_by_child.get(name, ()),
             )
             if region.name in names:
                 raise RegionDataError(f"duplicate region name: {region.name}")
             names.add(region.name)
-            try:
-                geometry = shape(raw_geometry)
-            except Exception as error:
-                raise RegionDataError(f"invalid geometry for {region.name}") from error
-            if geometry.is_empty or not geometry.is_valid:
-                raise RegionDataError(f"empty or invalid geometry for {region.name}")
-            if region.kind == "area" and geometry.geom_type not in {"Polygon", "MultiPolygon"}:
+            if region.kind == "area" and record.geometry_type not in {
+                "Polygon",
+                "MultiPolygon",
+            }:
                 raise RegionDataError(f"area region {region.name} is not polygonal")
-            if region.kind == "section" and geometry.geom_type not in {
+            if region.kind == "section" and record.geometry_type not in {
                 "LineString",
                 "MultiLineString",
             }:
                 raise RegionDataError(f"section region {region.name} is not linear")
             regions.append(region)
-            geometries.append(geometry)
-            features.append(raw_feature)
+            bounds.append(record.bounds)
 
         self._regions = tuple(regions)
-        self._geometries = tuple(geometries)
-        self._features = tuple(features)
         self._name_to_index = {region.name: index for index, region in enumerate(regions)}
+        missing = set(descriptions) - set(self._name_to_index)
+        if missing:
+            raise RegionDataError(
+                f"profile geometry lacks CF v{dataset_info.cf_version} region(s): "
+                + ", ".join(sorted(missing))
+            )
         for region in regions:
             unknown_parents = set(region.parents) - names
             if unknown_parents:
                 parent_list = ", ".join(sorted(unknown_parents))
                 raise RegionDataError(f"{region.name} has unknown parent(s): {parent_list}")
         self._assert_acyclic()
-        self._tree = STRtree(self._geometries)
+        self._tree = STRtree(tuple(box(*item) for item in bounds))
         self._section_indexes = tuple(
             index for index, region in enumerate(self._regions) if region.kind == "section"
         )
@@ -369,16 +364,15 @@ class RegionCatalog:
         self._geometry_resources = {
             resource.resolution: resource for resource in geometry_resources
         }
-        self._representation_features: dict[str, dict[str, dict[str, Any]]] = {
-            dataset_info.lookup_geometry_resolution: {
-                region.name: feature for region, feature in zip(regions, features, strict=True)
-            }
+        self._lookup_store = lookup_store
+        self._geometry_stores: dict[str, GeometryStore] = {
+            dataset_info.lookup_geometry_resolution: lookup_store
         }
 
     @staticmethod
     def _region_from_properties(
         properties: dict[str, Any],
-        raw_geometry: dict[str, Any],
+        geometry_type: str,
         *,
         parents: tuple[str, ...],
         hierarchy_path: tuple[str, ...],
@@ -390,7 +384,7 @@ class RegionCatalog:
             return Region(
                 name=str(properties["name"]),
                 kind=kind,  # type: ignore[arg-type]
-                geometry_type=str(raw_geometry["type"]),
+                geometry_type=geometry_type,
                 parents=parents,
                 description=str(properties.get("description", "")),
                 hierarchy_path=hierarchy_path,
@@ -469,8 +463,23 @@ class RegionCatalog:
         """Combine independently selected CF and spatial-profile data."""
 
         bundle = profile_dataset.load(cf_registry.load(cf_version))
+        return cls.from_bundle(profile_dataset, bundle)
+
+    @classmethod
+    def from_bundle(
+        cls,
+        profile_dataset: SpatialProfileDataset,
+        bundle: DatasetBundle,
+    ) -> RegionCatalog:
+        """Build a catalog from an already selected vocabulary/profile bundle."""
+
+        resources = {
+            resource.resolution: resource for resource in bundle.geometry_resources
+        }
+        lookup_resource = resources[bundle.info.lookup_geometry_resolution]
         return cls(
-            feature_collection=bundle.feature_collection,
+            lookup_store=profile_dataset.open_geometry(lookup_resource),
+            descriptions=bundle.descriptions,
             dataset_info=bundle.info,
             profile_dataset=profile_dataset,
             geometry_resources=bundle.geometry_resources,
@@ -536,29 +545,7 @@ class RegionCatalog:
         except (KeyError, TypeError) as error:
             raise RegionNotFoundError(f"unknown CF standardized region: {region_name}") from error
         resolution = geometry_resolution or self._dataset_info.default_geometry_resolution
-        features = self._features_for_resolution(resolution)
-        try:
-            feature = copy.deepcopy(features[region_name])
-        except KeyError as error:
-            raise RegionDataError(
-                f"geometry representation {resolution!r} lacks CF region {region_name!r}"
-            ) from error
-        if resolution != self._dataset_info.lookup_geometry_resolution:
-            raw_geometry = feature.get("geometry")
-            if not isinstance(raw_geometry, dict):
-                raise RegionDataError(
-                    f"geometry representation {resolution!r} lacks geometry for {region_name!r}"
-                )
-            try:
-                selected_geometry = shape(raw_geometry)
-            except Exception as error:
-                raise RegionDataError(
-                    f"invalid {resolution!r} geometry for {region_name}"
-                ) from error
-            if selected_geometry.is_empty or not selected_geometry.is_valid:
-                raise RegionDataError(
-                    f"empty or invalid {resolution!r} geometry for {region_name}"
-                )
+        feature = self._store_for_resolution(resolution).feature(region_name)
         properties = feature.get("properties")
         if not isinstance(properties, dict):
             raise RegionDataError(
@@ -576,8 +563,8 @@ class RegionCatalog:
         }
         return feature
 
-    def _features_for_resolution(self, resolution: str) -> dict[str, dict[str, Any]]:
-        cached = self._representation_features.get(resolution)
+    def _store_for_resolution(self, resolution: str) -> GeometryStore:
+        cached = self._geometry_stores.get(resolution)
         if cached is not None:
             return cached
         resource = self._geometry_resources.get(resolution)
@@ -586,34 +573,17 @@ class RegionCatalog:
             raise GeometryResolutionNotFoundError(
                 f"unknown geometry resolution {resolution!r}; available: {available}"
             )
-        collection = self._profile_dataset.load_geometry(resource)
-        raw_features = collection.get("features")
-        if not isinstance(raw_features, list):
-            raise RegionDataError("geometry representation is not a FeatureCollection")
-        by_name: dict[str, dict[str, Any]] = {}
-        for feature in raw_features:
-            if not isinstance(feature, dict):
-                continue
-            properties = feature.get("properties")
-            raw_geometry = feature.get("geometry")
-            if not isinstance(properties, dict) or not isinstance(raw_geometry, dict):
-                continue
-            name = properties.get("name")
-            if name not in self._name_to_index:
-                continue
-            if name in by_name:
-                raise RegionDataError(
-                    f"geometry representation {resolution!r} duplicates region {name!r}"
-                )
-            by_name[str(name)] = feature
-        missing = set(self._name_to_index) - set(by_name)
+        store = self._profile_dataset.open_geometry(resource)
+        missing = set(self._name_to_index) - {
+            record.name for record in store.records
+        }
         if missing:
             raise RegionDataError(
                 f"geometry representation {resolution!r} lacks CF region(s): "
                 + ", ".join(sorted(missing))
             )
-        self._representation_features[resolution] = by_name
-        return by_name
+        self._geometry_stores[resolution] = store
+        return store
 
     def _mapping_reference(self) -> MappingReference:
         info = self._dataset_info
@@ -700,7 +670,9 @@ class RegionCatalog:
         for raw_index in candidate_indexes:
             index = int(raw_index)
             region = self._regions[index]
-            if region.kind == "area" and self._geometries[index].covers(point):
+            if region.kind == "area" and self._lookup_store.geometry(
+                region.name
+            ).covers(point):
                 direct[index] = self._match(
                     region,
                     relation="covered_by",
@@ -712,7 +684,7 @@ class RegionCatalog:
         if tolerance > 0.0:
             for index in self._section_indexes:
                 distance = _line_distance_km(
-                    self._geometries[index],
+                    self._lookup_store.geometry(self._regions[index].name),
                     longitude=query_longitude,
                     latitude=checked_latitude,
                 )

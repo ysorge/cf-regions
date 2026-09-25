@@ -4,7 +4,9 @@ import json
 from pathlib import Path
 
 import shapefile
+from shapely import from_wkb
 from tools.build_dataset import _load_seavox, _shapefile_parts
+from tools.lookup_artifact import build_lookup_artifact
 
 
 def test_seavox_loader_accepts_official_shapefile_style_fields(tmp_path: Path) -> None:
@@ -62,3 +64,46 @@ def test_seavox_loader_deduplicates_wfs_subsets_and_keeps_richer_properties(
 
     assert len(features) == 1
     assert features[0]["properties"] == {"mrgid_sr": "24074", "mrgid_r": "23620"}
+
+
+def test_lookup_artifact_is_reproducible_and_indexed(tmp_path: Path) -> None:
+    source = tmp_path / "regions.geojson"
+    source.write_text(
+        json.dumps(
+            {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "properties": {"name": "test", "kind": "area"},
+                        "geometry": {
+                            "type": "Polygon",
+                            "coordinates": [
+                                [[0.0, 0.0], [2.0, 0.0], [2.0, 1.0], [0.0, 0.0]]
+                            ],
+                        },
+                    }
+                ],
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
+    geometry_path = tmp_path / "regions.lookup.wkb"
+    index_path = tmp_path / "regions.lookup.json"
+
+    geometry_sha256, index_sha256 = build_lookup_artifact(
+        source, geometry_path, index_path
+    )
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    record = index["features"][0]
+    geometry = from_wkb(
+        geometry_path.read_bytes()[
+            record["offset"] : record["offset"] + record["length"]
+        ]
+    )
+
+    assert len(geometry_sha256) == len(index_sha256) == 64
+    assert index["source_sha256"]
+    assert record["bounds"] == [0.0, 0.0, 2.0, 1.0]
+    assert geometry.geom_type == "Polygon"

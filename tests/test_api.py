@@ -296,7 +296,7 @@ def test_match_preserves_reproducible_mapping_and_source_provenance() -> None:
 
     assert direct.cf_version == "5"
     assert direct.mapping.id == "cfregions-default"
-    assert direct.mapping.geometry_resolution == "low"
+    assert direct.mapping.geometry_resolution == "high"
     assert direct.method == "polygon_lookup"
     assert direct.predicate == "covers"
     assert direct.source.name == "Natural Earth geography regions"

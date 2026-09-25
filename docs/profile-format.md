@@ -71,7 +71,7 @@ The currently supported lookup contract is deliberately narrow:
 ```json
 {
   "behavior_version": "1",
-  "geometry_resolution": "low",
+  "geometry_resolution": "high",
   "default_geometry_resolution": "low",
   "area_predicate": "covers",
   "boundary_inclusive": true,
@@ -94,6 +94,17 @@ Each representation declares:
 | `feature_count` | Number of features in the complete profile resource |
 | `processing.method` | Provider-defined stable processing method name |
 | `processing.parameters` | Provider-defined JSON object needed to reproduce or understand that processing |
+| `lookup_artifact` | Optional generated accelerator for lazy geometry access; never required to author a valid profile |
+
+Large lookup representations may optionally declare a `lookup_artifact` with
+`format: "wkb-pack-v1"`, manifest-relative `geometry_file` and `index_file`,
+and optional `sha256`/`index_sha256` values. The artifact contains the same
+geometries as the representation's GeoJSON in packed WKB plus a small bounding
+box index. It does not change the profile's spatial meaning, identity, or
+provenance. GeoJSON remains the portable source representation and is used
+automatically when the artifact is absent. Profile authors can generate the
+two files with `tools/lookup_artifact.py`; the machine-readable index contract
+is [`lookup-index.schema.json`](../src/cfregions/data/schemas/lookup-index.schema.json).
 
 ## Geometry FeatureCollections
 
@@ -154,9 +165,12 @@ opening the declared geometry or hierarchy resources. The bundled
 `profile-settings.json` selects only the exact global default profile; it is not
 an index of available profiles.
 
-Loading a selected profile verifies schema versions, compatibility, every
-declared hash, feature counts, complete name coverage, geometry validity/types,
-hierarchy references, duplicate edges, and cycles.
+Loading a selected profile verifies schema versions, compatibility, hierarchy
+references, duplicate edges, and cycles without opening large geometry files.
+Opening a representation verifies its declared hashes, feature count, complete
+name coverage, and geometry types. GeoJSON geometries are validated when used;
+compiled lookup artifacts were validated by their generator and are checked
+against the source representation and any declared artifact hashes.
 
 Use the bundled default profile as a complete real-world example. For a small
 synthetic example, see the external data-root fixture in

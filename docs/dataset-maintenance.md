@@ -161,8 +161,11 @@ python tools/build_dataset.py --help
 
 Run the builder first for `low` and then for `high`, using the same pinned input
 set and the same new output directory. The final manifest must declare both
-representations and their processing parameters and SHA-256 hashes. It also
-emits a separate, checksummed `hierarchy.json`. The builder
+representations and their processing parameters and SHA-256 hashes. When a
+high representation exists, the builder also derives its optional WKB pack and
+small lookup index; these are runtime accelerators and must always be
+re-generated from the authoritative GeoJSON rather than edited. It also emits
+a separate, checksummed `hierarchy.json`. The builder
 must complete with exact CF-name parity; do not bypass a missing-name or source
 version assertion.
 
@@ -232,6 +235,7 @@ Before publishing, confirm:
 - [ ] known ambiguity, overlaps, and gaps are documented;
 - [ ] licenses, citations, and notices are current;
 - [ ] package artifacts contain every declared manifest and geometry resource;
+- [ ] any declared lookup artifact was regenerated and matches its GeoJSON source;
 - [ ] release notes identify any result-changing behavior.
 
 ## Corrections after publication
