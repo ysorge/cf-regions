@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use cf-regions in your work, please cite it using this metadata."
+title: "cf-regions"
+abstract: "Python library for mapping and lookup of CF Standardized Region List names to geometries and region hierarchy."
+authors:
+  - family-names: "Sorge"
+    given-names: "Yves"
+    orcid: "https://orcid.org/0009-0007-0043-9207"
+doi: "10.5281/zenodo.22959858"
+license: "Apache-2.0"
+repository-code: "https://github.com/ocean-uhh/cf-regions"
+repository-artifact: "https://pypi.org/project/cf-regions/"
