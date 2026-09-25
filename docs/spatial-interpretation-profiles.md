@@ -103,7 +103,9 @@ manifest path. Only the deliberate global default is configured separately:
 Geometry and hierarchy paths are relative to the manifest. Discovery reads
 only small JSON manifests; geometry and hierarchy data stay lazy until a
 profile is selected. Providers may add SHA-256 values for integrity checking,
-but checksums are not required for discovery or use.
+but checksums are not required for plain GeoJSON profiles. If a representation
+declares a compiled lookup artifact, hashes for its authoritative GeoJSON,
+index, and WKB pack are required to prevent stale or mismatched generated data.
 
 An additional directory may contain one or many profile versions, conventionally:
 

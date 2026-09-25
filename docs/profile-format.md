@@ -58,8 +58,10 @@ The authoritative schema is
 | `input_sha256` | Optional hashes of pinned generation inputs |
 
 The shared CF vocabulary hash remains mandatory in the profile-independent CF
-registry. Profile authors may omit `sha256` from geometry representations and
-the hierarchy metadata. When present, these hashes bind metadata and result
+registry. Profile authors may omit `sha256` from plain GeoJSON representations
+and the hierarchy metadata. A representation that declares a compiled lookup
+artifact must provide source, index, and artifact hashes so the generated data
+is bound to one exact authoritative GeoJSON file. When present, these hashes bind metadata and result
 provenance to exact file bytes and the loader verifies them. They are
 integrity/reproducibility checks, not cryptographic signatures. An omitted hash
 is exposed as `None` by the Python API and `null` in structured CLI/API output.
@@ -90,7 +92,7 @@ Each representation declares:
 | --- | --- |
 | `label`, `description` | Human-facing detail information |
 | `geometry_file` | Manifest-relative GeoJSON resource |
-| `sha256` | Optional SHA-256 of the exact file bytes; if declared, it is verified |
+| `sha256` | SHA-256 of the exact GeoJSON bytes; optional unless `lookup_artifact` is declared |
 | `feature_count` | Number of features in the complete profile resource |
 | `processing.method` | Provider-defined stable processing method name |
 | `processing.parameters` | Provider-defined JSON object needed to reproduce or understand that processing |
@@ -98,7 +100,8 @@ Each representation declares:
 
 Large lookup representations may optionally declare a `lookup_artifact` with
 `format: "wkb-pack-v1"`, manifest-relative `geometry_file` and `index_file`,
-and optional `sha256`/`index_sha256` values. The artifact contains the same
+and mandatory `sha256`/`index_sha256` values. The parent representation's
+GeoJSON `sha256` is also mandatory in this case. The artifact contains the same
 geometries as the representation's GeoJSON in packed WKB plus a small bounding
 box index. It does not change the profile's spatial meaning, identity, or
 provenance. GeoJSON remains the portable source representation and is used

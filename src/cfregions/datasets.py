@@ -79,8 +79,8 @@ class LookupArtifactResource:
     format: str
     geometry_file: str
     index_file: str
-    sha256: str | None
-    index_sha256: str | None
+    sha256: str
+    index_sha256: str
 
 
 @dataclass(frozen=True, slots=True)
@@ -655,12 +655,11 @@ class SpatialProfileDataset(_ResourceLoader):
                 f"unsupported compiled lookup artifact format {artifact.format!r}"
             )
         index_content = self._read_bytes(artifact.index_file)
-        if artifact.index_sha256 is not None:
-            self._verify_sha256(
-                index_content,
-                expected=artifact.index_sha256,
-                label=artifact.index_file,
-            )
+        self._verify_sha256(
+            index_content,
+            expected=artifact.index_sha256,
+            label=artifact.index_file,
+        )
         try:
             index = json.loads(index_content)
         except (UnicodeDecodeError, json.JSONDecodeError) as error:
@@ -673,7 +672,7 @@ class SpatialProfileDataset(_ResourceLoader):
         if index.get("format") != "wkb-pack-v1":
             raise RegionDataError("unsupported compiled lookup artifact format")
         source_sha256 = index.get("source_sha256")
-        if resource.sha256 is not None and source_sha256 != resource.sha256:
+        if source_sha256 != resource.sha256:
             raise RegionDataError(
                 "compiled lookup artifact does not match its GeoJSON representation"
             )
@@ -742,12 +741,11 @@ class SpatialProfileDataset(_ResourceLoader):
             nonlocal pack
             if pack is None:
                 pack = self._read_bytes(artifact.geometry_file)
-                if artifact.sha256 is not None:
-                    self._verify_sha256(
-                        pack,
-                        expected=artifact.sha256,
-                        label=artifact.geometry_file,
-                    )
+                self._verify_sha256(
+                    pack,
+                    expected=artifact.sha256,
+                    label=artifact.geometry_file,
+                )
             offset, length = locations[record.name]
             end = offset + length
             if end > len(pack):
@@ -875,6 +873,7 @@ class SpatialProfileDataset(_ResourceLoader):
                 raise RegionDataError("geometry representation metadata is invalid")
             processing = cls._required_mapping(raw_resource, "processing")
             parameters = cls._required_mapping(processing, "parameters")
+            geometry_sha256 = cls._optional_sha256(raw_resource)
             raw_artifact = raw_resource.get("lookup_artifact")
             artifact: LookupArtifactResource | None = None
             if raw_artifact is not None:
@@ -882,16 +881,27 @@ class SpatialProfileDataset(_ResourceLoader):
                     raise RegionDataError(
                         "geometry lookup_artifact metadata must be an object"
                     )
+                if geometry_sha256 is None:
+                    raise RegionDataError(
+                        "a geometry representation with lookup_artifact must "
+                        "declare sha256"
+                    )
+                artifact_sha256 = cls._optional_sha256(raw_artifact)
+                index_sha256 = cls._optional_sha256(
+                    raw_artifact, "index_sha256"
+                )
+                if artifact_sha256 is None or index_sha256 is None:
+                    raise RegionDataError(
+                        "lookup_artifact must declare sha256 and index_sha256"
+                    )
                 artifact = LookupArtifactResource(
                     format=cls._required_string(raw_artifact, "format"),
                     geometry_file=cls._required_string(
                         raw_artifact, "geometry_file"
                     ),
                     index_file=cls._required_string(raw_artifact, "index_file"),
-                    sha256=cls._optional_sha256(raw_artifact),
-                    index_sha256=cls._optional_sha256(
-                        raw_artifact, "index_sha256"
-                    ),
+                    sha256=artifact_sha256,
+                    index_sha256=index_sha256,
                 )
             resources.append(
                 GeometryResource(
@@ -899,7 +909,7 @@ class SpatialProfileDataset(_ResourceLoader):
                     label=cls._required_string(raw_resource, "label"),
                     description=cls._required_string(raw_resource, "description"),
                     geometry_file=cls._required_string(raw_resource, "geometry_file"),
-                    sha256=cls._optional_sha256(raw_resource),
+                    sha256=geometry_sha256,
                     feature_count=cls._required_int(raw_resource, "feature_count"),
                     processing=GeometryProcessing(
                         method=cls._required_string(processing, "method"),

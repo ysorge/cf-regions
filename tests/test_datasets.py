@@ -255,6 +255,75 @@ def test_optional_lookup_artifact_is_used_and_verified(tmp_path: Path) -> None:
         )
 
 
+@pytest.mark.parametrize(
+    ("missing_field", "message"),
+    [
+        ("source_sha256", "representation with lookup_artifact must declare sha256"),
+        ("artifact_sha256", "lookup_artifact must declare sha256 and index_sha256"),
+        ("index_sha256", "lookup_artifact must declare sha256 and index_sha256"),
+    ],
+)
+def test_lookup_artifact_requires_complete_checksum_binding(
+    tmp_path: Path,
+    missing_field: str,
+    message: str,
+) -> None:
+    _external_dataset(tmp_path, profile_checksums=False)
+    manifest_path = tmp_path / "profiles/test-profile/1/manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    representation = manifest["representations"]["low"]
+    representation["sha256"] = "0" * 64
+    artifact = {
+        "format": "wkb-pack-v1",
+        "geometry_file": "geometry/low.lookup.wkb",
+        "index_file": "geometry/low.lookup.json",
+        "sha256": "1" * 64,
+        "index_sha256": "2" * 64,
+    }
+    representation["lookup_artifact"] = artifact
+    if missing_field == "source_sha256":
+        del representation["sha256"]
+    elif missing_field == "artifact_sha256":
+        del artifact["sha256"]
+    else:
+        del artifact["index_sha256"]
+    _write_json(manifest_path, manifest)
+
+    with pytest.raises(cfregions.RegionDataError, match=message):
+        cfregions.get_dataset_info(data_directory=tmp_path)
+
+
+def test_lookup_artifact_index_must_name_its_exact_geojson_source(
+    tmp_path: Path,
+) -> None:
+    _external_dataset(tmp_path)
+    profile_root = tmp_path / "profiles/test-profile/1"
+    geometry = profile_root / "geometry/low.geojson"
+    pack = profile_root / "geometry/low.lookup.wkb"
+    index_path = profile_root / "geometry/low.lookup.json"
+    pack_sha256, _ = build_lookup_artifact(geometry, pack, index_path)
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    index["source_sha256"] = "0" * 64
+    _write_json(index_path, index)
+    manifest_path = profile_root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["representations"]["low"]["lookup_artifact"] = {
+        "format": "wkb-pack-v1",
+        "geometry_file": "geometry/low.lookup.wkb",
+        "index_file": "geometry/low.lookup.json",
+        "sha256": pack_sha256,
+        "index_sha256": _sha256(index_path),
+    }
+    _write_json(manifest_path, manifest)
+
+    with pytest.raises(cfregions.RegionDataError, match="does not match its GeoJSON"):
+        cfregions.match_regions(
+            longitude=0,
+            latitude=0,
+            data_directory=tmp_path,
+        )
+
+
 def test_declared_profile_checksum_must_be_a_sha256_digest(tmp_path: Path) -> None:
     _external_dataset(tmp_path, profile_checksums=False)
     manifest_path = tmp_path / "profiles/test-profile/1/manifest.json"

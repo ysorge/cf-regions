@@ -164,7 +164,9 @@ set and the same new output directory. The final manifest must declare both
 representations and their processing parameters and SHA-256 hashes. When a
 high representation exists, the builder also derives its optional WKB pack and
 small lookup index; these are runtime accelerators and must always be
-re-generated from the authoritative GeoJSON rather than edited. It also emits
+re-generated from the authoritative GeoJSON rather than edited. Their source,
+index, and WKB checksums are mandatory and bind the generated artifact to that
+exact GeoJSON representation. It also emits
 a separate, checksummed `hierarchy.json`. The builder
 must complete with exact CF-name parity; do not bypass a missing-name or source
 version assertion.
