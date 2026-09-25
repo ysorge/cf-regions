@@ -109,6 +109,10 @@ provenance. GeoJSON remains the portable source representation and is used
 automatically when the artifact is absent. Profile authors can generate the
 two files with `tools/lookup_artifact.py`; the machine-readable index contract
 is [`lookup-index.schema.json`](../src/cfregions/data/schemas/lookup-index.schema.json).
+When opening an artifact, `cf-regions` verifies the exact GeoJSON source and
+index bytes against their declared hashes and checks that the index names that
+same GeoJSON hash. The WKB pack is verified before its first geometry is
+decoded.
 
 The profile provider chooses one validation mode:
 

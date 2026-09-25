@@ -354,6 +354,35 @@ def test_lookup_artifact_index_must_name_its_exact_geojson_source(
         )
 
 
+def test_lookup_artifact_must_match_the_actual_geojson_source(tmp_path: Path) -> None:
+    _external_dataset(tmp_path)
+    profile_root = tmp_path / "profiles/test-profile/1"
+    geometry = profile_root / "geometry/low.geojson"
+    pack = profile_root / "geometry/low.lookup.wkb"
+    index_path = profile_root / "geometry/low.lookup.json"
+    pack_sha256, index_sha256 = build_lookup_artifact(geometry, pack, index_path)
+    manifest_path = profile_root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["representations"]["low"]["lookup_artifact"] = {
+        "format": "wkb-pack-v1",
+        "geometry_file": "geometry/low.lookup.wkb",
+        "index_file": "geometry/low.lookup.json",
+        "sha256": pack_sha256,
+        "index_sha256": index_sha256,
+        "validation_mode": "runtime",
+    }
+    _write_json(manifest_path, manifest)
+
+    geometry.write_bytes(geometry.read_bytes() + b"\n")
+
+    with pytest.raises(cfregions.RegionDataError, match="checksum mismatch"):
+        cfregions.match_regions(
+            longitude=0,
+            latitude=0,
+            data_directory=tmp_path,
+        )
+
+
 @pytest.mark.parametrize("validation_mode", ["runtime", "prevalidated"])
 def test_profile_provider_controls_lookup_artifact_validation(
     tmp_path: Path,

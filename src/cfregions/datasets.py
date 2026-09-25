@@ -11,7 +11,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from importlib.resources import files
 from pathlib import Path, PurePosixPath
-from typing import Any, Protocol
+from typing import IO, Any, Literal, Protocol
 
 from shapely.geometry import mapping, shape
 from shapely.geometry.base import BaseGeometry
@@ -39,6 +39,8 @@ class Resource(Protocol):
     def name(self) -> str: ...
 
     def joinpath(self, child: str) -> Resource: ...
+
+    def open(self, mode: Literal["rb"]) -> IO[bytes]: ...
 
     def read_bytes(self) -> bytes: ...
 
@@ -225,6 +227,31 @@ class _ResourceLoader:
         if actual != expected:
             raise RegionDataError(
                 f"checksum mismatch for {label}: expected {expected}, found {actual}"
+            )
+
+    def _verify_resource_sha256(
+        self,
+        relative_path: str,
+        *,
+        expected: str,
+        chunk_size: int = 1024 * 1024,
+    ) -> None:
+        """Verify a resource without loading the complete file into memory."""
+
+        digest = hashlib.sha256()
+        try:
+            with self._resource(relative_path).open("rb") as stream:
+                while chunk := stream.read(chunk_size):
+                    digest.update(chunk)
+        except OSError as error:
+            raise RegionDataError(
+                f"unable to read data resource: {relative_path}"
+            ) from error
+        actual = digest.hexdigest()
+        if actual != expected:
+            raise RegionDataError(
+                f"checksum mismatch for {relative_path}: "
+                f"expected {expected}, found {actual}"
             )
 
     @staticmethod
@@ -683,11 +710,19 @@ class SpatialProfileDataset(_ResourceLoader):
         self._validate_schema_version(index, label=artifact.index_file)
         if index.get("format") != "wkb-pack-v1":
             raise RegionDataError("unsupported compiled lookup artifact format")
+        if resource.sha256 is None:
+            raise RegionDataError(
+                "a geometry representation with lookup_artifact must declare sha256"
+            )
         source_sha256 = index.get("source_sha256")
         if source_sha256 != resource.sha256:
             raise RegionDataError(
                 "compiled lookup artifact does not match its GeoJSON representation"
             )
+        self._verify_resource_sha256(
+            resource.geometry_file,
+            expected=resource.sha256,
+        )
         raw_records = index.get("features")
         declared_count = self._required_int(index, "feature_count")
         if (
