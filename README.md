@@ -1,5 +1,11 @@
 # cf-regions
 
+[![Available on pypi](https://img.shields.io/pypi/v/cf-regions.svg)](https://pypi.python.org/pypi/cf-regions/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+ [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![CI - Test](https://github.com/ysorge/cf-regions/actions/workflows/ci.yml/badge.svg)](https://github.com/ysorge/cf-regions/actions/workflows/ci.yml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22959858.svg)](https://doi.org/10.5281/zenodo.22959858)
+
 Experimental Python library for mapping and lookup of [CF Standardized Region List][cf-list] names to geometries and region hierarchy. The CF Standardized Region List is a controlled vocabulary of region names for Earth science data. It is part of the [CF Conventions](https://cfconventions.org/) and based on the NASA GCMD keyword list for locations.
 
 > [!IMPORTANT]
