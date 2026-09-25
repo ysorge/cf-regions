@@ -109,7 +109,7 @@ For a development checkout:
 ```console
 git clone https://github.com/ysorge/cf-regions.git
 cd cf-regions
-python -m pip install -e ".[dev]"
+pip install -e ".[dev]"
 pytest
 ```
 
