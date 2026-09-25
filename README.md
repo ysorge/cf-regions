@@ -34,7 +34,7 @@ not download data during lookup.
 Install from PyPI:
 
 ```console
-python -m pip install cf-regions
+pip install cf-regions
 ```
 
 To work on the current source checkout instead:
@@ -42,7 +42,7 @@ To work on the current source checkout instead:
 ```console
 git clone https://github.com/ysorge/cf-regions.git
 cd cf-regions
-python -m pip install -e ".[dev]"
+pip install -e ".[dev]"
 ```
 
 ## Quick start
@@ -90,6 +90,17 @@ versioned interpretations rather than official CF boundaries.
 - [Dataset maintenance][dataset-maintenance] — updating bundled CF and mapping
   data
 - [Data licenses][data-licenses] — source terms and attribution
+
+## Companion applications
+
+For interactive map-based exploration, use
+[`cf-regions-gui`](https://github.com/ysorge/cf-regions-gui), a native
+offline-capable desktop application built on `cf-regions`.
+
+```console
+pip install cf-regions-gui
+cfregions-gui
+```
 
 ## Development and support
 
